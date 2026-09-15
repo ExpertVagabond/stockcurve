@@ -4,7 +4,7 @@
   "graduationPriceQuote": 0.0015427502057786364,
   "migrationQuoteThreshold": 0.00594628,
   "migrationQuoteThresholdUsd": 1.9717979798370302,
-  "feeSchedule": "300→30 bps exp over 3600s (60 periods), dynamic fee on",
+  "feeSchedule": "300\u219230 bps exp over 3600s (60 periods), dynamic fee on",
   "unit": 0.02,
   "float": 8,
   "discountBps": 1500,
@@ -24,7 +24,13 @@
   "tokenBadge": "8VeVZe3Zxfpax2qQUp7i68FCLspLYErm2FJChc5NDuVn",
   "txs": {
     "createConfig": "ZeKvGvvLKjcGfBpa92rMh6K7UT5W6cCZuWZvkyZ9tr8F18Zn9nvnxaL6qempvJqPn42f2MNnDVSPaFG1b543i4L",
-    "createPool": "cg8A4bgZnwDH2MnKrSnat5CVPVW79qnBAbkDh6osFPGfbQUo2PrJkeV3kgrs3fQYfcfhT3DWzLWWPp2ZaCbQXTU"
+    "createPool": "cg8A4bgZnwDH2MnKrSnat5CVPVW79qnBAbkDh6osFPGfbQUo2PrJkeV3kgrs3fQYfcfhT3DWzLWWPp2ZaCbQXTU",
+    "keeperBuyDiscount": "2fh18yoKKBrtkykcpFQ85ZDfja4bH5GFy4EoVaeQi7VJpLfHuNbDFnbjhewhCdrV8j7MwWtmiVTubJ8j6g8wgYD",
+    "keeperGraduate": "4ri1iHW12aoG5ijZCVRu24ptB3B9pwcTS3JUsu7q79YsNrT92CqASpahR75kub6oFxtu1TEcHwxtxDS4yu4iFgbr",
+    "migrateToDammV2": "4xnjHomWvrH33sAKc54jBM7v2MWjWadjrmFFd7vmejUuYtYVAyDBivKTWg8fdf6VdugzLo9hbzALBPvGaFjx4CFb",
+    "keeperExit": "45FzHKzWDfvdsZAhu3yTS9cwaYzbdtUyeAFNkEedycUKkCB4kKyHfCifhHEoqPBTfAhkWpiFLTmPUrMzs4mjskFX"
   },
-  "launchedAt": "2026-09-15T22:12:47.430Z"
+  "launchedAt": "2026-09-15T22:12:47.430Z",
+  "dammV2Pool": "F2r2JepVXvycXCFBWxpLGXMVuu3hry4oXp246JmHRW4a",
+  "dammConfig": "7F6dnUcRuyM2TwR8myT1dYypFXpPSxqwKNSFNkxyNESd"
 }
