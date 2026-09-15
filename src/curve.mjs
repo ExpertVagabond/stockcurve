@@ -64,15 +64,15 @@ export function buildEquityCurve(p) {
   const checkpoints = [pRef * (1 - d), pRef * (1 - d / 3), pRef, pRef * (1 + prem)];
   const sqrtPrices = createSqrtPrices(checkpoints, o.baseDecimals, o.quoteDecimals);
 
-  const configParams = buildCurveWithCustomSqrtPrices({
+  // Fixed-supply rounding on some decimal combos needs a non-zero leftover; retry with 1 token if the SDK says so.
+  const build = (leftover) => buildCurveWithCustomSqrtPrices({
     token: {
       tokenType: TokenType.SPLToken,
       tokenBaseDecimal: o.baseDecimals,
       tokenQuoteDecimal: o.quoteDecimals,
       tokenAuthorityOption: TokenAuthorityOption.Immutable,
       totalTokenSupply: o.float,
-      // 1% of float (0 for tiny floats) absorbs fixed-supply rounding on low-decimal quotes; returns to leftoverReceiver after migration
-      leftover: o.leftover ?? Math.round(o.float * 0.01),
+      leftover, // returns to leftoverReceiver after migration
     },
     fee: {
       baseFeeParams: {
@@ -102,6 +102,9 @@ export function buildEquityCurve(p) {
     sqrtPrices,
     liquidityWeights: o.weights,
   });
+  let configParams;
+  try { configParams = build(o.leftover ?? Math.round(o.float * 0.01)); }
+  catch (e) { if (!/leftOverDelta/.test(e.message)) throw e; configParams = build(Math.max(1, Math.round(o.float * 0.01))); }
 
   const q = 10 ** o.quoteDecimals;
   const thresholdQuote = Number(configParams.migrationQuoteThreshold.toString()) / q;

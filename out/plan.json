@@ -1,9 +1,9 @@
 {
-  "createdAt": "2026-09-15T23:38:19.189Z",
-  "base": "RKLB",
+  "createdAt": "2026-09-15T23:50:57.447Z",
+  "base": "SNDK",
   "preipo": false,
   "unit": 0.01,
-  "float": 5,
+  "float": 12,
   "quote": {
     "symbol": "SOL",
     "mint": "So11111111111111111111111111111111111111112",
@@ -12,20 +12,19 @@
   "reference": {
     "base": {
       "ok": true,
-      "price": 63.55,
-      "source": "manual",
-      "feed": "issuer-supplied",
+      "price": 1527.3443263021857,
+      "source": "jupiter-xstock-twin",
+      "feed": "SNDKbwMUQvZhnLnxLduradgLHG5KrPuKwpnrkkGRhfH",
       "ageSec": 0,
       "tried": [
-        "lazer: HTTP 403: Not entitled: feed 1373 (no grant accepts this feed (asset type 'equity', instrument type 'spot', exchange 1))",
-        "onchain: stale 119.2d ($127.85545)"
+        "lazer: HTTP 403: Not entitled: feed 2858 (no grant accepts this feed (asset type 'equity', instrument type 'spot', exchange 1))"
       ]
     },
     "quote": {
       "ok": true,
-      "price": 96.89099008000001,
-      "bid": 96.88358925,
-      "ask": 96.8933893,
+      "price": 96.96441966,
+      "bid": 96.96068176,
+      "ask": 96.96899162,
       "source": "pyth-lazer",
       "feed": "Crypto.SOL/USD#6",
       "ageSec": 0,
@@ -33,19 +32,20 @@
     }
   },
   "summary": {
-    "referencePriceQuote": 0.006558917392373497,
-    "startPriceQuote": 0.006230971522754821,
-    "graduationPriceQuote": 0.006886863261992172,
-    "migrationQuoteThreshold": 0.017196785,
-    "migrationQuoteThresholdUsd": 1.6662135248428929,
+    "referencePriceQuote": 0.15751595602363508,
+    "startPriceQuote": 0.14964015822245333,
+    "graduationPriceQuote": 0.16539175382481683,
+    "migrationQuoteThreshold": 0.895166681,
+    "migrationQuoteThresholdUsd": 86.79931772213335,
     "feeSchedule": "300→30 bps exp over 3600s (60 periods), dynamic fee on",
     "curve": "lean",
-    "profile": "issuer",
-    "listingFeePct": 3,
+    "profile": "seed",
+    "partnerUnlockedLpPct": 90,
+    "listingFeePct": 0,
     "dammFeeBps": 20,
-    "creationFeeSol": 0.02,
+    "creationFeeSol": 0,
     "unit": 0.01,
-    "float": 5,
+    "float": 12,
     "discountBps": 500,
     "premiumBps": 500,
     "weights": [
@@ -55,10 +55,10 @@
     ]
   },
   "checkpoints": [
-    0.006230971522754821,
-    0.006449602102500605,
-    0.006558917392373497,
-    0.006886863261992172
+    0.14964015822245333,
+    0.15489069008990783,
+    0.15751595602363508,
+    0.16539175382481683
   ],
   "configParams": {
     "poolFees": {
@@ -84,12 +84,12 @@
     "migrationOption": 1,
     "tokenType": 0,
     "tokenDecimal": 9,
-    "migrationQuoteThreshold": "010666f1",
-    "partnerLiquidityPercentage": 0,
-    "partnerPermanentLockedLiquidityPercentage": 100,
+    "migrationQuoteThreshold": "355b28d9",
+    "partnerLiquidityPercentage": 90,
+    "partnerPermanentLockedLiquidityPercentage": 10,
     "creatorLiquidityPercentage": 0,
     "creatorPermanentLockedLiquidityPercentage": 0,
-    "sqrtStartPrice": "14352ec34e13aeee",
+    "sqrtStartPrice": "63078537d35473fb",
     "lockedVesting": {
       "amountPerPeriod": "00",
       "cliffDurationFromMigrationTime": "00",
@@ -99,8 +99,8 @@
     },
     "migrationFeeOption": 6,
     "tokenSupply": {
-      "preMigrationTokenSupply": "012a05f200",
-      "postMigrationTokenSupply": "012a05f200"
+      "preMigrationTokenSupply": "02cb417800",
+      "postMigrationTokenSupply": "02cb417800"
     },
     "creatorTradingFeePercentage": 0,
     "migratedPoolFee": {
@@ -108,7 +108,7 @@
       "dynamicFee": 1,
       "poolFeeBps": 20
     },
-    "poolCreationFee": "01312d00",
+    "poolCreationFee": "00",
     "partnerLiquidityVestingInfo": {
       "vestingPercentage": 0,
       "bpsPerPeriod": 0,
@@ -135,20 +135,20 @@
     "padding": [],
     "curve": [
       {
-        "sqrtPrice": "148f28660bd3cd4f",
-        "liquidity": "48f396413f1454a8b3129e00"
+        "sqrtPrice": "64c0730ed9bf132e",
+        "liquidity": "0306e5f8c6d81942e30a456c00"
       },
       {
-        "sqrtPrice": "14bb92cc336b5976",
-        "liquidity": "48f396413f1454a8b3129e00"
+        "sqrtPrice": "659a1c7168b98887",
+        "liquidity": "0306e5f8c6d81942e30a456c00"
       },
       {
-        "sqrtPrice": "153ea4f4d2cf51c4",
-        "liquidity": "01b5b585877a79fbf4a9a54800"
+        "sqrtPrice": "681c6ecb6c8e5d95",
+        "liquidity": "122963d4a91097914d9588c000"
       }
     ],
     "migrationFee": {
-      "feePercentage": 3,
+      "feePercentage": 0,
       "creatorFeePercentage": 0
     },
     "tokenUpdateAuthority": 1

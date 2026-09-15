@@ -1,0 +1,33 @@
+{
+  "name": "stockcurve SNDK 0.01sh (seed venue)",
+  "symbol": "sSNDK",
+  "description": "stockcurve seeded venue token: 1 sSNDK = 0.01 share-unit of a SanDisk reference, launched atomically on a Meteora Dynamic Bonding Curve quoted in SOL on the lean curve under the SEED profile: the issuer funds the raise itself and 90% of the migrated DAMM v2 liquidity stays withdrawable (10% permanently locked, DBC minimum). Reference anchored live to the Backpack Securities SNDK token via Jupiter ($373k on-chain liquidity, tracks the stock within 15 bps). Hackathon demo (Stocklana 2026), not a claim on SanDisk shares.",
+  "image": "https://raw.githubusercontent.com/ExpertVagabond/stockcurve/main/meta/sSNDK.png",
+  "external_url": "https://github.com/ExpertVagabond/stockcurve",
+  "attributes": [
+    {
+      "trait_type": "quote",
+      "value": "SOL"
+    },
+    {
+      "trait_type": "reference",
+      "value": "Backpack SNDK (Jupiter) / Equity.US.SNDK/USD"
+    },
+    {
+      "trait_type": "unit",
+      "value": "0.01 share"
+    },
+    {
+      "trait_type": "curve",
+      "value": "lean: -5% start / +5% graduation, weights 1:1:6"
+    },
+    {
+      "trait_type": "profile",
+      "value": "seed: partner LP 90% withdrawable / 10% locked, 20 bps DAMM v2"
+    },
+    {
+      "trait_type": "launch",
+      "value": "atomic: create + opening buy in one tx"
+    }
+  ]
+}
