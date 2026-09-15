@@ -19,7 +19,7 @@ const [ps, progress, feeMetrics, refBase, refQuote] = await Promise.all([
   client.state.getPool(pool),
   client.state.getPoolQuoteTokenCurveProgress(pool),
   client.state.getPoolFeeMetrics(pool),
-  plan.preipo ? resolvePreIpo(plan.base) : resolveUsd({ pythSymbol: `Equity.US.${plan.base}/USD`, twinMint: twinOf(plan.base) }),
+  plan.preipo ? resolvePreIpo(plan.base) : resolveUsd({ pythSymbol: `Equity.US.${plan.base}/USD`, twinMint: twinOf(plan.base), manual: plan.reference?.base?.source === "manual" ? plan.reference.base.price : undefined }),
   plan.quote.symbol === "USDC" ? { price: 1, source: "peg", ageSec: 0 } : resolveUsd({ pythSymbol: `Crypto.${plan.quote.symbol.toUpperCase()}/USD`, mint: plan.quote.mint }),
 ]);
 const cfg = await client.state.getPoolConfig(ps.poolState.config);

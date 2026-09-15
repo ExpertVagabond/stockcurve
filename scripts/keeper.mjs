@@ -48,7 +48,7 @@ function loadRegistry() {
 loadRegistry();
 
 async function reference(plan) {
-  const base = plan.preipo ? await resolvePreIpo(plan.base) : await resolveUsd({ pythSymbol: `Equity.US.${plan.base}/USD`, twinMint: twinOf(plan.base) });
+  const base = plan.preipo ? await resolvePreIpo(plan.base) : await resolveUsd({ pythSymbol: `Equity.US.${plan.base}/USD`, twinMint: twinOf(plan.base), manual: plan.reference?.base?.source === "manual" ? plan.reference.base.price : undefined });
   const quote = plan.quote.symbol === "USDC" ? { price: 1, source: "peg" } : await resolveUsd({ pythSymbol: `Crypto.${plan.quote.symbol.toUpperCase()}/USD`, mint: plan.quote.mint });
   return { refQuote: (base.price * plan.unit) / quote.price, baseSource: base.source, quoteSource: quote.source };
 }

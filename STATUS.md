@@ -62,6 +62,12 @@ Targets: Main track + Best Use of Meteora DBC ($5k) + Stocknized Agent on Clawpu
   capital $7.6k (15%) vs standard $29.3k (59%); listing $1.5k + curve ~$400 at graduation. RKLB reference needs Pyth grant
   (Backpack mint RKLBnAXG… exists, no price/badge; Pyth push 119d stale).
 
+## Pool 8 RKLB lean + seed profile (2026-09-16 ~00:40 UTC)
+- sRKLB/SOL 5hTGV4FQJkuNLBS9CJG2iAgunQp74EETNM9fcpj4r4tC: lean curve, manual ref $63.55 (Yahoo close 9/15; Pyth push print $127.86 was 119d stale & 2× wrong),
+  atomic (0 bps), keeper graduated (keeper/status now honor manual provenance), DAMM v2 Cdg8v5kX…, all 3 fees claimed. 8 pools.
+- `seed` profile: partner LP 90% unlocked/10% locked, no listing/creation fee → self-funded venue with recoverable capital. Validated
+  (HOOD/SOL float 150 = $822 raise); NOT launched — needs ~20 SOL. Wallet ≈ 0.19 SOL.
+
 ## Needs Matthew (interactive)
 1. Register + submit on hackathons.solana.com (links: repo, console; video optional).
 2. Pyth Terminal: equity/xStock feed grant on the Pro token (free grant = crypto majors only; all stock feeds 403).

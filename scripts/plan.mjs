@@ -43,7 +43,7 @@ console.log(`checkpoints ${built.checkpoints.map((c) => fmt(c)).join(" → ")}  
 console.log(`curve pts  ${cp.curve.length}: ${cp.curve.map((c) => fmt(getPriceFromSqrtPrice(c.sqrtPrice, 9, quote.decimals))).join(", ")}`);
 console.log(`float      ${float} tokens = ${float * unit} shares (fixed supply ${Number(cp.tokenSupply.preMigrationTokenSupply.toString()) / 1e9})`);
 console.log(`graduation needs ${fmt(s.migrationQuoteThreshold)} ${quote.sym} ≈ $${fmt(s.migrationQuoteThresholdUsd, 2)}`);
-console.log(`fees       ${s.feeSchedule}; profile ${s.profile}: listing fee ${s.listingFeePct}% at graduation, DAMM v2 ${s.dammFeeBps} bps, creation fee ${s.creationFeeSol} SOL; LP 100% permanently locked`);
+console.log(`fees       ${s.feeSchedule}; profile ${s.profile}: listing fee ${s.listingFeePct}% at graduation, DAMM v2 ${s.dammFeeBps} bps, creation fee ${s.creationFeeSol} SOL; partner LP ${100 - (s.partnerUnlockedLpPct || 0)}% permanently locked${s.partnerUnlockedLpPct ? `, ${s.partnerUnlockedLpPct}% withdrawable` : ""}`);
 
 mkdirSync("out", { recursive: true });
 const plan = {

@@ -42,7 +42,7 @@ its first transaction *is* the creation — there is no block in which a sniper 
 DBC pool [`GretDMXwL3Na7AtVvQzaAuQhVw8zVwsttqVxkYKXE3FP`](https://solscan.io/account/GretDMXwL3Na7AtVvQzaAuQhVw8zVwsttqVxkYKXE3FP)
 · [creation+buy tx](https://solscan.io/tx/5nA1XC87vSFsVAH3FLWz3aa4eBVyTuD32FujmrFpw7uZid2RFrPLKqcTX9C1qSGAS6WgNFEbqcpT76n66pxXzibg). Left live on the curve at fair value.
 
-Seven pools, one day, ~0.5 SOL. Console for all pools:
+Eight pools, one day, ~0.55 SOL. Console for all pools:
 **https://stockcurve.purplesquirrelnetworks.workers.dev**
 
 | Pool | Quote | Reference | Launch | Status |
@@ -53,6 +53,7 @@ Seven pools, one day, ~0.5 SOL. Console for all pools:
 | sDKNG/AAPLx | xStock | Backpack DKNG twin, live | manual; **keeper did everything else** | graduated |
 | sRDDT/SOL | SOL | Backpack RDDT twin, live | **atomic** create+buy | live on curve, +3 bps |
 | sHOOD/SOL | SOL | Backpack HOOD twin, live | atomic, **issuer profile**, keeper-graduated | graduated; listing + creation + trading fees claimed |
+| sRKLB/SOL | SOL | manual print $63.55 (no live source exists for RKLB) | atomic, **lean curve** (opening buy = 15% of raise), keeper-graduated | graduated; fees claimed |
 | sPLTR/SOL | SOL | PLTRx twin, live | atomic on the **shared config** (`launch-shared.mjs`, unit derived from the ladder, no config rent) | graduated; all three fees claimed to the same partner |
 
 ## Why a stock needs a different curve
@@ -146,6 +147,8 @@ a 119-day-stale Pyth push account: the exact case the primitive is for. Two curv
 |---|---|---|---|---|---|---|
 | `standard` (−15%, 1:3:4) | 770 sh | $50k | **$29.3k (59%)** | 235 sh ≈ $30k | $1,500 | ~$400 |
 | `lean` (−5%, 1:1:6) | 753 sh | $50k | **$7.6k (15%)** | 58 sh ≈ $7.5k | $1,500 | ~$400 |
+
+Pool 8 (`sRKLB/SOL`, [`5hTGV4FQJkuNLBS9CJG2iAgunQp74EETNM9fcpj4r4tC`](https://solscan.io/account/5hTGV4FQJkuNLBS9CJG2iAgunQp74EETNM9fcpj4r4tC)) ran the lean curve on mainnet: opening buy 0.0026 of a 0.0172 SOL raise = **15%**, opened at 0 bps. A third profile, `seed`, keeps 90% of partner LP withdrawable (DBC minimum 10% locked) for standing up a self-funded venue.
 
 The opening buy is the atomic anti-snipe buy; it returns as inventory the keeper sells at ≥ reference on
 DAMM v2, so the capital at risk is the basis on those shares, not the cash. The other 85% of a lean raise is real

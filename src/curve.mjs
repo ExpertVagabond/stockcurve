@@ -21,6 +21,9 @@ import {
 export const PROFILES = {
   demo:   { migrationFeePct: 0, migrationFeeOption: "FixedBps25", poolCreationFeeSol: 0, migratedPoolFeeBps: null },
   issuer: { migrationFeePct: 3, migrationFeeOption: "Customizable", poolCreationFeeSol: 0.02, migratedPoolFeeBps: 20 },
+  // seed: the issuer funds the raise itself to stand up a venue. Same fees, but partner LP is 90% UNLOCKED
+  // (DBC minimum 10% stays permanently locked) so the seeding capital is a withdrawable DAMM v2 position.
+  seed:   { migrationFeePct: 0, migrationFeeOption: "Customizable", poolCreationFeeSol: 0, migratedPoolFeeBps: 20, partnerUnlockedLpPct: 90 },
 };
 
 // Curve shapes. `standard` opens 15% under reference with half the liquidity in the discount zone — good
@@ -89,8 +92,8 @@ export function buildEquityCurve(p) {
       ...(prof.migratedPoolFeeBps ? { migratedPoolFee: { collectFeeMode: MigratedCollectFeeMode.QuoteToken, dynamicFee: DammV2DynamicFeeMode.Enabled, poolFeeBps: prof.migratedPoolFeeBps, baseFeeMode: DammV2BaseFeeMode.FeeTimeSchedulerLinear } } : {}),
     },
     liquidityDistribution: {
-      partnerLiquidityPercentage: 0,
-      partnerPermanentLockedLiquidityPercentage: 100, // all graduated LP permanently locked
+      partnerLiquidityPercentage: prof.partnerUnlockedLpPct ?? 0,                       // withdrawable partner LP (seed profile)
+      partnerPermanentLockedLiquidityPercentage: 100 - (prof.partnerUnlockedLpPct ?? 0), // permanently locked, still earns fees
       creatorLiquidityPercentage: 0,
       creatorPermanentLockedLiquidityPercentage: 0,
     },
@@ -110,7 +113,7 @@ export function buildEquityCurve(p) {
     migrationQuoteThreshold: thresholdQuote,
     migrationQuoteThresholdUsd: thresholdQuote * o.refQuoteUsd,
     feeSchedule: `${o.startFeeBps}→${o.endFeeBps} bps exp over ${o.feeDurationSec}s (${o.feePeriods} periods), dynamic fee on`,
-    curve: o.curve, profile: o.profile, listingFeePct: prof.migrationFeePct, dammFeeBps: prof.migratedPoolFeeBps ?? 25, creationFeeSol: prof.poolCreationFeeSol,
+    curve: o.curve, profile: o.profile, partnerUnlockedLpPct: prof.partnerUnlockedLpPct ?? 0, listingFeePct: prof.migrationFeePct, dammFeeBps: prof.migratedPoolFeeBps ?? 25, creationFeeSol: prof.poolCreationFeeSol,
     unit: o.unit, float: o.float, discountBps: o.discountBps, premiumBps: o.premiumBps, weights: o.weights,
   };
   return { configParams, checkpoints, sqrtPrices, summary };

@@ -78,7 +78,7 @@ footer{padding:30px var(--gutter) 50px;color:var(--fg-3);font-size:13px;border-t
 </header>
 
 <main class="rows">
-  <section class="row"><div class="row-head"><h2>Across seven launches</h2><span class="count">mainnet · 2026-09-15</span></div><div class="stat-rail" id="stats"></div></section>
+  <section class="row"><div class="row-head"><h2>Across eight launches</h2><span class="count">mainnet · 2026-09-15</span></div><div class="stat-rail" id="stats"></div></section>
   <section class="row" id="live"><div class="row-head"><h2>Live on the curve</h2><span class="count" id="liveCount"></span></div><div class="rail-wrap"><div class="rail" id="railLive"></div></div></section>
   <section class="row" id="graduated"><div class="row-head"><h2>Graduated to DAMM v2</h2><span class="count" id="gradCount"></span></div><div class="rail-wrap"><div class="rail" id="railGrad"></div></div></section>
   <section class="row"><div class="row-head"><h2>By quote token</h2><span class="count">xStocks · Backpack · USDC · SOL</span></div><div class="rail-wrap"><div class="rail" id="railQuote"></div></div></section>
@@ -105,7 +105,7 @@ const f = (n, d = 6) => Number(n).toFixed(d);
 const usd = n => "$" + Number(n).toFixed(4);
 const solscan = (t, x, txt) => `<a href="https://solscan.io/${t}/${x}" target="_blank" rel="noopener">${txt || x}</a>`;
 const age = sec => sec < 120 ? `${sec}s` : sec < 7200 ? `${Math.round(sec / 60)}m` : sec < 172800 ? `${(sec / 3600).toFixed(1)}h` : `${(sec / 86400).toFixed(1)}d`;
-const REF = { "pyth-lazer": "Pyth Pro live", "pyth-onchain": "Pyth push account", "jupiter-xstock-twin": "on-chain twin", "jupiter-v3": "Jupiter", "prestocks-mark": "PreStocks mark", "tessera-mark": "Tessera mark", "manual": "issuer" };
+const REF = { "manual": "manual print (provenance recorded)", "pyth-lazer": "Pyth Pro live", "pyth-onchain": "Pyth push account", "jupiter-xstock-twin": "on-chain twin", "jupiter-v3": "Jupiter", "prestocks-mark": "PreStocks mark", "tessera-mark": "Tessera mark", "manual": "issuer" };
 const QGROUP = q => q === "USDC" ? "USDC" : q === "SOL" ? "SOL" : "xStock";
 const poster = p => `posters/${p.launch.symbol}-poster.png`;
 const billboard = p => `posters/${p.launch.symbol}-billboard.png`;
@@ -182,7 +182,7 @@ $("close").onclick = closeSheet; $("sheet").addEventListener("click", e => { if 
   hero(live[0] || pools[pools.length - 1]);
   $("liveCount").textContent = `${live.length} pool${live.length === 1 ? "" : "s"}`; $("gradCount").textContent = `${grad.length} pools`;
   live.forEach(p => $("railLive").appendChild(tile(p, p.launch.atomic ? "atomic" : "live")));
-  grad.forEach(p => $("railGrad").appendChild(tile(p, p.launch.sharedConfig ? "launchpad" : p.plan.summary.profile === "issuer" ? "issuer" : p.launch.txs?.keeperBuyDiscount ? "keeper" : "")));
+  grad.forEach(p => $("railGrad").appendChild(tile(p, p.plan.summary.curve === "lean" ? "lean" : p.launch.sharedConfig ? "launchpad" : p.plan.summary.profile === "issuer" ? "issuer" : p.launch.txs?.keeperBuyDiscount ? "keeper" : "")));
   [...pools].sort((a, b) => QGROUP(a.status.quote).localeCompare(QGROUP(b.status.quote))).forEach(p => $("railQuote").appendChild(tile(p, p.status.quote)));
   [...pools].sort((a, b) => a.status.reference.baseSource.localeCompare(b.status.reference.baseSource)).forEach(p => $("railRef").appendChild(tile(p, (REF[p.status.reference.baseSource] || p.status.reference.baseSource).split(" ")[0])));
   const fees = pools.reduce((a, p) => a + p.status.fees.totalTradingQuote * p.status.reference.quoteUsd, 0);
