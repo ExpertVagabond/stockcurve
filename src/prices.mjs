@@ -25,16 +25,18 @@ export async function resolveLazerId(symbol) {
     headers: { "Content-Type": "application/json", Accept: "application/json, text/event-stream" },
     body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "tools/call", params: { name: "get_symbols", arguments: { query: q, limit: 50 } } }),
   });
-  const j = await r.json();
-  const feeds = JSON.parse(j.result.content[0].text).feeds;
-  return feeds.find((f) => f.symbol === symbol)?.pyth_lazer_id ?? null;
+  try {
+    const j = await r.json();
+    const feeds = JSON.parse(j.result.content[0].text).feeds;
+    return feeds.find((f) => f.symbol === symbol)?.pyth_lazer_id ?? null;
+  } catch { return null; } // MCP returns a plain error string when its upstream is down; treat as "no id"
 }
 
 export async function pythLazer(symbol) {
   const token = loadPythToken();
   if (!token) return { ok: false, why: "no PYTH_ACCESS_TOKEN" };
-  const id = await resolveLazerId(symbol);
-  if (!id) return { ok: false, why: "no lazer id" };
+  const id = await resolveLazerId(symbol).catch(() => null);
+  if (!id) return { ok: false, why: "no lazer id (metadata unavailable)" };
   const r = await fetch(LAZER_HTTP, {
     method: "POST",
     headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },

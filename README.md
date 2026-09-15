@@ -29,8 +29,29 @@ and monitored against the PreStocks secondary price (+1460 bps over mark) and Te
 DBC pool [`6vyZDFfkDW5GTZ9NbKUVhPmFKgcXYF28GV61hcnHqwfz`](https://solscan.io/account/6vyZDFfkDW5GTZ9NbKUVhPmFKgcXYF28GV61hcnHqwfz)
 → DAMM v2 [`99dvULFK5mK5AeVPQvsauXJGCBaYrnkJhoB1GUBhvwYz`](https://solscan.io/account/99dvULFK5mK5AeVPQvsauXJGCBaYrnkJhoB1GUBhvwYz).
 
-Total cost of all three runs: ~0.3 SOL including quote inventory. Console for all pools:
+Fourth run — **operated entirely by the keeper**: `sDKNG / AAPLx`, reference live from the Backpack
+Securities DKNG mint. The keeper caught the creation on the DBC program's log feed, bought the discount
+in one transaction (opening price = reference to 7 decimals), graduated it, migrated it, and exited at
+exactly target. DBC pool [`eMbF1jwsZ1YNBjcNmYK15FQrAyX8Hz4ksjtvvoSxZ25`](https://solscan.io/account/eMbF1jwsZ1YNBjcNmYK15FQrAyX8Hz4ksjtvvoSxZ25)
+→ DAMM v2 [`F2r2JepVXvycXCFBWxpLGXMVuu3hry4oXp246JmHRW4a`](https://solscan.io/account/F2r2JepVXvycXCFBWxpLGXMVuu3hry4oXp246JmHRW4a).
+Keeper transcript: [docs/keeper-pool4.log](docs/keeper-pool4.log).
+
+Fifth run — **atomic launch**: `sRDDT / SOL`, pool creation and the opening buy in one transaction
+(`scripts/launch-atomic.mjs`, sized offline from the curve). The pool opened **3 bps** from reference and
+its first transaction *is* the creation — there is no block in which a sniper can be first.
+DBC pool [`GretDMXwL3Na7AtVvQzaAuQhVw8zVwsttqVxkYKXE3FP`](https://solscan.io/account/GretDMXwL3Na7AtVvQzaAuQhVw8zVwsttqVxkYKXE3FP)
+· [creation+buy tx](https://solscan.io/tx/5nA1XC87vSFsVAH3FLWz3aa4eBVyTuD32FujmrFpw7uZid2RFrPLKqcTX9C1qSGAS6WgNFEbqcpT76n66pxXzibg). Left live on the curve at fair value.
+
+Five pools, five quote/reference combinations, one day, ~0.4 SOL. Console for all pools:
 **https://stockcurve.purplesquirrelnetworks.workers.dev**
+
+| Pool | Quote | Reference | Launch | Status |
+|---|---|---|---|---|
+| sGME/AAPLx | xStock | Pyth push account (stale, flagged) | manual | graduated |
+| sGME-SPY/SPYx | index xStock | GMEx twin, live | manual, sniped at t+5s, bot lost | graduated |
+| pOPENAI/USDC | USDC | PreStocks mark (pre-IPO) | manual | graduated |
+| sDKNG/AAPLx | xStock | Backpack DKNG twin, live | manual; **keeper did everything else** | graduated |
+| sRDDT/SOL | SOL | Backpack RDDT twin, live | **atomic** create+buy | live on curve, +3 bps |
 
 ## Why a stock needs a different curve
 
@@ -150,6 +171,7 @@ src/prices.mjs      reference resolver with provenance (Lazer → on-chain Pyth 
 src/curve.mjs       buildEquityCurve → DBC ConfigParameters
 scripts/plan.mjs    dry run → out/plan.json
 scripts/launch.mjs  createConfig + createPool (token badge aware)
+scripts/launch-atomic.mjs  createConfig, then createPool + opening buy in ONE tx (no sniper window)
 scripts/buy.mjs     swapQuote2 + swap2 (ExactIn / PartialFill)
 scripts/status.mjs  issuer console snapshot → out/status.json
 scripts/migrate.mjs migrateToDammV2 + verification

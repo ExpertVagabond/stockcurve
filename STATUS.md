@@ -42,6 +42,13 @@ Targets: Main track + Best Use of Meteora DBC ($5k) + Stocknized Agent on Clawpu
 - SOL quote added (wrapped SOL, Pyth Lazer live for SOL/USD). Top-up landed: wallet 0.52 SOL before pool 4.
 - Token logos: scripts/make-logos.py → meta/*.png, JSON image fields repointed.
 
+## Pool 5 + submission pack (2026-09-15 ~22:40 UTC)
+- ATOMIC launch sRDDT/SOL GretDMXwL3Na7AtVvQzaAuQhVw8zVwsttqVxkYKXE3FP (config, then createPool+firstBuy in ONE tx 5nA1XC87…),
+  opened +3 bps vs ref, first tx == creation. Left LIVE on curve at reference (judges can trade). Wallet ~0.42 SOL.
+- Pool 4 keeper run complete: exit tx 45FzHKzW… at target. docs/keeper-pool4.log.
+- Console: 5 pools. README summary table. docs/submission.md = paste-ready text + links.
+- Known: Pyth MCP get_symbols intermittently returns an error string; resolver now tolerates it.
+
 ## Needs Matthew (interactive)
 1. Register + submit on hackathons.solana.com (links: repo, console; video optional).
 2. Pyth Terminal: equity/xStock feed grant on the Pro token (free grant = crypto majors only; all stock feeds 403).
