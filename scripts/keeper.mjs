@@ -15,7 +15,7 @@ import { PublicKey } from "@solana/web3.js";
 import { getAssociatedTokenAddressSync, getAccount, TOKEN_PROGRAM_ID, TOKEN_2022_PROGRAM_ID } from "@solana/spl-token";
 import { ActivationType, DynamicBondingCurveClient, DYNAMIC_BONDING_CURVE_PROGRAM_ID, DAMM_V2_MIGRATION_FEE_ADDRESS, SwapMode, deriveDammV2PoolAddress, getPriceFromSqrtPrice } from "@meteora-ag/dynamic-bonding-curve-sdk";
 import { CpAmm, getPriceFromSqrtPrice as dammPrice } from "@meteora-ag/cp-amm-sdk";
-import { connection, loadKeypair, XSTOCKS } from "../src/config.mjs";
+import { connection, loadKeypair, twinOf } from "../src/config.mjs";
 import { resolveUsd } from "../src/prices.mjs";
 import { resolvePreIpo } from "../src/preipo.mjs";
 
@@ -44,7 +44,7 @@ for (const name of existsSync("out/pools") ? readdirSync("out/pools") : []) {
 }
 
 async function reference(plan) {
-  const base = plan.preipo ? await resolvePreIpo(plan.base) : await resolveUsd({ pythSymbol: `Equity.US.${plan.base}/USD`, twinMint: XSTOCKS[`${plan.base}x`]?.mint });
+  const base = plan.preipo ? await resolvePreIpo(plan.base) : await resolveUsd({ pythSymbol: `Equity.US.${plan.base}/USD`, twinMint: twinOf(plan.base) });
   const quote = plan.quote.symbol === "USDC" ? { price: 1, source: "peg" } : await resolveUsd({ pythSymbol: `Crypto.${plan.quote.symbol.toUpperCase()}/USD`, mint: plan.quote.mint });
   return { refQuote: (base.price * plan.unit) / quote.price, baseSource: base.source, quoteSource: quote.source };
 }

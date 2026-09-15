@@ -4,7 +4,7 @@ import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { PublicKey } from "@solana/web3.js";
 import { getMint, getExtensionData, ExtensionType, TOKEN_2022_PROGRAM_ID } from "@solana/spl-token";
 import { DynamicBondingCurveClient, getPriceFromSqrtPrice, feeNumeratorToBps } from "@meteora-ag/dynamic-bonding-curve-sdk";
-import { connection, XSTOCKS } from "../src/config.mjs";
+import { connection, XSTOCKS, twinOf } from "../src/config.mjs";
 import { resolveUsd } from "../src/prices.mjs";
 import { resolvePreIpo } from "../src/preipo.mjs";
 
@@ -19,7 +19,7 @@ const [ps, progress, feeMetrics, refBase, refQuote] = await Promise.all([
   client.state.getPool(pool),
   client.state.getPoolQuoteTokenCurveProgress(pool),
   client.state.getPoolFeeMetrics(pool),
-  plan.preipo ? resolvePreIpo(plan.base) : resolveUsd({ pythSymbol: `Equity.US.${plan.base}/USD`, twinMint: XSTOCKS[`${plan.base}x`]?.mint }),
+  plan.preipo ? resolvePreIpo(plan.base) : resolveUsd({ pythSymbol: `Equity.US.${plan.base}/USD`, twinMint: twinOf(plan.base) }),
   plan.quote.symbol === "USDC" ? { price: 1, source: "peg", ageSec: 0 } : resolveUsd({ pythSymbol: `Crypto.${plan.quote.symbol.toUpperCase()}/USD`, mint: plan.quote.mint }),
 ]);
 const cfg = await client.state.getPoolConfig(ps.poolState.config);

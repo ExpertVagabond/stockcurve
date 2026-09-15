@@ -88,6 +88,28 @@ The mainnet run above used source 2 for GME (32 days stale, flagged in `out/plan
 free Pyth Pro grant covers crypto majors only; with an equity grant the same command uses source 1
 unchanged.
 
+## The keeper (not a sniper)
+
+Pool 2 was sniped 5 seconds after creation by a flash-loan bot that then sold back at a loss. A
+stock-anchored curve is a bad target for that trade — the run is capped at reference × 1.05 and the
+300 bps opening fee eats the edge — but it is a good target for a **basis keeper**, which is what an
+issuer actually needs so a pool does not depend on a demo wallet:
+
+```
+node scripts/keeper.mjs --watch [--budget 1] [--band-bps 0] [--exit-bps 0] [--graduate]
+```
+
+- subscribes to DBC pool creations (`logsSubscribe` on the program) and tracks pools whose config is
+  in `out/pools/` (an issuer's own launches);
+- **discount zone** (pool < reference): buys exactly the quote that lifts price to reference — sized
+  by bisection on the SDK's offline `swapQuote2`, one `PartialFill` transaction, no probing;
+- **fair zone**: does nothing — real demand graduates the pool (`--graduate` overrides);
+- **curve complete**: migrates to DAMM v2;
+- **graduated**: sells the position on DAMM v2 only when the pool trades ≥ reference, sized so the
+  *average* execution stays ≥ target (bisection on the DAMM v2 quote) instead of dumping.
+
+Live proof: [sell of 1.344 pOPENAI at 0.09546909 USDC avg = the reference to 10 decimals](https://solscan.io/tx/5hXZDvESTgHTr7WNxF4YMtrdqDZun8ttxwAMnfNVtf6gwEpFRYrCYrQZKz9j9qTcxtT9GwtCeRAE6L3i2pQSuc8w).
+
 ## Pre-IPO mode (Tessera / PreStocks)
 
 `node scripts/plan.mjs --preipo OPENAI --quote USDC --unit 0.0001 --float 60` swaps the Pyth reference for
@@ -116,8 +138,9 @@ node scripts/migrate.mjs
 as `PYTH_ACCESS_TOKEN=…` (never in the repo).
 
 Knobs: `--unit` (shares per token, e.g. `0.1`), `--float` (tokens issued), `--discount`,
-`--premium` (bps), quote = any of the 20 xStocks in `src/config.mjs` or `USDC`. A base ticker with an
-xStock twin (GME → GMEx) gets a live secondary-market reference automatically.
+`--premium` (bps), quote = any of the 20 xStocks or 48 badged Backpack stocks in `src/config.mjs`, or `USDC`.
+A base ticker with an on-chain twin (GME → GMEx, DKNG → Backpack DKNG) gets a live secondary-market
+reference automatically.
 
 ## Layout
 
@@ -130,6 +153,7 @@ scripts/launch.mjs  createConfig + createPool (token badge aware)
 scripts/buy.mjs     swapQuote2 + swap2 (ExactIn / PartialFill)
 scripts/status.mjs  issuer console snapshot → out/status.json
 scripts/migrate.mjs migrateToDammV2 + verification
+scripts/keeper.mjs  basis keeper: watch → buy discount → migrate → target-sized exit
 scripts/swap.mjs    Jupiter swap between SOL / USDC / xStocks
 scripts/scan-*.mjs  research probes: xStock badges, Backpack (1,158 mints), pre-IPO, on-chain Pyth
 docs/research-findings.md   Backpack/pre-IPO/Clawpump/sniper findings with numbers
