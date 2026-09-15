@@ -1,49 +1,37 @@
 # stockcurve — STATUS
 
 Stocklana hackathon entry. Deadline **Fri 2026-09-18 16:00 ET**. Submit at
-https://hackathons.solana.com/hackathons/stocklana/submit (register first).
+https://hackathons.solana.com/hackathons/stocklana/submit (register first — Matthew, interactive).
 
 Targets: Main track + Best Use of Meteora DBC ($5k) + Stocknized Agent on Clawpump ($5k) + Pyth.
 
-## Thesis
-A DBC launch primitive tuned for tokenized-stock pairs: the curve's start price, graduation band and
-fee decay are derived from the Pyth reference price of the underlying, and the pool is quoted in the
-xStock itself (TOKEN/AAPLx), not SOL. Issuer console monitors curve price vs reference.
+## Live
+- Repo (PUBLIC): https://github.com/ExpertVagabond/stockcurve
+- Console: https://stockcurve.purplesquirrelnetworks.workers.dev (Worker + static assets, purplesquirrel acct;
+  rebuild: `node scripts/status.mjs && node site/build.mjs && wrangler deploy`)
+- Handoff PDF: ~/Desktop/Stocklana-Handoff.pdf (1 page)
 
-## Done (2026-09-15)
-- Source confirmed live; 72 submissions; list hidden until close.
-- Competitor scan → docs/competitor-scan.md. Direct rival equitycurve-studio is dry-run only.
-- Hot wallet 8nqQzTU5bqH3yjfi2ST1XvaaqWw447enCqnZkxHXTsKF funded: 0.3507 SOL (on-chain confirmed).
-  Keypair ~/.config/solana/lp-farm/keypair.json. USDC/xStock quote must be swapped from SOL.
-- Meteora TokenBadge EXISTS on mainnet for TSLAx/NVDAx/AAPLx/SPYx → stock-quote DBC pool is permissionless.
-  (scripts/check-badges.mjs)
-- Pyth: Hermes public API now 401. Pro token stored at ~/.config/pyth/pyth.env — authenticates on
-  Lazer ws but has NO feed grants (equity, crypto, indices all "Not entitled"). On-chain push accounts
-  exist but stale for equities (AAPL 32d, AAPLX 3d). Feed ids: Lazer 922 Equity.US.AAPL/USD,
-  1792 Crypto.AAPLX/USD, 1791 AAPLX/AAPL.RR, 3191 Equity.Index.AAPL/USD (24/7).
-- Deps installed: dynamic-bonding-curve-sdk 1.5.12, cp-amm-sdk, web3.js v1, spl-token, hermes-client.
+## Done 2026-09-15 (all mainnet, all independently re-read)
+- Swap 0.15 SOL → 0.04386 AAPLx (Jupiter) tx k2ZMaWqr…
+- DBC config 8de9pBxf2o4hmXo2kxhiLRvhmjuBmQjJQdiPTn5FQXC2 (quote AAPLx via TokenBadge 8VeVZe3Z…)
+- Pool sGME/AAPLx J1gcmbH3QthJahRdXqEAXc7eDbYE6JoWYqGVViGvFLbm, base mint 71cwbrMG…
+- 4 buys (+10.3%, +5.2%, +3.5%, +2.8% partial) → curve 100% at exactly the +5% graduation price
+- migrateToDammV2 → DAMM v2 pool 7FGmDHJNPhTu4VbRLQL7b5RKMXDD1p8Sm7hDKPWby4gA (isMigrated=1)
+- Curve: GME ref $18.65 (Pyth on-chain, 32d stale, FLAGGED), unit 0.1 share, float 5, −15%/+5%,
+  weights 1:3:4, fee 300→30 bps exp/1h + dynamic, DAMM v2 25 bps, LP 100% locked. Threshold 0.01426 AAPLx.
+- Wallet 8nqQzTU5…TsKF after: 0.153 SOL + ~0.028 AAPLx.
+- README with proof table; docs/competitor-scan.md; token metadata meta/sGME.json resolves (200).
 
-- 2026-09-15 MAINNET: swapped 0.15 SOL -> 0.04386 AAPLx (tx k2ZMaWqr…). Created DBC config
-  8de9pBxf2o4hmXo2kxhiLRvhmjuBmQjJQdiPTn5FQXC2 + pool sGME/AAPLx J1gcmbH3QthJahRdXqEAXc7eDbYE6JoWYqGVViGvFLbm
-  (base mint 71cwbrMGTMTAt9m8wbuYt8k3eW6VUGKuLW8Yzn961vuP). Curve: GME ref $18.65 (on-chain Pyth, stale 32d — flagged),
-  unit 0.1 share, float 5, -15%/+5%, weights 1:3:4, 300→30bps/1h, DAMM v2 25bps, LP 100% locked. Graduation ≈ 0.01426 AAPLx.
-  Details out/launch.json. Wallet after: ~0.17 SOL + 0.0439 AAPLx.
-- Metadata URI points at https://raw.githubusercontent.com/ExpertVagabond/stockcurve/main/meta/sGME.json — repo + file NOT yet created (do this).
+## Needs Matthew (interactive)
+1. Register + submit on hackathons.solana.com (links: repo, console; video optional).
+2. Pyth Terminal: equity/xStock feed grant on the Pro token (free grant = crypto majors only; all stock feeds 403).
+   With it, `node scripts/plan.mjs` uses live Lazer prices unchanged — worth a second pool (TSLAx quote) for the demo.
+3. Clawpump: sign up at clawpump.tech/developers → cpk_ key → then probe `/api/v1/pump-pairs` to see whether the
+   DBC pool can be registered as a stock-paired agent launch (their bounty wording: "using clawpump and Meteora").
 
-## Blocked / needs Matthew
-- Pyth Terminal: enable feed grants on the token (see checklist in chat). Until then price source
-  falls back to on-chain Pyth accounts (stale-flagged) + Jupiter price for AAPLx.
-- Clawpump API key (cpk_…) if we want the pool registered on clawpump.tech; otherwise the DBC pool
-  alone still satisfies "stock-paired pool using Meteora".
+## Next (me)
+- 2-min video (terminal run + console) — build, hand over for review, never post.
+- Optional: second pool TSLAx-quoted with live Pyth if the grant lands; console history (multiple snapshots).
+- Memory + STATUS on every milestone.
 
-## Next
-1. src/pyth.mjs — price source adapter (Lazer ws → on-chain fallback → Jupiter), reports staleness.
-2. src/curve.mjs — equity curve builder: reference → DBC config (buildCurveWithMarketCap or custom
-   points), fee scheduler decay, graduation band, DAMM v2 migration params.
-3. scripts/create-config.mjs + create-pool.mjs — mainnet, quote = AAPLx (badge verified).
-4. Swap ~0.1 SOL → AAPLx via Jupiter for quote inventory + seed buys.
-5. Monitor page (CF Pages) — curve price vs Pyth reference, graduation progress, multiplier-adjusted units.
-6. README + 2-min video + submit.
-
-Exact next command: `node scripts/buy.mjs --quote-amount 0.005` (write it first: swapQuote2 + swap2 against pool J1gcmbH…), then status.mjs, then gh repo create.
-Old: `cd "$VS/projects/stockcurve" && node scripts/check-badges.mjs` (sanity) then write src/pyth.mjs.
+Exact next command: `cd "$VS/projects/stockcurve" && node scripts/status.mjs` (sanity), then video.
