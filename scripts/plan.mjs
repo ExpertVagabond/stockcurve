@@ -13,10 +13,11 @@ const base = preipo ? preipo.toUpperCase() : arg("base", "GME");
 const quoteSym = arg("quote", "AAPLx");
 const unit = Number(arg("unit", DEFAULTS.unit));
 const float = Number(arg("float", DEFAULTS.float));
-const discountBps = Number(arg("discount", DEFAULTS.discountBps));
-const premiumBps = Number(arg("premium", DEFAULTS.premiumBps));
+const discountBps = arg("discount") ? Number(arg("discount")) : undefined;
+const premiumBps = arg("premium") ? Number(arg("premium")) : undefined;
 const manualBase = arg("manual-base") ? Number(arg("manual-base")) : undefined;
 const profile = arg("profile", "demo");
+const curve = arg("curve", "standard");
 
 const quote = quoteSym === "USDC" ? { ...USDC, sym: "USDC" } : quoteSym === "SOL" ? { ...SOL, sym: "SOL" } : { ...(XSTOCKS[quoteSym] || BACKPACK[quoteSym]), sym: quoteSym };
 if (!quote.mint) throw new Error(`unknown quote ${quoteSym}`);
@@ -25,7 +26,7 @@ const refBase = preipo ? await resolvePreIpo(preipo) : await resolveUsd({ pythSy
 const refQuote = quoteSym === "USDC" ? { price: 1, source: "peg", feed: "USDC", ageSec: 0, tried: [] }
   : await resolveUsd({ pythSymbol: quote.pythUsd || `Crypto.${quoteSym.toUpperCase()}/USD`, mint: quote.mint });
 
-const built = buildEquityCurve({ refBaseUsd: refBase.price, refQuoteUsd: refQuote.price, quoteDecimals: quote.decimals, unit, float, discountBps, premiumBps, profile });
+const built = buildEquityCurve({ refBaseUsd: refBase.price, refQuoteUsd: refQuote.price, quoteDecimals: quote.decimals, unit, float, discountBps, premiumBps, profile, curve });
 validateConfigParameters({ ...built.configParams, leftoverReceiver: "8nqQzTU5bqH3yjfi2ST1XvaaqWw447enCqnZkxHXTsKF" });
 
 const cp = built.configParams;
@@ -36,8 +37,8 @@ if (refBase.context) { const c = refBase.context; if (c.prestocks) console.log(`
 console.log(`base ref   $${fmt(refBase.price, 2)}  [${refBase.source}${refBase.stale ? " STALE" : ""} age ${refBase.ageSec}s] ${refBase.tried.length ? "tried: " + refBase.tried.join(" | ") : ""}`);
 console.log(`quote ref  $${fmt(refQuote.price, 2)}  [${refQuote.source} age ${refQuote.ageSec}s] ${refQuote.tried.length ? "tried: " + refQuote.tried.join(" | ") : ""}`);
 console.log(`reference  ${fmt(s.referencePriceQuote)} ${quote.sym}/token  ($${fmt(s.referencePriceQuote * refQuote.price, 4)})`);
-console.log(`start      ${fmt(s.startPriceQuote)}  (-${discountBps} bps)`);
-console.log(`graduate   ${fmt(s.graduationPriceQuote)}  (+${premiumBps} bps)`);
+console.log(`start      ${fmt(s.startPriceQuote)}  (-${s.discountBps} bps, curve ${s.curve})`);
+console.log(`graduate   ${fmt(s.graduationPriceQuote)}  (+${s.premiumBps} bps)`);
 console.log(`checkpoints ${built.checkpoints.map((c) => fmt(c)).join(" → ")}  weights ${s.weights.join(":")}`);
 console.log(`curve pts  ${cp.curve.length}: ${cp.curve.map((c) => fmt(getPriceFromSqrtPrice(c.sqrtPrice, 9, quote.decimals))).join(", ")}`);
 console.log(`float      ${float} tokens = ${float * unit} shares (fixed supply ${Number(cp.tokenSupply.preMigrationTokenSupply.toString()) / 1e9})`);

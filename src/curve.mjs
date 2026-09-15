@@ -23,11 +23,17 @@ export const PROFILES = {
   issuer: { migrationFeePct: 3, migrationFeeOption: "Customizable", poolCreationFeeSol: 0.02, migratedPoolFeeBps: 20 },
 };
 
+// Curve shapes. `standard` opens 15% under reference with half the liquidity in the discount zone — good
+// discovery, but the atomic opening buy that lifts price to reference costs ~57% of the raise (measured on
+// pools 6–7). `lean` opens 5% under with most liquidity above reference: same graduation rule, ~20% capital.
+export const CURVES = {
+  standard: { discountBps: 1500, premiumBps: 500, weights: [1, 3, 4] },
+  lean:     { discountBps: 500,  premiumBps: 500, weights: [1, 1, 6] },
+};
+
 export const DEFAULTS = {
   profile: "demo",
-  discountBps: 1500,      // start 15% under reference (IPO-style discount)
-  premiumBps: 500,        // graduate at +5% over reference
-  weights: [1, 3, 4],     // liquidity per segment, see header
+  curve: "standard",
   startFeeBps: 300,       // anti-snipe: 3% at open …
   endFeeBps: 30,          // … decaying to 30 bps (equity-like) …
   feePeriods: 60,
@@ -45,7 +51,9 @@ export const DEFAULTS = {
  * @returns {{configParams: object, checkpoints: number[], summary: object}}
  */
 export function buildEquityCurve(p) {
-  const o = { ...DEFAULTS, ...p };
+  const shape = CURVES[p.curve || DEFAULTS.curve];
+  if (!shape) throw new Error(`unknown curve ${p.curve}`);
+  const o = { ...DEFAULTS, ...shape, ...p };
   const prof = PROFILES[o.profile];
   if (!prof) throw new Error(`unknown profile ${o.profile}`);
   const pRef = (o.refBaseUsd * o.unit) / o.refQuoteUsd; // quote units per base token
@@ -102,7 +110,7 @@ export function buildEquityCurve(p) {
     migrationQuoteThreshold: thresholdQuote,
     migrationQuoteThresholdUsd: thresholdQuote * o.refQuoteUsd,
     feeSchedule: `${o.startFeeBps}→${o.endFeeBps} bps exp over ${o.feeDurationSec}s (${o.feePeriods} periods), dynamic fee on`,
-    profile: o.profile, listingFeePct: prof.migrationFeePct, dammFeeBps: prof.migratedPoolFeeBps ?? 25, creationFeeSol: prof.poolCreationFeeSol,
+    curve: o.curve, profile: o.profile, listingFeePct: prof.migrationFeePct, dammFeeBps: prof.migratedPoolFeeBps ?? 25, creationFeeSol: prof.poolCreationFeeSol,
     unit: o.unit, float: o.float, discountBps: o.discountBps, premiumBps: o.premiumBps, weights: o.weights,
   };
   return { configParams, checkpoints, sqrtPrices, summary };

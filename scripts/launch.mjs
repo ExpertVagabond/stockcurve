@@ -26,7 +26,7 @@ if (!tokenBadge && !["USDC", "SOL"].includes(plan.quote.symbol)) throw new Error
 // Rebuild the exact curve from the recorded references (BN fields don't survive JSON).
 const { configParams, summary } = buildEquityCurve({
   refBaseUsd: plan.reference.base.price, refQuoteUsd: plan.reference.quote.price, quoteDecimals: plan.quote.decimals,
-  unit: plan.unit, float: plan.float, discountBps: plan.summary.discountBps, premiumBps: plan.summary.premiumBps, profile: plan.summary.profile || "demo",
+  unit: plan.unit, float: plan.float, discountBps: plan.summary.discountBps, premiumBps: plan.summary.premiumBps, profile: plan.summary.profile || "demo", curve: plan.summary.curve || "standard",
 });
 if (summary.migrationQuoteThreshold !== plan.summary.migrationQuoteThreshold) throw new Error("curve drifted from plan.json — re-run plan.mjs");
 

@@ -137,6 +137,22 @@ ladder. Pool 7 (`sPLTR/SOL`, [`Enj6KRMbth9gqVFLEat9u8LC5wmfL8qjvrU9ojuWJqE6`](ht
 launched on pool 6's config: no config rent, creation fee + curve fees + listing fee all claimed by the same
 `feeClaimer`. That is what "partner-of-record for other issuers' launches" means in code.
 
+### Sizing a real pool (`scripts/size.mjs`)
+
+`node scripts/size.mjs --base RKLB --raise 50000 --quote USDC` — RKLB has a Backpack mint, no venue, no badge and
+a 119-day-stale Pyth push account: the exact case the primitive is for. Two curve shapes (`--curve`):
+
+| curve | float | raise | issuer's opening buy | inventory back | listing 3% | curve fees |
+|---|---|---|---|---|---|---|
+| `standard` (−15%, 1:3:4) | 770 sh | $50k | **$29.3k (59%)** | 235 sh ≈ $30k | $1,500 | ~$400 |
+| `lean` (−5%, 1:1:6) | 753 sh | $50k | **$7.6k (15%)** | 58 sh ≈ $7.5k | $1,500 | ~$400 |
+
+The opening buy is the atomic anti-snipe buy; it returns as inventory the keeper sells at ≥ reference on
+DAMM v2, so the capital at risk is the basis on those shares, not the cash. The other 85% of a lean raise is real
+buyers between reference and +5%. After graduation the raise (minus the listing fee) sits in a DAMM v2 pool,
+100% locked to the partner, earning 20 bps + dynamic fee forever. A real pool's reference must be live Pyth
+(Lazer equity grant); the twins are fine for demos and wrong for size.
+
 ## The keeper (not a sniper)
 
 Pool 2 was sniped 5 seconds after creation by a flash-loan bot that then sold back at a loss. A

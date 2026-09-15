@@ -55,6 +55,13 @@ Targets: Main track + Best Use of Meteora DBC ($5k) + Stocknized Agent on Clawpu
   DAMM v2 3oW76MEC…, claim.mjs claimed trading 0.000618 SOL + creation 0.018 SOL + listing 3% (txs in launch.json). Net +0.0195 SOL.
 - Console: 6 pools, revenue card on title page, ISSUER tag. Wallet ≈ 0.31 SOL.
 
+## Pool 7 + lean curve + sizing (2026-09-16 ~00:10 UTC)
+- launch-shared.mjs: pool on an existing partner config, unit derived from ladder. sPLTR/SOL Enj6KRMb… on sHOOD's config
+  2NEDFzx7…; keeper graduated; all 3 fees claimed again (same feeClaimer). 7 pools in console. Wallet 0.28 SOL.
+- curve.mjs CURVES {standard (−15%,1:3:4), lean (−5%,1:1:6)}; `--curve lean`. size.mjs: RKLB $50k raise → lean opening
+  capital $7.6k (15%) vs standard $29.3k (59%); listing $1.5k + curve ~$400 at graduation. RKLB reference needs Pyth grant
+  (Backpack mint RKLBnAXG… exists, no price/badge; Pyth push 119d stale).
+
 ## Needs Matthew (interactive)
 1. Register + submit on hackathons.solana.com (links: repo, console; video optional).
 2. Pyth Terminal: equity/xStock feed grant on the Pro token (free grant = crypto majors only; all stock feeds 403).
