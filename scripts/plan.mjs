@@ -2,7 +2,7 @@
 // Usage: node scripts/plan.mjs --base GME --quote AAPLx [--unit 0.1] [--float 5] [--discount 1500] [--premium 500] [--manual-base 18.65]
 import { mkdirSync, writeFileSync } from "node:fs";
 import { validateConfigParameters, getPriceFromSqrtPrice } from "@meteora-ag/dynamic-bonding-curve-sdk";
-import { XSTOCKS, BACKPACK, USDC, twinOf } from "../src/config.mjs";
+import { XSTOCKS, BACKPACK, USDC, SOL, twinOf } from "../src/config.mjs";
 import { resolveUsd } from "../src/prices.mjs";
 import { buildEquityCurve, DEFAULTS } from "../src/curve.mjs";
 import { resolvePreIpo } from "../src/preipo.mjs";
@@ -17,12 +17,12 @@ const discountBps = Number(arg("discount", DEFAULTS.discountBps));
 const premiumBps = Number(arg("premium", DEFAULTS.premiumBps));
 const manualBase = arg("manual-base") ? Number(arg("manual-base")) : undefined;
 
-const quote = quoteSym === "USDC" ? { ...USDC, sym: "USDC" } : { ...(XSTOCKS[quoteSym] || BACKPACK[quoteSym]), sym: quoteSym };
+const quote = quoteSym === "USDC" ? { ...USDC, sym: "USDC" } : quoteSym === "SOL" ? { ...SOL, sym: "SOL" } : { ...(XSTOCKS[quoteSym] || BACKPACK[quoteSym]), sym: quoteSym };
 if (!quote.mint) throw new Error(`unknown quote ${quoteSym}`);
 
 const refBase = preipo ? await resolvePreIpo(preipo) : await resolveUsd({ pythSymbol: `Equity.US.${base}/USD`, twinMint: twinOf(base), manual: manualBase });
 const refQuote = quoteSym === "USDC" ? { price: 1, source: "peg", feed: "USDC", ageSec: 0, tried: [] }
-  : await resolveUsd({ pythSymbol: quote.pythUsd, mint: quote.mint });
+  : await resolveUsd({ pythSymbol: quote.pythUsd || `Crypto.${quoteSym.toUpperCase()}/USD`, mint: quote.mint });
 
 const built = buildEquityCurve({ refBaseUsd: refBase.price, refQuoteUsd: refQuote.price, quoteDecimals: quote.decimals, unit, float, discountBps, premiumBps });
 validateConfigParameters({ ...built.configParams, leftoverReceiver: "8nqQzTU5bqH3yjfi2ST1XvaaqWw447enCqnZkxHXTsKF" });

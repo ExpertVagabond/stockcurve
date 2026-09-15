@@ -34,14 +34,18 @@ const cpAmm = new CpAmm(connection);
 mkdirSync("out", { recursive: true });
 const log = (ev) => { const line = JSON.stringify({ at: new Date().toISOString(), ...ev }); console.log(line); appendFileSync("out/keeper.log", line + "\n"); };
 
-// Registry: every pool we launched, keyed by config address → { plan, launch }
+// Registry: every pool we launched, keyed by config address → { plan, launch }. Re-read on demand so a
+// pool launched while the keeper is running (launch.mjs writes out/pools/<name>/) is picked up.
 const registry = new Map();
-for (const name of existsSync("out/pools") ? readdirSync("out/pools") : []) {
-  const dir = `out/pools/${name}`;
-  if (!existsSync(`${dir}/launch.json`)) continue;
-  const plan = JSON.parse(readFileSync(`${dir}/plan.json`, "utf8")), launch = JSON.parse(readFileSync(`${dir}/launch.json`, "utf8"));
-  registry.set(launch.config, { name, plan, launch });
+function loadRegistry() {
+  for (const name of existsSync("out/pools") ? readdirSync("out/pools") : []) {
+    const dir = `out/pools/${name}`;
+    if (!existsSync(`${dir}/launch.json`)) continue;
+    const plan = JSON.parse(readFileSync(`${dir}/plan.json`, "utf8")), launch = JSON.parse(readFileSync(`${dir}/launch.json`, "utf8"));
+    registry.set(launch.config, { name, plan, launch });
+  }
 }
+loadRegistry();
 
 async function reference(plan) {
   const base = plan.preipo ? await resolvePreIpo(plan.base) : await resolveUsd({ pythSymbol: `Equity.US.${plan.base}/USD`, twinMint: twinOf(plan.base) });
@@ -178,6 +182,7 @@ async function poolFromSignature(sig) {
 }
 
 const tracked = new Map(); // pool → registry entry
+const doneSet = new Set();
 if (arg("pool")) {
   const p = arg("pool");
   const entry = [...registry.values()].find((e) => e.launch.pool === p);
@@ -189,6 +194,7 @@ if (arg("pool")) {
     if (err || !logs.some((l) => /InitializeVirtualPool/i.test(l))) return;
     const found = await poolFromSignature(signature).catch(() => null);
     if (!found) return;
+    loadRegistry();
     const entry = registry.get(found.config);
     log({ ev: "pool-created", ...found, ours: !!entry, sig: signature });
     if (entry) tracked.set(found.pool, entry);
@@ -199,8 +205,9 @@ if (arg("pool")) {
 }
 
 for (;;) {
+  if (has("watch")) { loadRegistry(); for (const e of registry.values()) if (e.launch.pool && !tracked.has(e.launch.pool) && !doneSet.has(e.launch.pool)) tracked.set(e.launch.pool, e); }
   for (const [p, e] of tracked) {
-    try { const r = await tick(p, e); if (r === "done") tracked.delete(p); }
+    try { const r = await tick(p, e); if (r === "done") { tracked.delete(p); doneSet.add(p); } }
     catch (err) { log({ ev: "error", pool: p, msg: err.message.slice(0, 200) }); }
   }
   if (has("once") || (!has("watch") && tracked.size === 0)) break;

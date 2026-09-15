@@ -1,7 +1,7 @@
 // Create the DBC config (partner) and the virtual pool (creator) on mainnet from out/plan.json.
 // Usage: node scripts/launch.mjs [--dry] [--name "..."] [--symbol sGME] [--uri https://...]
 // --dry simulates both transactions and prints compute/rent without sending.
-import { readFileSync, writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, copyFileSync } from "node:fs";
 import BN from "bn.js";
 import { Keypair, PublicKey } from "@solana/web3.js";
 import { DynamicBondingCurveClient, deriveDbcPoolAddress, deriveTokenBadgeAddress } from "@meteora-ag/dynamic-bonding-curve-sdk";
@@ -21,7 +21,7 @@ const quoteMint = new PublicKey(plan.quote.mint);
 // SPL quotes (USDC) are permissionless; Token-2022 stock quotes need Meteora's TokenBadge at remaining account 0.
 const badgePda = deriveTokenBadgeAddress(quoteMint);
 const tokenBadge = (await connection.getAccountInfo(badgePda)) ? badgePda : undefined;
-if (!tokenBadge && plan.quote.symbol !== "USDC") throw new Error(`no TokenBadge for quote ${plan.quote.symbol}`);
+if (!tokenBadge && !["USDC", "SOL"].includes(plan.quote.symbol)) throw new Error(`no TokenBadge for quote ${plan.quote.symbol}`);
 
 // Rebuild the exact curve from the recorded references (BN fields don't survive JSON).
 const { configParams, summary } = buildEquityCurve({
@@ -72,4 +72,8 @@ const after = await connection.getBalance(me);
 console.log(`pool ${pool.toBase58()} exists; config matches: ${state.poolState.config.equals(config.publicKey)}; SOL spent ${(before - after) / 1e9}`);
 const record = { ...plan.summary, name, symbol, uri, config: config.publicKey.toBase58(), baseMint: baseMint.publicKey.toBase58(), pool: pool.toBase58(), quoteMint: plan.quote.mint, tokenBadge: tokenBadge?.toBase58() ?? null, txs: { createConfig: sig1, createPool: sig2 }, launchedAt: new Date().toISOString() };
 writeFileSync("out/launch.json", JSON.stringify(record, null, 2));
-console.log("wrote out/launch.json");
+const dir = `out/pools/${arg("out", `${symbol}-${plan.quote.symbol}`)}`;
+mkdirSync(dir, { recursive: true });
+copyFileSync("out/plan.json", `${dir}/plan.json`);
+writeFileSync(`${dir}/launch.json`, JSON.stringify(record, null, 2));
+console.log(`wrote out/launch.json and ${dir}/{plan,launch}.json`);

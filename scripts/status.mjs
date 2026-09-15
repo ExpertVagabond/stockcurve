@@ -25,7 +25,7 @@ const [ps, progress, feeMetrics, refBase, refQuote] = await Promise.all([
 const cfg = await client.state.getPoolConfig(ps.poolState.config);
 
 // xStocks carry a ScaledUiAmount multiplier (corporate actions). Raw units × multiplier = display units.
-const qMint = plan.quote.symbol === "USDC" ? null : await getMint(connection, new PublicKey(plan.quote.mint), "confirmed", TOKEN_2022_PROGRAM_ID).catch(() => null);
+const qMint = ["USDC", "SOL"].includes(plan.quote.symbol) ? null : await getMint(connection, new PublicKey(plan.quote.mint), "confirmed", TOKEN_2022_PROGRAM_ID).catch(() => null);
 let multiplier = 1;
 if (qMint) {
   const ext = getExtensionData(ExtensionType.ScaledUiAmountConfig, qMint.tlvData);

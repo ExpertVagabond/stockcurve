@@ -138,7 +138,7 @@ node scripts/migrate.mjs
 as `PYTH_ACCESS_TOKEN=…` (never in the repo).
 
 Knobs: `--unit` (shares per token, e.g. `0.1`), `--float` (tokens issued), `--discount`,
-`--premium` (bps), quote = any of the 20 xStocks or 48 badged Backpack stocks in `src/config.mjs`, or `USDC`.
+`--premium` (bps), quote = any of the 20 xStocks or 48 badged Backpack stocks in `src/config.mjs`, `USDC`, or `SOL`.
 A base ticker with an on-chain twin (GME → GMEx, DKNG → Backpack DKNG) gets a live secondary-market
 reference automatically.
 

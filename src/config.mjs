@@ -91,6 +91,7 @@ export const BACKPACK = {
 
 export const USDC = { mint: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v", decimals: 6 };
 export const WSOL = "So11111111111111111111111111111111111111112";
+export const SOL = { mint: WSOL, decimals: 9, pythUsd: "Crypto.SOL/USD" }; // wrapped SOL: permissionless DBC quote
 
 /** Live on-chain twin of an underlying ticker: xStock first, then Backpack. */
 export const twinOf = (ticker) => XSTOCKS[`${ticker}x`]?.mint || BACKPACK[ticker]?.mint;
