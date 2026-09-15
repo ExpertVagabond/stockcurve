@@ -7,10 +7,9 @@ const TESSERA = "https://rest-api.tessera.pe/v1/public/token-details";
 const ALIASES = { SPACEX: ["SPACEX", "T-SpaceX"], OPENAI: ["OPENAI", "T-OpenAI"], KALSHI: ["KALSHI", "T-Kalshi"] };
 
 export async function fetchPreIpo() {
-  const [pre, tess] = await Promise.all([
-    fetch(PRESTOCKS).then((r) => r.json()),
-    fetch(TESSERA).then((r) => r.json()),
-  ]);
+  // Each provider fails independently: a 500 from one must not take the other (or the anchor) down.
+  const safe = (url) => fetch(url).then((r) => (r.ok ? r.json() : Promise.reject(new Error(`${url} HTTP ${r.status}`)))).then((j) => (Array.isArray(j) ? j : Promise.reject(new Error(`${url} non-array`)))).catch((e) => { console.warn(`preipo: ${e.message}`); return []; });
+  const [pre, tess] = await Promise.all([safe(PRESTOCKS), safe(TESSERA)]);
   return {
     prestocks: pre.map((t) => ({ provider: "prestocks", symbol: t.symbol, mint: t.contract_address, mark: t.markPrice, token: t.tokenPrice, markValuation: t.markValuation, impliedValuation: t.impliedValuation, supply: t.supply, url: t.external_url })),
     tessera: tess.map((t) => ({ provider: "tessera", symbol: t.symbol, mint: t.mint, mark: t.markPrice, markValuation: t.markValuation, holders: t.holders })),
