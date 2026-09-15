@@ -42,7 +42,7 @@ its first transaction *is* the creation — there is no block in which a sniper 
 DBC pool [`GretDMXwL3Na7AtVvQzaAuQhVw8zVwsttqVxkYKXE3FP`](https://solscan.io/account/GretDMXwL3Na7AtVvQzaAuQhVw8zVwsttqVxkYKXE3FP)
 · [creation+buy tx](https://solscan.io/tx/5nA1XC87vSFsVAH3FLWz3aa4eBVyTuD32FujmrFpw7uZid2RFrPLKqcTX9C1qSGAS6WgNFEbqcpT76n66pxXzibg). Left live on the curve at fair value.
 
-Six pools, one day, ~0.45 SOL. Console for all pools:
+Seven pools, one day, ~0.5 SOL. Console for all pools:
 **https://stockcurve.purplesquirrelnetworks.workers.dev**
 
 | Pool | Quote | Reference | Launch | Status |
@@ -53,6 +53,7 @@ Six pools, one day, ~0.45 SOL. Console for all pools:
 | sDKNG/AAPLx | xStock | Backpack DKNG twin, live | manual; **keeper did everything else** | graduated |
 | sRDDT/SOL | SOL | Backpack RDDT twin, live | **atomic** create+buy | live on curve, +3 bps |
 | sHOOD/SOL | SOL | Backpack HOOD twin, live | atomic, **issuer profile**, keeper-graduated | graduated; listing + creation + trading fees claimed |
+| sPLTR/SOL | SOL | PLTRx twin, live | atomic on the **shared config** (`launch-shared.mjs`, unit derived from the ladder, no config rent) | graduated; all three fees claimed to the same partner |
 
 ## Why a stock needs a different curve
 
@@ -127,6 +128,14 @@ Equity underwriters take 3–7% of an IPO raise; the listing fee is that, in the
 trading. The DAMM v2 stream is the compounding one — tokenized stocks on Solana trade 24/7. `scripts/claim.mjs`
 claims all three and re-reads the breakdown. The business is being the partner-of-record for other issuers'
 launches: `--profile issuer` is one flag.
+
+### One config, any ticker (the launchpad)
+
+A DBC config fixes its price ladder in quote units, so `scripts/launch-shared.mjs` floats the **unit** instead:
+`unit = ladderReference / (refBase / refQuote)` shares per token, so any ticker's live reference lands on the
+ladder. Pool 7 (`sPLTR/SOL`, [`Enj6KRMbth9gqVFLEat9u8LC5wmfL8qjvrU9ojuWJqE6`](https://solscan.io/account/Enj6KRMbth9gqVFLEat9u8LC5wmfL8qjvrU9ojuWJqE6))
+launched on pool 6's config: no config rent, creation fee + curve fees + listing fee all claimed by the same
+`feeClaimer`. That is what "partner-of-record for other issuers' launches" means in code.
 
 ## The keeper (not a sniper)
 

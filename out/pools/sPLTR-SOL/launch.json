@@ -1,0 +1,53 @@
+{
+  "referencePriceQuote": 0.01118697126176206,
+  "startPriceQuote": 0.00950892557249775,
+  "graduationPriceQuote": 0.011746319824850164,
+  "migrationQuoteThreshold": 0.028711452,
+  "migrationQuoteThresholdUsd": 2.798091447042784,
+  "feeSchedule": "300\u219230 bps exp (config), dynamic fee on",
+  "unit": 0.0062751387499902144,
+  "float": 5,
+  "discountBps": 1500,
+  "premiumBps": 500,
+  "weights": [
+    1,
+    3,
+    4
+  ],
+  "profile": "issuer",
+  "listingFeePct": 3,
+  "dammFeeBps": 20,
+  "creationFeeSol": 0.02,
+  "name": "stockcurve PLTR (shared config)",
+  "symbol": "sPLTR",
+  "uri": "https://raw.githubusercontent.com/ExpertVagabond/stockcurve/main/meta/sPLTR.json",
+  "atomic": true,
+  "sharedConfig": true,
+  "openingBuy": 0.01682925,
+  "openedAtPrice": 0.011190570552324246,
+  "config": "2NEDFzx7o9menoSdkQumSpGSuaZ3bPzPRii5SDK9p5oo",
+  "baseMint": "DGRLFMh8eM7TLUZQA3NMNVyLmc8xeA8dWTHemGR5PZEG",
+  "pool": "Enj6KRMbth9gqVFLEat9u8LC5wmfL8qjvrU9ojuWJqE6",
+  "quoteMint": "So11111111111111111111111111111111111111112",
+  "tokenBadge": null,
+  "txs": {
+    "createPoolWithFirstBuy": "5nRYaYy8f25vvfBTvMXRH5MvxRzcvyc2opUQir3a7mkQFvRwQFMzevefBzDMnEUoKmyYYu9Pc1rEJRimHopkpeue",
+    "claimTradingFee": "5izFpaBHL7xGFFHALDzCgiqrLzFv7q2nw5766RYqgXcjzU7Jk4x3QV3f1Ja4Tg7dSBQEKy2hWzybyGLc389LUUYN",
+    "claimCreationFee": "2NvJR8Pzkg8wuYuxZaNL9PLieWhqnTyVUf3zaFkM3E5hbYtyLcLxFtypGPMyzAGTdRoCxbpvX6TkzYmdB71Z5XCr",
+    "withdrawMigrationFee": "t1tH79U4vE3dQK3PHGAtBcTn8MpE4txmcW6g43vZ4AxMMhxZ2FN3Wcy62hsEDPWyRMvHiAbXNSXbkTXispc84ud",
+    "keeperGraduate": "2eYXVSY7WqN8mU89U5Z5X9CWdrQu4xuALNafJuukuRg297fs6XkBZaTjTxf655ttBBgxBv9e69AXXwsS9NREgMqh",
+    "migrateToDammV2": "5WkRVigFvez1KhsXvbSLdwAFEsZmKrYjxUrczKaGhfV5376W3nW8mfAUVBSFFKSaFjK4LathFdnwvJUczBdweLSH",
+    "keeperExit": "25g7PNBhVtoT1UCYzZXbEcqgERc8urphjfgguwp3GC44ZxBNZJ4bwFkpMLDySbXiQuPk9cmeNAuEffBbyHGnTVXF"
+  },
+  "launchedAt": "2026-09-15T23:28:12.961Z",
+  "revenue": {
+    "tradingFeeQuote": 0.000716691,
+    "listingFeePct": 3,
+    "creationFeeSol": 0.02,
+    "claimedAt": "2026-09-15T23:29:11.143Z",
+    "listingFeeQuote": 0.000861344,
+    "creationFeePartnerSol": 0.018,
+    "netWalletDeltaSol": 0.019563
+  },
+  "dammV2Pool": "CXP5qUtfp15cbXviJbdyFYm9TR7xKvvufCFAAnWmFcL"
+}
