@@ -27,7 +27,7 @@ const tokenBadge = (await connection.getAccountInfo(badgePda)) ? badgePda : unde
 if (!tokenBadge && !["USDC", "SOL"].includes(plan.quote.symbol)) throw new Error(`no TokenBadge for quote ${plan.quote.symbol}`);
 
 const bDec = 9, qDec = plan.quote.decimals;
-const { configParams, summary } = buildEquityCurve({ refBaseUsd: plan.reference.base.price, refQuoteUsd: plan.reference.quote.price, quoteDecimals: qDec, unit: plan.unit, float: plan.float, discountBps: plan.summary.discountBps, premiumBps: plan.summary.premiumBps });
+const { configParams, summary } = buildEquityCurve({ refBaseUsd: plan.reference.base.price, refQuoteUsd: plan.reference.quote.price, quoteDecimals: qDec, unit: plan.unit, float: plan.float, discountBps: plan.summary.discountBps, premiumBps: plan.summary.premiumBps, profile: plan.summary.profile || "demo" });
 if (summary.migrationQuoteThreshold !== plan.summary.migrationQuoteThreshold) throw new Error("curve drifted from plan.json — re-run plan.mjs");
 
 // Size the opening buy: quote reserve to reach reference, grossed up for the opening fee (+ slack).

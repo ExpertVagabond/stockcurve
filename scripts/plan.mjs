@@ -16,6 +16,7 @@ const float = Number(arg("float", DEFAULTS.float));
 const discountBps = Number(arg("discount", DEFAULTS.discountBps));
 const premiumBps = Number(arg("premium", DEFAULTS.premiumBps));
 const manualBase = arg("manual-base") ? Number(arg("manual-base")) : undefined;
+const profile = arg("profile", "demo");
 
 const quote = quoteSym === "USDC" ? { ...USDC, sym: "USDC" } : quoteSym === "SOL" ? { ...SOL, sym: "SOL" } : { ...(XSTOCKS[quoteSym] || BACKPACK[quoteSym]), sym: quoteSym };
 if (!quote.mint) throw new Error(`unknown quote ${quoteSym}`);
@@ -24,7 +25,7 @@ const refBase = preipo ? await resolvePreIpo(preipo) : await resolveUsd({ pythSy
 const refQuote = quoteSym === "USDC" ? { price: 1, source: "peg", feed: "USDC", ageSec: 0, tried: [] }
   : await resolveUsd({ pythSymbol: quote.pythUsd || `Crypto.${quoteSym.toUpperCase()}/USD`, mint: quote.mint });
 
-const built = buildEquityCurve({ refBaseUsd: refBase.price, refQuoteUsd: refQuote.price, quoteDecimals: quote.decimals, unit, float, discountBps, premiumBps });
+const built = buildEquityCurve({ refBaseUsd: refBase.price, refQuoteUsd: refQuote.price, quoteDecimals: quote.decimals, unit, float, discountBps, premiumBps, profile });
 validateConfigParameters({ ...built.configParams, leftoverReceiver: "8nqQzTU5bqH3yjfi2ST1XvaaqWw447enCqnZkxHXTsKF" });
 
 const cp = built.configParams;
@@ -41,7 +42,7 @@ console.log(`checkpoints ${built.checkpoints.map((c) => fmt(c)).join(" → ")}  
 console.log(`curve pts  ${cp.curve.length}: ${cp.curve.map((c) => fmt(getPriceFromSqrtPrice(c.sqrtPrice, 9, quote.decimals))).join(", ")}`);
 console.log(`float      ${float} tokens = ${float * unit} shares (fixed supply ${Number(cp.tokenSupply.preMigrationTokenSupply.toString()) / 1e9})`);
 console.log(`graduation needs ${fmt(s.migrationQuoteThreshold)} ${quote.sym} ≈ $${fmt(s.migrationQuoteThresholdUsd, 2)}`);
-console.log(`fees       ${s.feeSchedule}; DAMM v2 25 bps; LP 100% permanently locked`);
+console.log(`fees       ${s.feeSchedule}; profile ${s.profile}: listing fee ${s.listingFeePct}% at graduation, DAMM v2 ${s.dammFeeBps} bps, creation fee ${s.creationFeeSol} SOL; LP 100% permanently locked`);
 
 mkdirSync("out", { recursive: true });
 const plan = {

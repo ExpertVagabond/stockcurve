@@ -1,6 +1,6 @@
 {
-  "createdAt": "2026-09-15T22:20:01.163Z",
-  "base": "RDDT",
+  "createdAt": "2026-09-15T23:02:26.266Z",
+  "base": "HOOD",
   "preipo": false,
   "unit": 0.01,
   "float": 5,
@@ -12,19 +12,19 @@
   "reference": {
     "base": {
       "ok": true,
-      "price": 159.53470292303265,
+      "price": 108.60487889003798,
       "source": "jupiter-xstock-twin",
-      "feed": "RDDTGbhHwVXfyCvQMXzzowKjf5qrYBZAnehoXW83ooh",
+      "feed": "XsvNBAYkrDRNhA7wPHQfX3ZUXZyZLdnCQDfHZ56bzpg",
       "ageSec": 0,
       "tried": [
-        "lazer: HTTP 403: Not entitled: feed 1366 (no grant accepts this feed (asset type 'equity', instrument type 'spot', exchange 2))"
+        "lazer: HTTP 403: Not entitled: feed 1182 (no grant accepts this feed (asset type 'equity', instrument type 'spot', exchange 1))"
       ]
     },
     "quote": {
       "ok": true,
-      "price": 96.42697605000001,
-      "bid": 96.42212893,
-      "ask": 96.42717098,
+      "price": 97.08157494,
+      "bid": 97.08133589,
+      "ask": 97.08839705,
       "source": "pyth-lazer",
       "feed": "Crypto.SOL/USD#6",
       "ageSec": 0,
@@ -32,12 +32,16 @@
     }
   },
   "summary": {
-    "referencePriceQuote": 0.016544613287500544,
-    "startPriceQuote": 0.014062921294375462,
-    "graduationPriceQuote": 0.017371843951875573,
-    "migrationQuoteThreshold": 0.04184815,
-    "migrationQuoteThresholdUsd": 4.035290557786808,
+    "referencePriceQuote": 0.01118697126176206,
+    "startPriceQuote": 0.00950892557249775,
+    "graduationPriceQuote": 0.011746319824850164,
+    "migrationQuoteThreshold": 0.028711452,
+    "migrationQuoteThresholdUsd": 2.7873529789742126,
     "feeSchedule": "300→30 bps exp over 3600s (60 periods), dynamic fee on",
+    "profile": "issuer",
+    "listingFeePct": 3,
+    "dammFeeBps": 20,
+    "creationFeeSol": 0.02,
     "unit": 0.01,
     "float": 5,
     "discountBps": 1500,
@@ -49,10 +53,10 @@
     ]
   },
   "checkpoints": [
-    0.014062921294375462,
-    0.015717382623125515,
-    0.016544613287500544,
-    0.017371843951875573
+    0.00950892557249775,
+    0.010627622698673957,
+    0.01118697126176206,
+    0.011746319824850164
   ],
   "configParams": {
     "poolFees": {
@@ -78,12 +82,12 @@
     "migrationOption": 1,
     "tokenType": 0,
     "tokenDecimal": 9,
-    "migrationQuoteThreshold": "027e8d56",
+    "migrationQuoteThreshold": "01b61a1c",
     "partnerLiquidityPercentage": 0,
     "partnerPermanentLockedLiquidityPercentage": 100,
     "creatorLiquidityPercentage": 0,
     "creatorPermanentLockedLiquidityPercentage": 0,
-    "sqrtStartPrice": "1e5bbae0a8a66068",
+    "sqrtStartPrice": "18f6a8bdf6f39b23",
     "lockedVesting": {
       "amountPerPeriod": "00",
       "cliffDurationFromMigrationTime": "00",
@@ -91,7 +95,7 @@
       "numberOfPeriod": "00",
       "cliffUnlockAmount": "00"
     },
-    "migrationFeeOption": 0,
+    "migrationFeeOption": 6,
     "tokenSupply": {
       "preMigrationTokenSupply": "012a05f200",
       "postMigrationTokenSupply": "012a05f200"
@@ -99,10 +103,10 @@
     "creatorTradingFeePercentage": 0,
     "migratedPoolFee": {
       "collectFeeMode": 0,
-      "dynamicFee": 0,
-      "poolFeeBps": 0
+      "dynamicFee": 1,
+      "poolFeeBps": 20
     },
-    "poolCreationFee": "00",
+    "poolCreationFee": "01312d00",
     "partnerLiquidityVestingInfo": {
       "vestingPercentage": 0,
       "bpsPerPeriod": 0,
@@ -129,20 +133,20 @@
     "padding": [],
     "curve": [
       {
-        "sqrtPrice": "20182e8e54b58691",
-        "liquidity": "5540c4c1a98b9d3e013f6a00"
+        "sqrtPrice": "1a64214484b399e6",
+        "liquidity": "47219bba15c05b48dabce400"
       },
       {
-        "sqrtPrice": "20ed9fedf0c33b31",
-        "liquidity": "ffc24e44fca2d7ba03be3e00"
+        "sqrtPrice": "1b13a4a085ba8167",
+        "liquidity": "d564d32e414111da9036ac00"
       },
       {
-        "sqrtPrice": "21bdcb8204ccb983",
-        "liquidity": "0155031306a62e74f8f368d000"
+        "sqrtPrice": "1bbed20e526757b5",
+        "liquidity": "011c866ee857016d236af39000"
       }
     ],
     "migrationFee": {
-      "feePercentage": 0,
+      "feePercentage": 3,
       "creatorFeePercentage": 0
     },
     "tokenUpdateAuthority": 1
