@@ -42,7 +42,7 @@ its first transaction *is* the creation — there is no block in which a sniper 
 DBC pool [`GretDMXwL3Na7AtVvQzaAuQhVw8zVwsttqVxkYKXE3FP`](https://solscan.io/account/GretDMXwL3Na7AtVvQzaAuQhVw8zVwsttqVxkYKXE3FP)
 · [creation+buy tx](https://solscan.io/tx/5nA1XC87vSFsVAH3FLWz3aa4eBVyTuD32FujmrFpw7uZid2RFrPLKqcTX9C1qSGAS6WgNFEbqcpT76n66pxXzibg). Left live on the curve at fair value.
 
-Eight pools, one day, ~0.55 SOL. Console for all pools:
+Nine pools, ~1.5 SOL all-in. Console for all pools:
 **https://stockcurve.purplesquirrelnetworks.workers.dev**
 
 | Pool | Quote | Reference | Launch | Status |
@@ -54,6 +54,7 @@ Eight pools, one day, ~0.55 SOL. Console for all pools:
 | sRDDT/SOL | SOL | Backpack RDDT twin, live | **atomic** create+buy | live on curve, +3 bps |
 | sHOOD/SOL | SOL | Backpack HOOD twin, live | atomic, **issuer profile**, keeper-graduated | graduated; listing + creation + trading fees claimed |
 | sRKLB/SOL | SOL | manual print $63.55 (no live source exists for RKLB) | atomic, **lean curve** (opening buy = 15% of raise), keeper-graduated | graduated; fees claimed |
+| sSNDK/SOL | SOL | Backpack SNDK twin, live ($373k liq) | atomic, lean, **seed profile**, keeper self-funded the raise | graduated; **50% of unlocked LP withdrawn** back to the wallet |
 | sPLTR/SOL | SOL | PLTRx twin, live | atomic on the **shared config** (`launch-shared.mjs`, unit derived from the ladder, no config rent) | graduated; all three fees claimed to the same partner |
 
 ## Why a stock needs a different curve
@@ -155,6 +156,14 @@ DAMM v2, so the capital at risk is the basis on those shares, not the cash. The 
 buyers between reference and +5%. After graduation the raise (minus the listing fee) sits in a DAMM v2 pool,
 100% locked to the partner, earning 20 bps + dynamic fee forever. A real pool's reference must be live Pyth
 (Lazer equity grant); the twins are fine for demos and wrong for size.
+
+### The profile matrix, all proven on mainnet
+
+| profile | what it's for | proof |
+|---|---|---|
+| `demo` | mechanism | pools 1–5 |
+| `issuer` | revenue: 3% listing + 0.02 SOL creation + curve fees + 20 bps DAMM v2 on locked LP | pools 6–8, all three streams claimed on-chain |
+| `seed` | a self-funded venue with recoverable capital: partner LP 90% withdrawable, 10% locked | pool 9 `sSNDK/SOL` [`EnrkDGJc1L77nsBmpAcbLs9SssALuf7McSWPYvLw7fEt`](https://solscan.io/account/EnrkDGJc1L77nsBmpAcbLs9SssALuf7McSWPYvLw7fEt): keeper funded the 0.895 SOL raise, graduated, then [withdrew 50% of the unlocked LP](https://solscan.io/tx/QJVT7Vtb3TMq4HeSUyqSDZiRrpTj6WY5GVmDrEcRBchaQ69AwGV68SJ8s52f7gCTnrwGUP9emN5K4G7xsoTnKqq) — 0.402 SOL + 2.43 sSNDK back in the wallet (`scripts/lp.mjs`) |
 
 ## The keeper (not a sniper)
 

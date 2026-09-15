@@ -68,6 +68,12 @@ Targets: Main track + Best Use of Meteora DBC ($5k) + Stocknized Agent on Clawpu
 - `seed` profile: partner LP 90% unlocked/10% locked, no listing/creation fee → self-funded venue with recoverable capital. Validated
   (HOOD/SOL float 150 = $822 raise); NOT launched — needs ~20 SOL. Wallet ≈ 0.19 SOL.
 
+## Pool 9 seed venue (2026-09-16 ~01:20 UTC)
+- sSNDK/SOL EnrkDGJc1L77nsBmpAcbLs9SssALuf7McSWPYvLw7fEt on seed config CsrQWn2J… (created by launch-atomic; pool tx failed on
+  Metaplex 32-char name limit → relaunched via launch-shared on that config). Lean curve, live SNDK twin ($1,527), 0 bps open.
+  Keeper self-funded 0.895 SOL raise → DAMM v2 836qKA34…; lp.mjs withdrew 50% unlocked LP: 0.402 SOL + 2.43 sSNDK back (tx QJVT7Vtb…).
+- Gotchas: token name ≤ 32 chars; leftover auto-retry in curve.mjs; keeper SOL-quote native balance. Wallet ≈ 0.62 SOL. 9 pools.
+
 ## Needs Matthew (interactive)
 1. Register + submit on hackathons.solana.com (links: repo, console; video optional).
 2. Pyth Terminal: equity/xStock feed grant on the Pro token (free grant = crypto majors only; all stock feeds 403).
