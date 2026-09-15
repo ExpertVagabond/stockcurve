@@ -1,0 +1,29 @@
+{
+  "name": "stockcurve PLTR (shared config)",
+  "symbol": "sPLTR",
+  "description": "stockcurve demo pool token for a Palantir reference, launched on the SHARED stockcurve issuer config (one partner config serves any ticker: the share-unit per token is derived at launch so the live reference lands on the config's price ladder). Quoted in SOL, atomic creation + opening buy, reference anchored live to PLTRx via Jupiter. 3% listing fee, 20 bps DAMM v2, 0.02 SOL creation fee flow to the partner. Hackathon demo (Stocklana 2026), not a claim on Palantir shares.",
+  "image": "https://raw.githubusercontent.com/ExpertVagabond/stockcurve/main/meta/sPLTR.png",
+  "external_url": "https://github.com/ExpertVagabond/stockcurve",
+  "attributes": [
+    {
+      "trait_type": "quote",
+      "value": "SOL"
+    },
+    {
+      "trait_type": "reference",
+      "value": "PLTRx (Jupiter) / Equity.US.PLTR/USD"
+    },
+    {
+      "trait_type": "unit",
+      "value": "derived at launch from the shared ladder"
+    },
+    {
+      "trait_type": "config",
+      "value": "shared issuer config 2NEDFzx7o9menoSdkQumSpGSuaZ3bPzPRii5SDK9p5oo"
+    },
+    {
+      "trait_type": "launch",
+      "value": "atomic: create + opening buy in one tx"
+    }
+  ]
+}
