@@ -88,8 +88,8 @@ unchanged.
 npm i
 # 1. dry run: resolve references, build + validate the curve, write out/plan.json
 node scripts/plan.mjs --base GME --quote AAPLx --unit 0.1 --float 5
-# 2. quote inventory (SOL → xStock via Jupiter)
-node scripts/swap-sol-to-quote.mjs --quote AAPLx --sol 0.15
+# 2. quote inventory (any of SOL / USDC / xStock → xStock via Jupiter)
+node scripts/swap.mjs --from SOL --to AAPLx --amount 0.15
 # 3. mainnet: create config + pool (simulate first with --dry)
 node scripts/launch.mjs --dry && node scripts/launch.mjs
 # 4. trade, watch, graduate
@@ -102,7 +102,8 @@ node scripts/migrate.mjs
 as `PYTH_ACCESS_TOKEN=…` (never in the repo).
 
 Knobs: `--unit` (shares per token, e.g. `0.1`), `--float` (tokens issued), `--discount`,
-`--premium` (bps), quote `AAPLx | TSLAx | NVDAx | SPYx | USDC`.
+`--premium` (bps), quote = any of the 20 xStocks in `src/config.mjs` or `USDC`. A base ticker with an
+xStock twin (GME → GMEx) gets a live secondary-market reference automatically.
 
 ## Layout
 
@@ -115,7 +116,9 @@ scripts/launch.mjs  createConfig + createPool (token badge aware)
 scripts/buy.mjs     swapQuote2 + swap2 (ExactIn / PartialFill)
 scripts/status.mjs  issuer console snapshot → out/status.json
 scripts/migrate.mjs migrateToDammV2 + verification
-scripts/check-badges.mjs, check-pyth-onchain.mjs, scan-onchain-equities.mjs   research probes
+scripts/swap.mjs    Jupiter swap between SOL / USDC / xStocks
+scripts/scan-*.mjs  research probes: xStock badges, Backpack (1,158 mints), pre-IPO, on-chain Pyth
+docs/research-findings.md   Backpack/pre-IPO/Clawpump/sniper findings with numbers
 docs/competitor-scan.md   the 23 public Stocklana repos, and why none has a stock-quoted DBC pool
 ```
 

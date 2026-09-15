@@ -22,6 +22,13 @@ Targets: Main track + Best Use of Meteora DBC ($5k) + Stocknized Agent on Clawpu
 - Wallet 8nqQzTU5…TsKF after: 0.153 SOL + ~0.028 AAPLx.
 - README with proof table; docs/competitor-scan.md; token metadata meta/sGME.json resolves (200).
 
+## Pool 2 (2026-09-15 evening) — sGME-SPY/SPYx, LIVE reference (GMEx twin via Jupiter)
+- config 2stFUjXp…, pool 9rKgkPWtf2fWAd8heFjmrZam6dMiMNAZioTHBLVAfQ6B, base GnfNU67q…, DAMM v2 3qKHCfkELRGMmy97KU5W71ShZbkXMJcSVk3B9NjnJm3a
+- SNIPED at t+5s by GQKsdX8C… (flash-loan bot), sold back at t+20s at a loss; curve unaffected. See docs/research-findings.md
+- Research: Backpack 1,158 Solana mints / 51 priced / 48 DBC-badged; pre-IPO (Tessera 3, PreStocks 8) = reference only (TransferFee, no badge);
+  Clawpump rival pool is self-made SOL config, 252 SOL threshold, 0%.
+- Console is multi-pool (out/pools/<name>/ → data/pools.json). Wallet ≈ 0.12 SOL, 0.015 AAPLx, ~0.0025 SPYx.
+
 ## Needs Matthew (interactive)
 1. Register + submit on hackathons.solana.com (links: repo, console; video optional).
 2. Pyth Terminal: equity/xStock feed grant on the Pro token (free grant = crypto majors only; all stock feeds 403).
