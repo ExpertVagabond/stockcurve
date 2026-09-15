@@ -17,7 +17,14 @@ Working code on mainnet — the whole lifecycle ran on Solana mainnet on 2026-09
 | Buys on the curve (+10.3%, +5.2%, +3.5%, +2.8%) | [1](https://solscan.io/tx/3PVDD46WX4cgzA9vhvtfa5Z7rEJbiSCkknfHdF6oRtQHptxrX9WpYTwPmN67gF1EX4DeCKyN2EJXGvteNSUmr763) · [2](https://solscan.io/tx/2uxZB78z7aFKjJ1dRNiL9EVSGLhWCCpe5p9BCNbksSX5xLLjahNNgBAJJ4exYJ43i3Q1poE34LWD5qSYA2Fc1Kpf) · [3](https://solscan.io/tx/57oGj6HMKuyWwB9ALSsK9M44QCvPqB5VXJ9kCz9d2ufkVkmA7ZGWxcG3CYDJXiQtZbLVZ1x9ZYF4cRf7nuQi65Q4) · [4 (partial fill to 100%)](https://solscan.io/tx/RYwvXNb6tv3JzgwcrSGQJEDJnMSgG5fp5gyG77zZZA8sRizsTi2YMCD5fugTwGcWVDVCK9xnFgHfkTUsLXm1yXS) |
 | Graduation → DAMM v2 pool | [`7FGmDHJNPhTu4VbRLQL7b5RKMXDD1p8Sm7hDKPWby4gA`](https://solscan.io/account/7FGmDHJNPhTu4VbRLQL7b5RKMXDD1p8Sm7hDKPWby4gA) · [tx](https://solscan.io/tx/5RgKF9dHygAC131e2ZBCEo71mUHipnR5m76QCywEUpRL7QVSP5bnqTKXwvHwAo3sHx4iPDubv3LDA8H3uEtyR9Gh) |
 
-Total cost of the run: ~0.2 SOL including the AAPLx quote inventory.
+Second run, same day, quoted in the S&P 500 xStock (index-relative price discovery) with a **live**
+reference (GMEx via Jupiter): DBC pool [`9rKgkPWtf2fWAd8heFjmrZam6dMiMNAZioTHBLVAfQ6B`](https://solscan.io/account/9rKgkPWtf2fWAd8heFjmrZam6dMiMNAZioTHBLVAfQ6B)
+→ DAMM v2 [`3qKHCfkELRGMmy97KU5W71ShZbkXMJcSVk3B9NjnJm3a`](https://solscan.io/account/3qKHCfkELRGMmy97KU5W71ShZbkXMJcSVk3B9NjnJm3a).
+A sniper bot bought half the float 5 seconds after creation and sold it back 15 seconds later at a
+loss — the 300 bps opening fee did its job ([docs/research-findings.md](docs/research-findings.md) §4).
+
+Total cost of both runs: ~0.25 SOL including quote inventory. Console for both pools:
+**https://stockcurve.purplesquirrelnetworks.workers.dev**
 
 ## Why a stock needs a different curve
 
@@ -111,6 +118,14 @@ scripts/migrate.mjs migrateToDammV2 + verification
 scripts/check-badges.mjs, check-pyth-onchain.mjs, scan-onchain-equities.mjs   research probes
 docs/competitor-scan.md   the 23 public Stocklana repos, and why none has a stock-quoted DBC pool
 ```
+
+## Why this matters beyond the demo
+
+`scripts/scan-backpack.mjs` (public Backpack API): **1,158 tokenized US stocks already have Solana
+mints; 51 have any on-chain price; 48 already carry a Meteora DBC quote badge.** 95% of tokenized
+stocks on Solana have no price-discovery venue. Every xStock we could find (20/20) is badged too.
+The same command works against both issuers today. Full numbers and the pre-IPO (Tessera/PreStocks)
+analysis: [docs/research-findings.md](docs/research-findings.md).
 
 ## After the hackathon
 

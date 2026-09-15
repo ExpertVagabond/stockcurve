@@ -41,7 +41,7 @@
 </head>
 <body>
 <main>
-  <h1>stockcurve <small id="pair">·</small></h1>
+  <h1>stockcurve <small id="pair">·</small> <select id="poolSel" style="margin-left:10px;background:var(--panel);color:var(--fg);border:1px solid var(--line);border-radius:6px;padding:3px 8px;font-size:13px"></select></h1>
   <p class="sub">Pyth-anchored Meteora DBC pool quoted in a tokenized stock. Snapshot <span id="at" class="mono">…</span>, live quote price from Jupiter <span id="live" class="mono"></span>.</p>
 
   <div class="grid">
@@ -79,8 +79,17 @@
 </main>
 <script>
 (async () => {
-  const [s, l, p] = await Promise.all(["status", "launch", "plan"].map(n => fetch(`data/${n}.json`).then(r => r.json())));
+  const pools = await fetch("data/pools.json").then(r => r.json());
+  const sel = document.getElementById("poolSel");
+  pools.forEach((p, i) => { const o = document.createElement("option"); o.value = i; o.textContent = `${p.status.symbol} / ${p.status.quote}`; sel.appendChild(o); });
+  const wanted = pools.findIndex(p => location.hash.slice(1) === p.name);
+  sel.value = wanted >= 0 ? wanted : pools.length - 1;
+  sel.onchange = () => { location.hash = pools[sel.value].name; render(pools[sel.value]); };
+  render(pools[sel.value]);
+})();
+async function render({ status: s, launch: l, plan: p }) {
   const $ = id => document.getElementById(id);
+  document.getElementById("band").innerHTML = '<div class="rail"></div>';
   const f = (n, d = 6) => Number(n).toFixed(d);
   const usd = n => "$" + Number(n).toFixed(4);
   const solscan = (t, x) => `<a href="https://solscan.io/${t}/${x}" target="_blank" rel="noopener">${x}</a>`;
@@ -136,7 +145,7 @@
       $("basis").innerHTML += ` <small>live ${liveBps >= 0 ? "+" : ""}${liveBps.toFixed(0)} bps</small>`;
     }
   } catch {}
-})();
+}
 </script>
 </body>
 </html>

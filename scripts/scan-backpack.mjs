@@ -1,7 +1,7 @@
 // Backpack Securities tokenized stocks on Solana: which have mints, token program/extensions, DBC quote eligibility, on-chain liquidity.
 import { deriveTokenBadgeAddress } from "@meteora-ag/dynamic-bonding-curve-sdk";
 import { PublicKey } from "@solana/web3.js";
-import { getMint, getExtensionTypes, ExtensionType, TOKEN_2022_PROGRAM_ID, TOKEN_PROGRAM_ID } from "@solana/spl-token";
+import { unpackMint, getExtensionTypes, ExtensionType, TOKEN_2022_PROGRAM_ID, TOKEN_PROGRAM_ID } from "@solana/spl-token";
 import { writeFileSync } from "node:fs";
 import { connection } from "../src/config.mjs";
 
@@ -14,8 +14,8 @@ const mints = onchain.map((r) => new PublicKey(r.mint));
 const chunk = (arr, n) => arr.reduce((a, _, i) => (i % n ? a : [...a, arr.slice(i, i + n)]), []);
 const infos = (await Promise.all(chunk(mints, 100).map((c) => connection.getMultipleAccountsInfo(c)))).flat();
 const badges = (await Promise.all(chunk(mints.map((m) => deriveTokenBadgeAddress(m)), 100).map((c) => connection.getMultipleAccountsInfo(c)))).flat();
-const ids = onchain.map((r) => r.mint).join(",");
-const prices = await (await fetch(`https://lite-api.jup.ag/price/v3?ids=${ids}`)).json().catch(() => ({}));
+const prices = {};
+for (const c of chunk(onchain.map((r) => r.mint), 50)) Object.assign(prices, await (await fetch(`https://lite-api.jup.ag/price/v3?ids=${c.join(",")}`)).json().catch(() => ({})));
 
 let t22 = 0, spl = 0, badged = 0, permissionless = 0, priced = 0;
 const out = [];
@@ -25,7 +25,7 @@ for (let i = 0; i < onchain.length; i++) {
   let ext = [], dec = null;
   if (ai.owner.equals(TOKEN_2022_PROGRAM_ID)) {
     t22++;
-    const m = await getMint(connection, mints[i], "confirmed", TOKEN_2022_PROGRAM_ID);
+    const m = unpackMint(mints[i], ai, TOKEN_2022_PROGRAM_ID); // parse from the batched account data, no extra RPC
     ext = getExtensionTypes(m.tlvData).map((t) => ExtensionType[t]); dec = m.decimals;
   } else if (ai.owner.equals(TOKEN_PROGRAM_ID)) { spl++; ext = ["SPL"]; }
   const eligible = ext[0] === "SPL" || ext.every((t) => ["MetadataPointer", "TokenMetadata"].includes(t)) ? "permissionless" : badges[i] ? "badge" : "needs-badge";

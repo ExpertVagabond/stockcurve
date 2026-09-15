@@ -1,12 +1,15 @@
-// Build the static issuer console from out/status.json + out/launch.json + out/plan.json → site/dist/
-import { readFileSync, writeFileSync, mkdirSync, copyFileSync } from "node:fs";
-const status = JSON.parse(readFileSync("out/status.json", "utf8"));
-const launch = JSON.parse(readFileSync("out/launch.json", "utf8"));
-const plan = JSON.parse(readFileSync("out/plan.json", "utf8"));
+// Build the static issuer console: every pool under out/pools/<name>/{plan,launch,status}.json → site/dist/
+import { readFileSync, writeFileSync, mkdirSync, readdirSync, existsSync } from "node:fs";
 mkdirSync("site/dist/data", { recursive: true });
-copyFileSync("out/status.json", "site/dist/data/status.json");
-copyFileSync("out/launch.json", "site/dist/data/launch.json");
-writeFileSync("site/dist/data/plan.json", JSON.stringify({ base: plan.base, unit: plan.unit, float: plan.float, quote: plan.quote, summary: plan.summary, checkpoints: plan.checkpoints, reference: plan.reference }, null, 2));
-let html = readFileSync("site/index.html", "utf8").replace("__BUILT_AT__", new Date().toISOString());
-writeFileSync("site/dist/index.html", html);
-console.log("site/dist built", new Date().toISOString());
+const pools = [];
+for (const name of readdirSync("out/pools").sort()) {
+  const dir = `out/pools/${name}`;
+  if (!existsSync(`${dir}/status.json`)) continue;
+  const plan = JSON.parse(readFileSync(`${dir}/plan.json`, "utf8"));
+  const launch = JSON.parse(readFileSync(`${dir}/launch.json`, "utf8"));
+  const status = JSON.parse(readFileSync(`${dir}/status.json`, "utf8"));
+  pools.push({ name, status, launch, plan: { base: plan.base, unit: plan.unit, float: plan.float, quote: plan.quote, summary: plan.summary, checkpoints: plan.checkpoints, reference: plan.reference } });
+}
+writeFileSync("site/dist/data/pools.json", JSON.stringify(pools, null, 2));
+writeFileSync("site/dist/index.html", readFileSync("site/index.html", "utf8").replace("__BUILT_AT__", new Date().toISOString()));
+console.log(`site/dist built with ${pools.length} pools:`, pools.map((p) => p.name).join(", "));
