@@ -23,7 +23,13 @@ reference (GMEx via Jupiter): DBC pool [`9rKgkPWtf2fWAd8heFjmrZam6dMiMNAZioTHBLV
 A sniper bot bought half the float 5 seconds after creation and sold it back 15 seconds later at a
 loss — the 300 bps opening fee did its job ([docs/research-findings.md](docs/research-findings.md) §4).
 
-Total cost of both runs: ~0.25 SOL including quote inventory. Console for both pools:
+Third run: a **pre-IPO curve** — `pOPENAI / USDC`, anchored to the PreStocks OPENAI mark price ($954.71)
+and monitored against the PreStocks secondary price (+1460 bps over mark) and Tessera's T-OpenAI valuation
+(0.80× PreStocks). A pre-IPO name has no exchange print, so the curve *is* the price discovery.
+DBC pool [`6vyZDFfkDW5GTZ9NbKUVhPmFKgcXYF28GV61hcnHqwfz`](https://solscan.io/account/6vyZDFfkDW5GTZ9NbKUVhPmFKgcXYF28GV61hcnHqwfz)
+→ DAMM v2 [`99dvULFK5mK5AeVPQvsauXJGCBaYrnkJhoB1GUBhvwYz`](https://solscan.io/account/99dvULFK5mK5AeVPQvsauXJGCBaYrnkJhoB1GUBhvwYz).
+
+Total cost of all three runs: ~0.3 SOL including quote inventory. Console for all pools:
 **https://stockcurve.purplesquirrelnetworks.workers.dev**
 
 ## Why a stock needs a different curve
@@ -82,12 +88,20 @@ The mainnet run above used source 2 for GME (32 days stale, flagged in `out/plan
 free Pyth Pro grant covers crypto majors only; with an equity grant the same command uses source 1
 unchanged.
 
+## Pre-IPO mode (Tessera / PreStocks)
+
+`node scripts/plan.mjs --preipo OPENAI --quote USDC --unit 0.0001 --float 60` swaps the Pyth reference for
+[`src/preipo.mjs`](src/preipo.mjs): the PreStocks mark price is the anchor; the PreStocks secondary token
+price, both providers' valuations and the Tessera mark are recorded as context and shown in the console.
+Neither provider's mint can be a DBC *quote* today (both carry `TransferFeeConfig`, no badge), which is
+why the pre-IPO pool is USDC-quoted.
+
 ## Run it
 
 ```bash
 npm i
 # 1. dry run: resolve references, build + validate the curve, write out/plan.json
-node scripts/plan.mjs --base GME --quote AAPLx --unit 0.1 --float 5
+node scripts/plan.mjs --base GME --quote AAPLx --unit 0.1 --float 5      # or --preipo OPENAI --quote USDC
 # 2. quote inventory (any of SOL / USDC / xStock → xStock via Jupiter)
 node scripts/swap.mjs --from SOL --to AAPLx --amount 0.15
 # 3. mainnet: create config + pool (simulate first with --dry)

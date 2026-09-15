@@ -29,6 +29,11 @@ Targets: Main track + Best Use of Meteora DBC ($5k) + Stocknized Agent on Clawpu
   Clawpump rival pool is self-made SOL config, 252 SOL threshold, 0%.
 - Console is multi-pool (out/pools/<name>/ → data/pools.json). Wallet ≈ 0.12 SOL, 0.015 AAPLx, ~0.0025 SPYx.
 
+## Pool 3 (2026-09-15 late) — pOPENAI/USDC pre-IPO curve
+- config 7EM9JeCd…, pool 6vyZDFfkDW5GTZ9NbKUVhPmFKgcXYF28GV61hcnHqwfz, base AD8PxCMD…, DAMM v2 99dvULFK5mK5AeVPQvsauXJGCBaYrnkJhoB1GUBhvwYz
+- anchor PreStocks OPENAI mark $954.71; secondary $1094 (+1460bps); Tessera T-OpenAI val $950B = 0.80× PreStocks. unit 0.0001, float 60, leftover 1.
+- Backpack overlap: badged(48) == priced(48) exactly; 1,110 have neither. Wallet ≈ 0.03 SOL, ~1 USDC, 0.015 AAPLx — NEEDS TOP-UP for anything further.
+
 ## Needs Matthew (interactive)
 1. Register + submit on hackathons.solana.com (links: repo, console; video optional).
 2. Pyth Terminal: equity/xStock feed grant on the Pro token (free grant = crypto majors only; all stock feeds 403).

@@ -18,8 +18,10 @@ const uri = arg("uri", `https://raw.githubusercontent.com/ExpertVagabond/stockcu
 const kp = loadKeypair();
 const me = kp.publicKey;
 const quoteMint = new PublicKey(plan.quote.mint);
-const tokenBadge = deriveTokenBadgeAddress(quoteMint);
-if (!(await connection.getAccountInfo(tokenBadge))) throw new Error(`no TokenBadge for quote ${plan.quote.symbol}`);
+// SPL quotes (USDC) are permissionless; Token-2022 stock quotes need Meteora's TokenBadge at remaining account 0.
+const badgePda = deriveTokenBadgeAddress(quoteMint);
+const tokenBadge = (await connection.getAccountInfo(badgePda)) ? badgePda : undefined;
+if (!tokenBadge && plan.quote.symbol !== "USDC") throw new Error(`no TokenBadge for quote ${plan.quote.symbol}`);
 
 // Rebuild the exact curve from the recorded references (BN fields don't survive JSON).
 const { configParams, summary } = buildEquityCurve({
@@ -32,7 +34,7 @@ const client = DynamicBondingCurveClient.create(connection, "confirmed");
 const config = Keypair.generate();
 const baseMint = Keypair.generate();
 console.log(`${DRY ? "DRY RUN" : "MAINNET"} launch ${symbol} (${name}) / ${plan.quote.symbol}`);
-console.log(`config ${config.publicKey.toBase58()}  baseMint ${baseMint.publicKey.toBase58()}  badge ${tokenBadge.toBase58()}`);
+console.log(`config ${config.publicKey.toBase58()}  baseMint ${baseMint.publicKey.toBase58()}  badge ${tokenBadge ? tokenBadge.toBase58() : "none (SPL quote)"}`);
 
 async function run(label, tx, signers) {
   tx.feePayer = me;
@@ -68,6 +70,6 @@ const pool = deriveDbcPoolAddress(quoteMint, baseMint.publicKey, config.publicKe
 const state = await client.state.getPool(pool);
 const after = await connection.getBalance(me);
 console.log(`pool ${pool.toBase58()} exists; config matches: ${state.poolState.config.equals(config.publicKey)}; SOL spent ${(before - after) / 1e9}`);
-const record = { ...plan.summary, name, symbol, uri, config: config.publicKey.toBase58(), baseMint: baseMint.publicKey.toBase58(), pool: pool.toBase58(), quoteMint: plan.quote.mint, tokenBadge: tokenBadge.toBase58(), txs: { createConfig: sig1, createPool: sig2 }, launchedAt: new Date().toISOString() };
+const record = { ...plan.summary, name, symbol, uri, config: config.publicKey.toBase58(), baseMint: baseMint.publicKey.toBase58(), pool: pool.toBase58(), quoteMint: plan.quote.mint, tokenBadge: tokenBadge?.toBase58() ?? null, txs: { createConfig: sig1, createPool: sig2 }, launchedAt: new Date().toISOString() };
 writeFileSync("out/launch.json", JSON.stringify(record, null, 2));
 console.log("wrote out/launch.json");

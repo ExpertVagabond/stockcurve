@@ -8,8 +8,9 @@ import { connection, loadKeypair } from "../src/config.mjs";
 
 const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
 const launch = JSON.parse(readFileSync("out/launch.json", "utf8"));
+const plan = JSON.parse(readFileSync("out/plan.json", "utf8"));
 const pool = new PublicKey(arg("pool", launch.pool));
-const qDec = 8, bDec = 9;
+const qDec = plan.quote.decimals, bDec = 9, qSym = plan.quote.symbol;
 const amountIn = new BN(Math.round(Number(arg("quote-amount", "0.005")) * 10 ** qDec));
 const mode = process.argv.includes("--partial") ? SwapMode.PartialFill : SwapMode.ExactIn;
 
@@ -21,7 +22,7 @@ const currentPoint = cfg.activationType === ActivationType.Slot ? new BN(await c
 
 const priceBefore = Number(getPriceFromSqrtPrice(ps.poolState.sqrtPrice, bDec, qDec));
 const quote = client.pool.swapQuote2({ virtualPool: ps, config: cfg, swapBaseForQuote: false, swapMode: mode, amountIn, slippageBps: 100, hasReferral: false, eligibleForFirstSwapWithMinFee: false, currentPoint });
-console.log(`price before ${priceBefore.toFixed(8)} ${launch.symbol ? "AAPLx/" + launch.symbol : ""}`);
+console.log(`price before ${priceBefore.toFixed(8)} ${qSym}/${launch.symbol}`);
 console.log("quote:", JSON.stringify(quote, (k, v) => (v && v.words) ? v.toString() : v));
 
 const tx = await client.pool.swap2({ owner: kp.publicKey, pool, swapBaseForQuote: false, swapMode: mode, amountIn, minimumAmountOut: quote.minimumAmountOut, referralTokenAccount: null });

@@ -103,9 +103,9 @@ async function render({ status: s, launch: l, plan: p }) {
   $("stage").innerHTML = s.pool.isMigrated ? `<span class="ok">Graduated</span> <small>DAMM v2 live</small>` : s.pool.progressPct >= 100 ? `<span class="warn">Curve complete</span> <small>awaiting migration</small>` : `<span class="acc">On curve</span> <small>${s.pool.progressPct.toFixed(1)}%</small>`;
   $("progressTxt").textContent = `${s.pool.progressPct.toFixed(1)}% · ${f(s.pool.quoteReserve, 8)} / ${f(s.pool.threshold, 8)} ${s.quote} (≈ $${Number(s.pool.thresholdUsd).toFixed(2)})`;
   $("progress").style.width = Math.min(100, s.pool.progressPct) + "%";
-  $("reserve").innerHTML = `${f(s.pool.quoteReserveDisplay, 8)} <small>× multiplier ${s.quoteMint.scaledUiMultiplier.toFixed(5)} · raw ${f(s.pool.quoteReserve, 8)}</small>`;
+  $("reserve").innerHTML = s.quoteMint.scaledUiMultiplier !== 1 ? `${f(s.pool.quoteReserveDisplay, 8)} <small>× multiplier ${s.quoteMint.scaledUiMultiplier.toFixed(5)} · raw ${f(s.pool.quoteReserve, 8)}</small>` : `${f(s.pool.quoteReserve, 6)} <small>${s.quote}</small>`;
   $("fees").innerHTML = `${f(s.fees.totalTradingQuote, 8)} <small>${s.quote} · unclaimed ${f(s.fees.partnerUnclaimedQuote, 8)}</small>`;
-  $("sold").innerHTML = `${f(s.pool.baseSold, 4)} <small>tokens = ${f(s.pool.baseSold * s.unit, 4)} shares of ${p.float * p.unit} floated</small>`;
+  $("sold").innerHTML = `${f(s.pool.baseSold, 4)} <small>tokens = ${f(s.pool.baseSold * s.unit, 4)} ${s.preipo ? "PreStocks-token units" : "shares"} of ${+(p.float * p.unit).toPrecision(4)} floated</small>`;
   $("feeSched").textContent = s.fees.schedule;
 
   // band: start … graduation, ticks at reference + current
@@ -121,13 +121,18 @@ async function render({ status: s, launch: l, plan: p }) {
 
   const rows = [
     ["DBC pool", solscan("account", s.poolAddress)], ["DBC config", solscan("account", s.config)], ["Base mint " + s.symbol, solscan("token", s.baseMint)],
-    ["Quote mint " + s.quote, solscan("token", s.quoteMint.mint) + ' <span class="pill ok">Meteora token badge</span>'],
+    ["Quote mint " + s.quote, solscan("token", s.quoteMint.mint) + (l.tokenBadge ? ' <span class="pill ok">Meteora token badge</span>' : ' <span class="pill">SPL · permissionless</span>')],
     ...(l.dammV2Pool ? [["DAMM v2 pool", solscan("account", l.dammV2Pool)]] : []),
     ...Object.entries(l.txs || {}).map(([k, v]) => [k, solscan("tx", v)]),
   ];
   $("chain").innerHTML = rows.map(([k, v]) => `<tr><td>${k}</td><td class="mono">${v}</td></tr>`).join("");
   const age = sec => sec < 120 ? `${sec}s` : sec < 7200 ? `${Math.round(sec / 60)}m` : sec < 172800 ? `${(sec / 3600).toFixed(1)}h` : `${(sec / 86400).toFixed(1)}d`;
   const prov = [
+    ...(s.preipo ? [
+      ["PreStocks " + s.preipo.prestocks.symbol, `mark <b>$${s.preipo.prestocks.mark.toFixed(2)}</b> (curve anchor) · secondary token $${s.preipo.prestocks.token.toFixed(2)} <span class="pill ${Math.abs(s.preipo.prestocks.basisBps) < 500 ? "ok" : "warn"}">${s.preipo.prestocks.basisBps >= 0 ? "+" : ""}${s.preipo.prestocks.basisBps.toFixed(0)} bps vs mark</span> · valuation $${(s.preipo.prestocks.markValuation / 1e9).toFixed(0)}B · <a href="https://solscan.io/token/${s.preipo.prestocks.mint}" target="_blank" rel="noopener">mint</a>`],
+      ...(s.preipo.tessera ? [["Tessera " + s.preipo.tessera.symbol, `mark $${s.preipo.tessera.mark.toFixed(2)} · valuation $${(s.preipo.tessera.markValuation / 1e9).toFixed(0)}B <span class="pill warn">${(s.preipo.tessera.markValuation / s.preipo.prestocks.markValuation).toFixed(2)}× PreStocks</span> · ${s.preipo.tessera.holders.toLocaleString()} holders`]] : []),
+      ["Why a curve", "A pre-IPO name has no exchange print and the two issuers disagree on valuation; the DBC curve anchored to the mark is the neutral discovery venue, and graduation above it is the market's verdict."],
+    ] : []),
     [p.base + " (base)", `$${Number(s.reference.baseUsd).toFixed(2)} via <b>${s.reference.baseSource}</b>, age ${age(s.reference.baseAgeSec)} ${s.reference.baseStale ? '<span class="pill warn">stale — flagged</span>' : '<span class="pill ok">fresh</span>'}`],
     [s.quote + " (quote)", `$${Number(s.reference.quoteUsd).toFixed(2)} via <b>${s.reference.quoteSource}</b>, age ${age(s.reference.quoteAgeSec ?? 0)}`],
     ["Resolver order", "Pyth Pro (Lazer) → Pyth push-oracle account on Solana → Jupiter price → issuer-supplied. Source and age are recorded in the plan the config was built from."],
