@@ -34,6 +34,14 @@ Targets: Main track + Best Use of Meteora DBC ($5k) + Stocknized Agent on Clawpu
 - anchor PreStocks OPENAI mark $954.71; secondary $1094 (+1460bps); Tessera T-OpenAI val $950B = 0.80× PreStocks. unit 0.0001, float 60, leftover 1.
 - Backpack overlap: badged(48) == priced(48) exactly; 1,110 have neither. Wallet ≈ 0.03 SOL, ~1 USDC, 0.015 AAPLx — NEEDS TOP-UP for anything further.
 
+## Keeper + Pool 4 (2026-09-15 22:00 UTC)
+- scripts/keeper.mjs: --watch on DBC program; buy-discount (bisection on swapQuote2), --graduate, migrate, target-sized DAMM v2 exit.
+- Real exits: pOPENAI 1.344 @0.09546909 (=ref) tx 5hXZDvES…; sGME-SPY 0.112 @0.001404 (=ref) tx 5gt4rmaa…
+- Pool 4 sDKNG/AAPLx eMbF1jwsZ1YNBjcNmYK15FQrAyX8Hz4ksjtvvoSxZ25 (config 8pQ79LJm…, base CAvzhyds…), ref = Backpack DKNG twin via Jupiter.
+  Keeper discovered it via logsSubscribe, bought 0.004535 AAPLx → price == ref (tx 2fh18yoK…). Graduate/migrate/exit in progress — see out/keeper.log.
+- SOL quote added (wrapped SOL, Pyth Lazer live for SOL/USD). Top-up landed: wallet 0.52 SOL before pool 4.
+- Token logos: scripts/make-logos.py → meta/*.png, JSON image fields repointed.
+
 ## Needs Matthew (interactive)
 1. Register + submit on hackathons.solana.com (links: repo, console; video optional).
 2. Pyth Terminal: equity/xStock feed grant on the Pro token (free grant = crypto majors only; all stock feeds 403).
