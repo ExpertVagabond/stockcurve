@@ -53,7 +53,7 @@ export const DEFAULTS = {
 export function buildEquityCurve(p) {
   const shape = CURVES[p.curve || DEFAULTS.curve];
   if (!shape) throw new Error(`unknown curve ${p.curve}`);
-  const o = { ...DEFAULTS, ...shape, ...p };
+  const o = { ...DEFAULTS, ...shape, ...Object.fromEntries(Object.entries(p).filter(([, v]) => v !== undefined)) }; // undefined never overrides a shape value
   const prof = PROFILES[o.profile];
   if (!prof) throw new Error(`unknown profile ${o.profile}`);
   const pRef = (o.refBaseUsd * o.unit) / o.refQuoteUsd; // quote units per base token

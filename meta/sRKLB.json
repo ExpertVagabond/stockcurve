@@ -1,0 +1,33 @@
+{
+  "name": "stockcurve RKLB 0.01sh (lean)",
+  "symbol": "sRKLB",
+  "description": "stockcurve demo pool token: 1 sRKLB = 0.01 share-unit of a Rocket Lab reference, launched atomically on a Meteora Dynamic Bonding Curve quoted in SOL on the LEAN curve (start -5%, graduate +5%, liquidity weighted above reference so the issuer's opening buy is ~15% of the raise) under the issuer profile. Reference: manual print $63.55 (RKLB close 2026-09-15) recorded as provenance \u2014 RKLB has a Backpack mint but no on-chain price, no Meteora badge, and a 119-day-stale Pyth push account; a real pool needs a live Pyth reference. Hackathon demo (Stocklana 2026), not a claim on Rocket Lab shares.",
+  "image": "https://raw.githubusercontent.com/ExpertVagabond/stockcurve/main/meta/sRKLB.png",
+  "external_url": "https://github.com/ExpertVagabond/stockcurve",
+  "attributes": [
+    {
+      "trait_type": "quote",
+      "value": "SOL"
+    },
+    {
+      "trait_type": "reference",
+      "value": "manual $63.55 (2026-09-15 close) / Equity.US.RKLB/USD"
+    },
+    {
+      "trait_type": "unit",
+      "value": "0.01 share"
+    },
+    {
+      "trait_type": "curve",
+      "value": "lean: -5% start / +5% graduation, weights 1:1:6"
+    },
+    {
+      "trait_type": "profile",
+      "value": "issuer: 3% listing fee, 20 bps DAMM v2, 0.02 SOL creation fee"
+    },
+    {
+      "trait_type": "launch",
+      "value": "atomic: create + opening buy in one tx"
+    }
+  ]
+}
