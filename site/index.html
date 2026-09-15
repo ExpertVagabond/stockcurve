@@ -1,156 +1,191 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="js">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>stockcurve console</title>
-<meta name="description" content="Issuer console for a Pyth-anchored Meteora DBC pool quoted in a tokenized stock.">
+<title>stockcurve</title>
+<meta name="description" content="Pyth-anchored Meteora DBC pools quoted in tokenized stocks — five live mainnet launches, one keeper, one atomic launch.">
+<meta property="og:title" content="stockcurve"><meta property="og:description" content="IPO-style launch curves for tokenized stocks on Solana."><meta property="og:image" content="posters/sRDDT-poster.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root { color-scheme: dark; --bg:#0b0d10; --panel:#12161b; --line:#1f2630; --fg:#e6e9ee; --mute:#8a94a3; --ok:#39d98a; --warn:#f5b342; --bad:#ff6b6b; --acc:#7aa2ff; }
-  * { box-sizing: border-box; }
-  body { margin:0; background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Inter", system-ui, sans-serif; padding: 24px 16px 48px; }
-  main { max-width: 960px; margin: 0 auto; }
-  h1 { font-size: 20px; margin: 0 0 4px; letter-spacing: .2px; }
-  h1 small { color: var(--mute); font-weight: 400; }
-  .sub { color: var(--mute); margin: 0 0 20px; font-size: 14px; }
-  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin-bottom: 16px; }
-  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
-  .k { color: var(--mute); font-size: 12px; text-transform: uppercase; letter-spacing: .6px; }
-  .v { font: 600 22px/1.2 ui-monospace, "SF Mono", Menlo, monospace; margin-top: 4px; word-break: break-all; }
-  .v small { font-size: 13px; color: var(--mute); font-weight: 400; }
-  .ok { color: var(--ok); } .warn { color: var(--warn); } .bad { color: var(--bad); } .acc { color: var(--acc); }
-  .band { position: relative; height: 54px; margin: 8px 0 4px; }
-  .band .rail { position:absolute; left:0; right:0; top:26px; height:6px; background: var(--line); border-radius:3px; }
-  .band .seg { position:absolute; top:26px; height:6px; }
-  .band .tick { position:absolute; top:12px; width:2px; height:34px; background: var(--mute); }
-  .band .tick.cur { background: var(--acc); width:3px; top:6px; height:46px; box-shadow: 0 0 10px var(--acc); }
-  .band label { position:absolute; top:-2px; font: 11px ui-monospace, monospace; color: var(--mute); transform: translateX(-50%); white-space: nowrap; }
-  .band label.cur { top:auto; bottom:-6px; color: var(--acc); }
-  .bar { height: 10px; background: var(--line); border-radius: 5px; overflow: hidden; margin-top: 8px; }
-  .bar i { display:block; height:100%; background: linear-gradient(90deg, var(--acc), var(--ok)); }
-  table { width:100%; border-collapse: collapse; font-size: 13px; }
-  td { padding: 6px 8px; border-top: 1px solid var(--line); vertical-align: top; }
-  td:first-child { color: var(--mute); white-space: nowrap; width: 200px; }
-  code, .mono { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12.5px; }
-  a { color: var(--acc); text-decoration: none; } a:hover { text-decoration: underline; }
-  .pill { display:inline-block; padding: 2px 8px; border-radius: 999px; font-size: 11px; border:1px solid var(--line); color: var(--mute); margin-left: 6px; vertical-align: middle; }
-  .pill.ok { border-color: var(--ok); color: var(--ok); } .pill.warn { border-color: var(--warn); color: var(--warn); }
-  footer { color: var(--mute); font-size: 12px; margin-top: 24px; }
-  @media (max-width: 480px) { .v { font-size: 18px; } td:first-child { width: 120px; } }
+:root{--bg:#0a0a0b;--bg-2:#141416;--line:#26262a;--line-2:#35353b;--fg:#fff;--fg-2:#d2d2d6;--fg-3:#8c8c95;--red:#e50914;--red-hi:#f6121d;--green:#8de08d;--acc:#7aa2ff;--tile-w:198px;--gutter:clamp(20px,4.4vw,58px);--mono:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--fg-2);font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:inherit}img{max-width:100%}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:16px var(--gutter);background:linear-gradient(180deg,rgba(6,6,8,.92) 0%,rgba(6,6,8,.55) 55%,transparent 100%);transition:background .3s}
+nav.solid{background:rgba(8,8,10,.96);border-bottom:1px solid var(--line);backdrop-filter:blur(12px)}
+.brand{font-size:clamp(15px,2vw,19px);font-weight:800;letter-spacing:.02em;color:var(--red);text-decoration:none;text-transform:uppercase;white-space:nowrap}.brand span{color:var(--fg);font-weight:700}
+.navlinks{display:flex;align-items:center;gap:clamp(14px,2.4vw,30px)}.navlinks a{font-size:13.5px;font-weight:500;color:var(--fg-2);text-decoration:none;white-space:nowrap}.navlinks a:hover{color:#fff}
+@media(max-width:680px){.navlinks a.hide-sm{display:none}}
+.hero{position:relative;min-height:min(78vh,700px);display:flex;align-items:flex-end;padding:0 var(--gutter) clamp(46px,7vw,86px);overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:0;background-size:cover;background-position:center}
+.hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(10,10,11,.99) 0%,rgba(10,10,11,.97) 34%,rgba(10,10,11,.8) 58%,rgba(10,10,11,.35) 100%),linear-gradient(0deg,var(--bg) 0%,rgba(10,10,11,.5) 22%,transparent 55%),repeating-linear-gradient(0deg,rgba(255,255,255,.02) 0 1px,transparent 1px 3px)}
+.hero-inner{position:relative;z-index:1;max-width:760px}
+.badge-row{display:flex;align-items:center;gap:11px;margin-bottom:20px}.n-mark{font-weight:800;color:var(--red);font-size:13px;letter-spacing:.32em}.badge-row .kind{font-size:12.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--fg-2);font-weight:600}
+h1.hero-title{margin:0;font-weight:800;font-size:clamp(36px,7.2vw,78px);line-height:.98;letter-spacing:-.035em;color:#fff;text-shadow:0 3px 26px rgba(0,0,0,.6)}
+.hero-meta{display:flex;flex-wrap:wrap;align-items:center;gap:9px 14px;margin:22px 0 0;font-size:14.5px;color:var(--fg-2);font-weight:500}
+.pill{border:1px solid var(--line-2);border-radius:4px;padding:2px 9px;font-size:12px;letter-spacing:.08em;color:var(--fg-3)}.pill.g{color:var(--green);border-color:rgba(141,224,141,.4)}.pill.r{color:var(--red-hi);border-color:rgba(229,9,20,.45)}.pill.b{color:var(--acc);border-color:rgba(122,162,255,.4)}
+.yr{color:var(--green);font-weight:700;font-family:var(--mono)}
+.hero-desc{margin:20px 0 0;max-width:62ch;font-size:clamp(15.5px,2vw,17.5px);line-height:1.6;color:var(--fg-2);text-shadow:0 2px 14px rgba(0,0,0,.7)}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:12px 26px;border-radius:5px;border:0;font-size:15.5px;font-weight:700;text-decoration:none;cursor:pointer;font-family:inherit;transition:background .2s}
+.btn-w{background:#fff;color:#0a0a0b}.btn-w:hover{background:#d9d9dd}.btn-g{background:rgba(109,109,115,.55);color:#fff}.btn-g:hover{background:rgba(109,109,115,.38)}
+.rows{position:relative;z-index:2;margin-top:-38px;padding-bottom:22px}
+.row{margin-bottom:clamp(30px,4.4vw,48px)}
+.row-head{display:flex;align-items:baseline;gap:12px;padding:0 var(--gutter);margin-bottom:13px}.row-head h2{margin:0;font-size:clamp(16px,2.3vw,22px);font-weight:700;color:#e8e8ec;letter-spacing:-.012em}.row-head .count{font-size:12.5px;color:var(--fg-3);font-weight:500}
+.rail-wrap{position:relative}
+.rail{display:flex;gap:9px;padding:32px var(--gutter);margin:-32px 0;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x proximity;scroll-padding-inline:var(--gutter);scrollbar-width:none}.rail::-webkit-scrollbar{display:none}
+.tile{position:relative;flex:0 0 auto;width:var(--tile-w);aspect-ratio:2/3;border-radius:5px;overflow:hidden;scroll-snap-align:start;background:#1a1a1d;transition:transform .28s cubic-bezier(.2,.7,.3,1),box-shadow .28s;text-decoration:none;display:block;cursor:pointer;border:0;padding:0;text-align:left;color:inherit;font:inherit}
+@media(hover:hover){.tile:hover{transform:scale(1.09);z-index:15;box-shadow:0 16px 40px rgba(0,0,0,.66)}.tile:hover .tile-over{opacity:1;transform:translateY(0)}.tile:hover .tile-face{filter:brightness(.42)}}
+.tile:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+.tile-face{position:absolute;inset:0;background-size:cover;background-position:center;transition:filter .28s}
+.tile-over{position:absolute;inset:0;padding:14px 13px;display:flex;flex-direction:column;justify-content:flex-end;gap:5px;opacity:0;transform:translateY(8px);transition:opacity .25s,transform .25s}
+.tile-over b{color:#fff;font-size:15px;letter-spacing:-.01em}.tile-over .m{font-family:var(--mono);font-size:11.5px;color:var(--fg-2)}.tile-over .s{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);font-weight:700}
+.tile-tag{position:absolute;top:8px;left:8px;background:var(--red);color:#fff;font-size:10px;font-weight:800;letter-spacing:.14em;padding:3px 7px;border-radius:3px;text-transform:uppercase}
+.stat-rail{display:flex;gap:9px;padding:0 var(--gutter);overflow-x:auto;scrollbar-width:none}.stat-rail::-webkit-scrollbar{display:none}
+.stat{flex:0 0 auto;min-width:190px;background:var(--bg-2);border:1px solid var(--line);border-radius:6px;padding:14px 16px}.stat .k{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-3);font-weight:600}.stat .v{font:600 24px/1.15 var(--mono);color:#fff;margin-top:6px}.stat .v small{font-size:12px;color:var(--fg-3);font-weight:400;font-family:'Inter',sans-serif}
+.sheet{position:fixed;inset:0;z-index:200;display:none;align-items:flex-start;justify-content:center;overflow-y:auto;background:rgba(0,0,0,.7);padding:5vh 12px 40px}.sheet.open{display:flex}
+.sheet-in{width:min(920px,100%);background:#141416;border-radius:8px;border:1px solid var(--line);overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.7)}
+.sheet-hero{position:relative;min-height:300px;display:flex;align-items:flex-end;padding:26px 30px;background-size:cover;background-position:center right}
+.sheet-hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(20,20,22,.98) 0%,rgba(20,20,22,.85) 45%,rgba(20,20,22,.2) 100%),linear-gradient(0deg,#141416 0%,transparent 45%)}
+.sheet-hero>*{position:relative;z-index:1}.sheet-hero h2{margin:0;font-size:clamp(28px,4.5vw,46px);font-weight:800;letter-spacing:-.03em;color:#fff;line-height:1}
+.close{position:absolute;top:14px;right:14px;z-index:2;width:36px;height:36px;border-radius:50%;background:#181818;border:1px solid var(--line-2);color:#fff;font-size:18px;cursor:pointer}
+.sheet-body{padding:22px 30px 30px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:14px}
+.card{background:#0f0f11;border:1px solid var(--line);border-radius:6px;padding:12px 14px}.card .k{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-3);font-weight:600}.card .v{font:600 20px/1.2 var(--mono);color:#fff;margin-top:4px;word-break:break-all}.card .v small{font-size:12px;color:var(--fg-3);font-weight:400;font-family:'Inter',sans-serif}
+.ok{color:var(--green)}.warn{color:#f5b342}.b{color:var(--acc)}
+.band{position:relative;height:54px;margin:8px 0 4px}.band .rail0{position:absolute;left:0;right:0;top:26px;height:6px;background:var(--line);border-radius:3px}.band .seg{position:absolute;top:26px;height:6px}.band .tick{position:absolute;top:12px;width:2px;height:34px;background:var(--fg-3)}.band .tick.cur{background:var(--red);width:3px;top:6px;height:46px;box-shadow:0 0 10px var(--red)}.band label{position:absolute;top:-2px;font:11px var(--mono);color:var(--fg-3);transform:translateX(-50%);white-space:nowrap}.band label.cur{top:auto;bottom:-6px;color:var(--red-hi)}
+.bar{height:8px;background:var(--line);border-radius:4px;overflow:hidden;margin-top:8px}.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--red),#ff6b6b)}
+table{width:100%;border-collapse:collapse;font-size:13px}td{padding:6px 8px;border-top:1px solid var(--line);vertical-align:top}td:first-child{color:var(--fg-3);white-space:nowrap;width:190px}
+.mono{font-family:var(--mono);font-size:12.5px}.sm{display:inline-block;padding:1px 7px;border-radius:999px;font-size:11px;border:1px solid var(--line-2);color:var(--fg-3);margin-left:6px;vertical-align:middle}.sm.ok{border-color:rgba(141,224,141,.5)}.sm.warn{border-color:rgba(245,179,66,.5)}
+.sec{margin-top:18px}.sec h3{margin:0 0 8px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--fg-3)}
+footer{padding:30px var(--gutter) 50px;color:var(--fg-3);font-size:13px;border-top:1px solid var(--line)}footer a{color:var(--fg-2)}
+@media(max-width:480px){:root{--tile-w:150px}td:first-child{width:120px}.sheet-body{padding:16px}.sheet-hero{padding:18px}}
 </style>
 </head>
 <body>
-<main>
-  <h1>stockcurve <small id="pair">·</small> <select id="poolSel" style="margin-left:10px;background:var(--panel);color:var(--fg);border:1px solid var(--line);border-radius:6px;padding:3px 8px;font-size:13px"></select></h1>
-  <p class="sub">Pyth-anchored Meteora DBC pool quoted in a tokenized stock. Snapshot <span id="at" class="mono">…</span>, live quote price from Jupiter <span id="live" class="mono"></span>.</p>
+<nav id="nav"><a class="brand" href="#">stock<span>curve</span></a><div class="navlinks"><a href="#live">Live</a><a href="#graduated">Graduated</a><a class="hide-sm" href="https://github.com/ExpertVagabond/stockcurve" target="_blank" rel="noopener">GitHub</a><a class="hide-sm" href="https://github.com/ExpertVagabond/stockcurve/blob/main/docs/research-findings.md" target="_blank" rel="noopener">Research</a></div></nav>
 
-  <div class="grid">
-    <div class="card"><div class="k">Pool price</div><div class="v" id="poolPrice">…</div></div>
-    <div class="card"><div class="k">Reference (Pyth)</div><div class="v" id="refPrice">…</div></div>
-    <div class="card"><div class="k">Basis vs reference</div><div class="v" id="basis">…</div></div>
-    <div class="card"><div class="k">Lifecycle</div><div class="v" id="stage">…</div></div>
+<header class="hero"><div class="hero-bg" id="heroBg"></div>
+  <div class="hero-inner">
+    <div class="badge-row"><span class="n-mark">S</span><span class="kind" id="heroKind">Featured pool</span></div>
+    <h1 class="hero-title" id="heroTitle">stockcurve</h1>
+    <div class="hero-meta" id="heroMeta"></div>
+    <p class="hero-desc" id="heroDesc"></p>
+    <div class="hero-cta" id="heroCta"></div>
   </div>
+</header>
 
-  <div class="card" style="margin-bottom:16px">
-    <div class="k">Curve band · start → reference → graduation</div>
-    <div class="band" id="band"><div class="rail"></div></div>
-    <div class="k" style="margin-top:14px">Graduation progress <span id="progressTxt" class="mono"></span></div>
-    <div class="bar"><i id="progress" style="width:0"></i></div>
-  </div>
-
-  <div class="grid">
-    <div class="card"><div class="k">Quote reserve (share units)</div><div class="v" id="reserve">…</div></div>
-    <div class="card"><div class="k">Trading fees earned (quote)</div><div class="v" id="fees">…</div></div>
-    <div class="card"><div class="k">Float sold</div><div class="v" id="sold">…</div></div>
-    <div class="card"><div class="k">Fee schedule</div><div class="v" id="feeSched" style="font-size:14px">…</div></div>
-  </div>
-
-  <div class="card">
-    <div class="k" style="margin-bottom:6px">On-chain</div>
-    <table id="chain"></table>
-  </div>
-
-  <div class="card" style="margin-top:16px">
-    <div class="k" style="margin-bottom:6px">Reference provenance</div>
-    <table id="prov"></table>
-  </div>
-
-  <footer>Built __BUILT_AT__ · <a href="https://github.com/ExpertVagabond/stockcurve">source</a> · demo token is a hackathon artifact, not a claim on shares.</footer>
+<main class="rows">
+  <section class="row"><div class="row-head"><h2>Across five launches</h2><span class="count">mainnet · 2026-09-15</span></div><div class="stat-rail" id="stats"></div></section>
+  <section class="row" id="live"><div class="row-head"><h2>Live on the curve</h2><span class="count" id="liveCount"></span></div><div class="rail-wrap"><div class="rail" id="railLive"></div></div></section>
+  <section class="row" id="graduated"><div class="row-head"><h2>Graduated to DAMM v2</h2><span class="count" id="gradCount"></span></div><div class="rail-wrap"><div class="rail" id="railGrad"></div></div></section>
+  <section class="row"><div class="row-head"><h2>By quote token</h2><span class="count">xStocks · Backpack · USDC · SOL</span></div><div class="rail-wrap"><div class="rail" id="railQuote"></div></div></section>
+  <section class="row"><div class="row-head"><h2>By reference</h2><span class="count">how each curve was anchored</span></div><div class="rail-wrap"><div class="rail" id="railRef"></div></div></section>
 </main>
-<script>
-(async () => {
-  const pools = await fetch("data/pools.json").then(r => r.json());
-  const sel = document.getElementById("poolSel");
-  pools.forEach((p, i) => { const o = document.createElement("option"); o.value = i; o.textContent = `${p.status.symbol} / ${p.status.quote}`; sel.appendChild(o); });
-  const wanted = pools.findIndex(p => location.hash.slice(1) === p.name);
-  sel.value = wanted >= 0 ? wanted : pools.length - 1;
-  sel.onchange = () => { location.hash = pools[sel.value].name; render(pools[sel.value]); };
-  render(pools[sel.value]);
-})();
-async function render({ status: s, launch: l, plan: p }) {
-  const $ = id => document.getElementById(id);
-  document.getElementById("band").innerHTML = '<div class="rail"></div>';
-  const f = (n, d = 6) => Number(n).toFixed(d);
-  const usd = n => "$" + Number(n).toFixed(4);
-  const solscan = (t, x) => `<a href="https://solscan.io/${t}/${x}" target="_blank" rel="noopener">${x}</a>`;
-  const bps = s.pool.basisBps;
 
-  $("pair").textContent = `${s.symbol} / ${s.quote}`;
-  $("at").textContent = new Date(s.at).toISOString().replace("T", " ").slice(0, 16) + " UTC";
+<div class="sheet" id="sheet" role="dialog" aria-modal="true"><div class="sheet-in">
+  <div class="sheet-hero" id="sheetHero"><button class="close" id="close" aria-label="close">×</button><div><div class="badge-row"><span class="n-mark">S</span><span class="kind" id="sKind"></span></div><h2 id="sTitle"></h2><div class="hero-meta" id="sMeta"></div></div></div>
+  <div class="sheet-body">
+    <div class="grid"><div class="card"><div class="k">Pool price</div><div class="v" id="poolPrice"></div></div><div class="card"><div class="k">Reference</div><div class="v" id="refPrice"></div></div><div class="card"><div class="k">Basis</div><div class="v" id="basis"></div></div><div class="card"><div class="k">Lifecycle</div><div class="v" id="stage"></div></div></div>
+    <div class="card"><div class="k">Curve band · start → reference → graduation</div><div class="band" id="band"></div><div class="k" style="margin-top:14px">Graduation progress <span id="progressTxt" class="mono"></span></div><div class="bar"><i id="progress"></i></div></div>
+    <div class="grid" style="margin-top:10px"><div class="card"><div class="k">Quote reserve</div><div class="v" id="reserve"></div></div><div class="card"><div class="k">Trading fees earned</div><div class="v" id="fees"></div></div><div class="card"><div class="k">Float sold</div><div class="v" id="sold"></div></div><div class="card"><div class="k">Fee schedule</div><div class="v" id="feeSched" style="font-size:13px;font-family:Inter,sans-serif"></div></div></div>
+    <div class="sec"><h3>On-chain</h3><table id="chain"></table></div>
+    <div class="sec"><h3>Reference provenance</h3><table id="prov"></table></div>
+  </div>
+</div></div>
+
+<footer>Built __BUILT_AT__ · <a href="https://github.com/ExpertVagabond/stockcurve">source</a> · Stocklana 2026 · demo tokens are hackathon artifacts, not claims on shares.</footer>
+
+<script>
+const $ = id => document.getElementById(id);
+const f = (n, d = 6) => Number(n).toFixed(d);
+const usd = n => "$" + Number(n).toFixed(4);
+const solscan = (t, x, txt) => `<a href="https://solscan.io/${t}/${x}" target="_blank" rel="noopener">${txt || x}</a>`;
+const age = sec => sec < 120 ? `${sec}s` : sec < 7200 ? `${Math.round(sec / 60)}m` : sec < 172800 ? `${(sec / 3600).toFixed(1)}h` : `${(sec / 86400).toFixed(1)}d`;
+const REF = { "pyth-lazer": "Pyth Pro live", "pyth-onchain": "Pyth push account", "jupiter-xstock-twin": "on-chain twin", "jupiter-v3": "Jupiter", "prestocks-mark": "PreStocks mark", "tessera-mark": "Tessera mark", "manual": "issuer" };
+const QGROUP = q => q === "USDC" ? "USDC" : q === "SOL" ? "SOL" : "xStock";
+const poster = p => `posters/${p.launch.symbol}-poster.png`;
+const billboard = p => `posters/${p.launch.symbol}-billboard.png`;
+const stageOf = p => p.status.pool.isMigrated ? "graduated" : p.status.pool.progressPct >= 100 ? "complete" : "live";
+const launchMode = p => p.launch.atomic ? "atomic launch" : (p.launch.txs?.keeperBuyDiscount ? "keeper-operated" : "manual");
+
+window.addEventListener("scroll", () => $("nav").classList.toggle("solid", scrollY > 40));
+
+function tile(p, tag) {
+  const s = p.status, st = stageOf(p);
+  const b = document.createElement("button"); b.className = "tile"; b.setAttribute("aria-label", `${s.symbol} / ${s.quote}`);
+  b.innerHTML = `<div class="tile-face" style="background-image:url('${poster(p)}')"></div>${tag ? `<span class="tile-tag">${tag}</span>` : ""}<div class="tile-over"><span class="s">${st === "live" ? "live on curve" : st === "graduated" ? "graduated" : "curve complete"}</span><b>${s.symbol} / ${s.quote}</b><span class="m">basis ${s.pool.basisBps >= 0 ? "+" : ""}${s.pool.basisBps.toFixed(0)} bps · ${s.pool.progressPct.toFixed(0)}%</span><span class="m">${REF[s.reference.baseSource] || s.reference.baseSource}${s.reference.baseStale ? " · stale" : ""}</span></div>`;
+  b.onclick = () => openSheet(p);
+  return b;
+}
+
+function hero(p) {
+  const s = p.status, st = stageOf(p);
+  $("heroBg").style.backgroundImage = `url('${billboard(p)}')`;
+  $("heroKind").textContent = st === "live" ? "Live on the curve · trade it" : "Featured pool";
+  $("heroTitle").textContent = `${s.symbol} / ${s.quote}`;
+  $("heroMeta").innerHTML = `<span class="yr">${s.pool.basisBps >= 0 ? "+" : ""}${s.pool.basisBps.toFixed(0)} bps vs reference</span><span class="pill ${st === "live" ? "g" : ""}">${st === "live" ? "LIVE" : st.toUpperCase()}</span><span class="pill">${QGROUP(s.quote)} quote</span><span class="pill b">${REF[s.reference.baseSource] || s.reference.baseSource}</span><span class="pill ${p.launch.atomic ? "r" : ""}">${launchMode(p)}</span>`;
+  $("heroDesc").textContent = p.launch.atomic
+    ? `Created and opened in one transaction: the pool's first on-chain tx is its own creation, so there was no block in which a sniper could be first. It opened ${((p.launch.openedAtPrice / s.reference.refPriceQuote - 1) * 1e4).toFixed(0)} bps from the reference and sits on the curve at fair value — buy it and the curve, not a bot, sets the price.`
+    : `${p.plan.base} floated at 1 token = ${p.plan.unit} share-unit, quoted in ${s.quote}, curve from −${p.plan.summary.discountBps} bps to +${p.plan.summary.premiumBps} bps around a reference of ${usd(s.reference.refPriceUsd)}. Graduated to DAMM v2 after ${f(s.pool.threshold, 6)} ${s.quote} of real demand.`;
+  $("heroCta").innerHTML = `<a class="btn btn-w" href="https://solscan.io/account/${s.poolAddress}" target="_blank" rel="noopener">▶ Open on Solscan</a><button class="btn btn-g" id="heroMore">ⓘ Title page</button>`;
+  $("heroMore").onclick = () => openSheet(p);
+}
+
+function openSheet(p) {
+  const { status: s, launch: l, plan } = p;
+  const bps = s.pool.basisBps, st = stageOf(p);
+  $("sheetHero").style.backgroundImage = `url('${billboard(p)}')`;
+  $("sKind").textContent = `${QGROUP(s.quote)}-quoted · ${launchMode(p)}`;
+  $("sTitle").textContent = `${s.symbol} / ${s.quote}`;
+  $("sMeta").innerHTML = `<span class="yr">${bps >= 0 ? "+" : ""}${bps.toFixed(0)} bps</span><span class="pill ${st === "live" ? "g" : ""}">${st.toUpperCase()}</span><span class="pill">snapshot ${new Date(s.at).toISOString().replace("T", " ").slice(0, 16)} UTC</span>`;
   $("poolPrice").innerHTML = `${f(s.pool.priceQuote, 8)} <small>${s.quote} · ${usd(s.pool.priceUsd)}</small>`;
   $("refPrice").innerHTML = `${f(s.reference.refPriceQuote, 8)} <small>${s.quote} · ${usd(s.reference.refPriceUsd)}</small>`;
-  $("basis").innerHTML = `<span class="${Math.abs(bps) < 100 ? "ok" : bps > 0 ? "warn" : "acc"}">${bps >= 0 ? "+" : ""}${bps.toFixed(0)} bps</span>`;
-  $("stage").innerHTML = s.pool.isMigrated ? `<span class="ok">Graduated</span> <small>DAMM v2 live</small>` : s.pool.progressPct >= 100 ? `<span class="warn">Curve complete</span> <small>awaiting migration</small>` : `<span class="acc">On curve</span> <small>${s.pool.progressPct.toFixed(1)}%</small>`;
+  $("basis").innerHTML = `<span class="${Math.abs(bps) < 100 ? "ok" : bps > 0 ? "warn" : "b"}">${bps >= 0 ? "+" : ""}${bps.toFixed(0)} bps</span>`;
+  $("stage").innerHTML = s.pool.isMigrated ? `<span class="ok">Graduated</span> <small>DAMM v2 live</small>` : s.pool.progressPct >= 100 ? `<span class="warn">Complete</span> <small>awaiting migration</small>` : `<span class="b">On curve</span> <small>${s.pool.progressPct.toFixed(1)}%</small>`;
   $("progressTxt").textContent = `${s.pool.progressPct.toFixed(1)}% · ${f(s.pool.quoteReserve, 8)} / ${f(s.pool.threshold, 8)} ${s.quote} (≈ $${Number(s.pool.thresholdUsd).toFixed(2)})`;
   $("progress").style.width = Math.min(100, s.pool.progressPct) + "%";
-  $("reserve").innerHTML = s.quoteMint.scaledUiMultiplier !== 1 ? `${f(s.pool.quoteReserveDisplay, 8)} <small>× multiplier ${s.quoteMint.scaledUiMultiplier.toFixed(5)} · raw ${f(s.pool.quoteReserve, 8)}</small>` : `${f(s.pool.quoteReserve, 6)} <small>${s.quote}</small>`;
+  $("reserve").innerHTML = s.quoteMint.scaledUiMultiplier !== 1 ? `${f(s.pool.quoteReserveDisplay, 8)} <small>share units · × ${s.quoteMint.scaledUiMultiplier.toFixed(5)}</small>` : `${f(s.pool.quoteReserve, 6)} <small>${s.quote}</small>`;
   $("fees").innerHTML = `${f(s.fees.totalTradingQuote, 8)} <small>${s.quote} · unclaimed ${f(s.fees.partnerUnclaimedQuote, 8)}</small>`;
-  $("sold").innerHTML = `${f(s.pool.baseSold, 4)} <small>tokens = ${f(s.pool.baseSold * s.unit, 4)} ${s.preipo ? "PreStocks-token units" : "shares"} of ${+(p.float * p.unit).toPrecision(4)} floated</small>`;
+  $("sold").innerHTML = `${f(s.pool.baseSold, 4)} <small>= ${f(s.pool.baseSold * s.unit, 4)} ${s.preipo ? "PreStocks units" : "shares"} of ${+(plan.float * plan.unit).toPrecision(4)}</small>`;
   $("feeSched").textContent = s.fees.schedule;
-
-  // band: start … graduation, ticks at reference + current
+  const band = $("band"); band.innerHTML = '<div class="rail0"></div>';
   const lo = s.pool.startPriceQuote, hi = s.pool.graduationPriceQuote, ref = s.reference.refPriceQuote, cur = s.pool.priceQuote;
   const pct = x => Math.max(0, Math.min(100, (x - lo) / (hi - lo) * 100));
-  const band = $("band");
-  const cps = p.checkpoints, w = p.summary.weights, colors = ["#3a4a6a", "#4a6ab0", "#5a8ae0"];
+  const cps = plan.checkpoints, w = plan.summary.weights, colors = ["#3a2a2e", "#7a1a22", "#b3121b"];
   for (let i = 0; i < cps.length - 1; i++) { const d = document.createElement("div"); d.className = "seg"; d.style.left = pct(cps[i]) + "%"; d.style.width = (pct(cps[i + 1]) - pct(cps[i])) + "%"; d.style.background = colors[i]; d.title = `segment ${i + 1}, weight ${w[i]}`; band.appendChild(d); }
-  for (const [x, txt, cls] of [[lo, "start −" + p.summary.discountBps + "bps", ""], [ref, "reference", ""], [hi, "graduate +" + p.summary.premiumBps + "bps", ""], [cur, "pool " + f(cur, 6), "cur"]]) {
-    const t = document.createElement("div"); t.className = "tick " + cls; t.style.left = pct(x) + "%"; band.appendChild(t);
-    const lab = document.createElement("label"); lab.className = cls; lab.style.left = pct(x) + "%"; lab.textContent = txt; band.appendChild(lab);
-  }
-
-  const rows = [
-    ["DBC pool", solscan("account", s.poolAddress)], ["DBC config", solscan("account", s.config)], ["Base mint " + s.symbol, solscan("token", s.baseMint)],
-    ["Quote mint " + s.quote, solscan("token", s.quoteMint.mint) + (l.tokenBadge ? ' <span class="pill ok">Meteora token badge</span>' : ' <span class="pill">SPL · permissionless</span>')],
-    ...(l.dammV2Pool ? [["DAMM v2 pool", solscan("account", l.dammV2Pool)]] : []),
-    ...Object.entries(l.txs || {}).map(([k, v]) => [k, solscan("tx", v)]),
-  ];
+  for (const [x, txt, cls] of [[lo, "start −" + plan.summary.discountBps, ""], [ref, "reference", ""], [hi, "graduate +" + plan.summary.premiumBps, ""], [cur, "pool " + f(cur, 6), "cur"]]) { const t = document.createElement("div"); t.className = "tick " + cls; t.style.left = pct(x) + "%"; band.appendChild(t); const lab = document.createElement("label"); lab.className = cls; lab.style.left = pct(x) + "%"; lab.textContent = txt; band.appendChild(lab); }
+  const rows = [["DBC pool", solscan("account", s.poolAddress)], ["DBC config", solscan("account", s.config)], ["Base mint " + s.symbol, solscan("token", s.baseMint)], ["Quote mint " + s.quote, solscan("token", s.quoteMint.mint) + (l.tokenBadge ? ' <span class="sm ok">Meteora token badge</span>' : ' <span class="sm">permissionless quote</span>')], ...(l.dammV2Pool ? [["DAMM v2 pool", solscan("account", l.dammV2Pool)]] : []), ...Object.entries(l.txs || {}).map(([k, v]) => [k, solscan("tx", v)])];
   $("chain").innerHTML = rows.map(([k, v]) => `<tr><td>${k}</td><td class="mono">${v}</td></tr>`).join("");
-  const age = sec => sec < 120 ? `${sec}s` : sec < 7200 ? `${Math.round(sec / 60)}m` : sec < 172800 ? `${(sec / 3600).toFixed(1)}h` : `${(sec / 86400).toFixed(1)}d`;
   const prov = [
-    ...(s.preipo ? [
-      ["PreStocks " + s.preipo.prestocks.symbol, `mark <b>$${s.preipo.prestocks.mark.toFixed(2)}</b> (curve anchor) · secondary token $${s.preipo.prestocks.token.toFixed(2)} <span class="pill ${Math.abs(s.preipo.prestocks.basisBps) < 500 ? "ok" : "warn"}">${s.preipo.prestocks.basisBps >= 0 ? "+" : ""}${s.preipo.prestocks.basisBps.toFixed(0)} bps vs mark</span> · valuation $${(s.preipo.prestocks.markValuation / 1e9).toFixed(0)}B · <a href="https://solscan.io/token/${s.preipo.prestocks.mint}" target="_blank" rel="noopener">mint</a>`],
-      ...(s.preipo.tessera ? [["Tessera " + s.preipo.tessera.symbol, `mark $${s.preipo.tessera.mark.toFixed(2)} · valuation $${(s.preipo.tessera.markValuation / 1e9).toFixed(0)}B <span class="pill warn">${(s.preipo.tessera.markValuation / s.preipo.prestocks.markValuation).toFixed(2)}× PreStocks</span> · ${s.preipo.tessera.holders.toLocaleString()} holders`]] : []),
-      ["Why a curve", "A pre-IPO name has no exchange print and the two issuers disagree on valuation; the DBC curve anchored to the mark is the neutral discovery venue, and graduation above it is the market's verdict."],
-    ] : []),
-    [p.base + " (base)", `$${Number(s.reference.baseUsd).toFixed(2)} via <b>${s.reference.baseSource}</b>, age ${age(s.reference.baseAgeSec)} ${s.reference.baseStale ? '<span class="pill warn">stale — flagged</span>' : '<span class="pill ok">fresh</span>'}`],
-    [s.quote + " (quote)", `$${Number(s.reference.quoteUsd).toFixed(2)} via <b>${s.reference.quoteSource}</b>, age ${age(s.reference.quoteAgeSec ?? 0)}`],
-    ["Resolver order", "Pyth Pro (Lazer) → Pyth push-oracle account on Solana → Jupiter price → issuer-supplied. Source and age are recorded in the plan the config was built from."],
+    ...(s.preipo ? [["PreStocks " + s.preipo.prestocks.symbol, `mark <b>$${s.preipo.prestocks.mark.toFixed(2)}</b> (anchor) · secondary $${s.preipo.prestocks.token.toFixed(2)} <span class="sm ${Math.abs(s.preipo.prestocks.basisBps) < 500 ? "ok" : "warn"}">${s.preipo.prestocks.basisBps >= 0 ? "+" : ""}${s.preipo.prestocks.basisBps.toFixed(0)} bps vs mark</span> · valuation $${(s.preipo.prestocks.markValuation / 1e9).toFixed(0)}B`], ...(s.preipo.tessera ? [["Tessera " + s.preipo.tessera.symbol, `mark $${s.preipo.tessera.mark.toFixed(2)} · valuation $${(s.preipo.tessera.markValuation / 1e9).toFixed(0)}B <span class="sm warn">${(s.preipo.tessera.markValuation / s.preipo.prestocks.markValuation).toFixed(2)}× PreStocks</span>`]] : [])] : []),
+    [plan.base + " (base)", `$${Number(s.reference.baseUsd).toFixed(2)} via <b>${REF[s.reference.baseSource] || s.reference.baseSource}</b>, age ${age(s.reference.baseAgeSec)} ${s.reference.baseStale ? '<span class="sm warn">stale — flagged</span>' : '<span class="sm ok">fresh</span>'}`],
+    [s.quote + " (quote)", `$${Number(s.reference.quoteUsd).toFixed(2)} via <b>${REF[s.reference.quoteSource] || s.reference.quoteSource}</b>`],
+    ["Resolver", "Pyth Pro → on-chain twin → Pyth push account → Jupiter → issuer-supplied. Source and age are written into the plan the config was built from."],
   ];
   $("prov").innerHTML = prov.map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join("");
-
-  // live quote price so the basis moves between snapshots
-  try {
-    const j = await fetch(`https://lite-api.jup.ag/price/v3?ids=${s.quoteMint.mint}`).then(r => r.json());
-    const live = j[s.quoteMint.mint]?.usdPrice;
-    if (live) {
-      $("live").textContent = `${s.quote} $${live.toFixed(2)}`;
-      const liveRefQuote = s.reference.refPriceUsd / live;
-      const liveBps = (s.pool.priceQuote / liveRefQuote - 1) * 1e4;
-      $("basis").innerHTML += ` <small>live ${liveBps >= 0 ? "+" : ""}${liveBps.toFixed(0)} bps</small>`;
-    }
-  } catch {}
+  $("sheet").classList.add("open"); document.body.style.overflow = "hidden";
+  history.replaceState(null, "", "#" + p.name);
 }
+const closeSheet = () => { $("sheet").classList.remove("open"); document.body.style.overflow = ""; };
+$("close").onclick = closeSheet; $("sheet").addEventListener("click", e => { if (e.target === $("sheet")) closeSheet(); }); addEventListener("keydown", e => { if (e.key === "Escape") closeSheet(); });
+
+(async () => {
+  const pools = await fetch("data/pools.json").then(r => r.json());
+  const live = pools.filter(p => stageOf(p) !== "graduated"), grad = pools.filter(p => stageOf(p) === "graduated");
+  hero(live[0] || pools[pools.length - 1]);
+  $("liveCount").textContent = `${live.length} pool${live.length === 1 ? "" : "s"}`; $("gradCount").textContent = `${grad.length} pools`;
+  live.forEach(p => $("railLive").appendChild(tile(p, p.launch.atomic ? "atomic" : "live")));
+  grad.forEach(p => $("railGrad").appendChild(tile(p, p.launch.txs?.keeperBuyDiscount ? "keeper" : "")));
+  [...pools].sort((a, b) => QGROUP(a.status.quote).localeCompare(QGROUP(b.status.quote))).forEach(p => $("railQuote").appendChild(tile(p, p.status.quote)));
+  [...pools].sort((a, b) => a.status.reference.baseSource.localeCompare(b.status.reference.baseSource)).forEach(p => $("railRef").appendChild(tile(p, (REF[p.status.reference.baseSource] || p.status.reference.baseSource).split(" ")[0])));
+  const fees = pools.reduce((a, p) => a + p.status.fees.totalTradingQuote * p.status.reference.quoteUsd, 0);
+  const stats = [["Pools on mainnet", pools.length, "one day"], ["Quote tokens", new Set(pools.map(p => p.status.quote)).size, "AAPLx · SPYx · USDC · SOL"], ["Graduated to DAMM v2", grad.length, "100% LP locked"], ["Reference sources", new Set(pools.map(p => p.status.reference.baseSource)).size, "Pyth · twins · pre-IPO mark"], ["Fees earned", "$" + fees.toFixed(2), "at demo float"], ["Sniper window", "0 blocks", "atomic launch"]];
+  $("stats").innerHTML = stats.map(([k, v, s]) => `<div class="stat"><div class="k">${k}</div><div class="v">${v} <small>${s}</small></div></div>`).join("");
+  const want = pools.find(p => location.hash.slice(1) === p.name); if (want) openSheet(want);
+})();
 </script>
 </body>
 </html>

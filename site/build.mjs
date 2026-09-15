@@ -1,6 +1,8 @@
 // Build the static issuer console: every pool under out/pools/<name>/{plan,launch,status}.json → site/dist/
-import { readFileSync, writeFileSync, mkdirSync, readdirSync, existsSync } from "node:fs";
+import { readFileSync, writeFileSync, mkdirSync, readdirSync, existsSync, copyFileSync } from "node:fs";
 mkdirSync("site/dist/data", { recursive: true });
+mkdirSync("site/dist/posters", { recursive: true });
+for (const f of readdirSync("meta")) if (f.endsWith("-poster.png") || f.endsWith("-billboard.png")) copyFileSync(`meta/${f}`, `site/dist/posters/${f}`);
 const pools = [];
 for (const name of readdirSync("out/pools").sort()) {
   const dir = `out/pools/${name}`;
