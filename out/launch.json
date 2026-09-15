@@ -24,7 +24,10 @@
   "tokenBadge": "8VeVZe3Zxfpax2qQUp7i68FCLspLYErm2FJChc5NDuVn",
   "txs": {
     "createConfig": "5RHP6icoTyXdS46Y9FFhsMfyt1q1qhUn2Jgjt5Nb3Kw61SUfD547zUgfAJvBVEboVqMqRVRefCkfoVBk6qWRGwNw",
-    "createPool": "5ca4uXAHMxNMP93KYuS2PTtrnPLV93W6hFJYRzPtRsAux7rwuDgDWG3YMtDuYpZukePwWweV7rhvw2NEXdSvyWi2"
+    "createPool": "5ca4uXAHMxNMP93KYuS2PTtrnPLV93W6hFJYRzPtRsAux7rwuDgDWG3YMtDuYpZukePwWweV7rhvw2NEXdSvyWi2",
+    "migrateToDammV2": "5RgKF9dHygAC131e2ZBCEo71mUHipnR5m76QCywEUpRL7QVSP5bnqTKXwvHwAo3sHx4iPDubv3LDA8H3uEtyR9Gh"
   },
-  "launchedAt": "2026-09-15T20:26:29.993Z"
+  "launchedAt": "2026-09-15T20:26:29.993Z",
+  "dammV2Pool": "7FGmDHJNPhTu4VbRLQL7b5RKMXDD1p8Sm7hDKPWby4gA",
+  "dammConfig": "7F6dnUcRuyM2TwR8myT1dYypFXpPSxqwKNSFNkxyNESd"
 }
