@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>stockcurve console</title>
+<meta name="description" content="Issuer console for a Pyth-anchored Meteora DBC pool quoted in a tokenized stock.">
+<style>
+  :root { color-scheme: dark; --bg:#0b0d10; --panel:#12161b; --line:#1f2630; --fg:#e6e9ee; --mute:#8a94a3; --ok:#39d98a; --warn:#f5b342; --bad:#ff6b6b; --acc:#7aa2ff; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:15px/1.5 -apple-system, "Inter", system-ui, sans-serif; padding: 24px 16px 48px; }
+  main { max-width: 960px; margin: 0 auto; }
+  h1 { font-size: 20px; margin: 0 0 4px; letter-spacing: .2px; }
+  h1 small { color: var(--mute); font-weight: 400; }
+  .sub { color: var(--mute); margin: 0 0 20px; font-size: 14px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin-bottom: 16px; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+  .k { color: var(--mute); font-size: 12px; text-transform: uppercase; letter-spacing: .6px; }
+  .v { font: 600 22px/1.2 ui-monospace, "SF Mono", Menlo, monospace; margin-top: 4px; word-break: break-all; }
+  .v small { font-size: 13px; color: var(--mute); font-weight: 400; }
+  .ok { color: var(--ok); } .warn { color: var(--warn); } .bad { color: var(--bad); } .acc { color: var(--acc); }
+  .band { position: relative; height: 54px; margin: 8px 0 4px; }
+  .band .rail { position:absolute; left:0; right:0; top:26px; height:6px; background: var(--line); border-radius:3px; }
+  .band .seg { position:absolute; top:26px; height:6px; }
+  .band .tick { position:absolute; top:12px; width:2px; height:34px; background: var(--mute); }
+  .band .tick.cur { background: var(--acc); width:3px; top:6px; height:46px; box-shadow: 0 0 10px var(--acc); }
+  .band label { position:absolute; top:-2px; font: 11px ui-monospace, monospace; color: var(--mute); transform: translateX(-50%); white-space: nowrap; }
+  .band label.cur { top:auto; bottom:-6px; color: var(--acc); }
+  .bar { height: 10px; background: var(--line); border-radius: 5px; overflow: hidden; margin-top: 8px; }
+  .bar i { display:block; height:100%; background: linear-gradient(90deg, var(--acc), var(--ok)); }
+  table { width:100%; border-collapse: collapse; font-size: 13px; }
+  td { padding: 6px 8px; border-top: 1px solid var(--line); vertical-align: top; }
+  td:first-child { color: var(--mute); white-space: nowrap; width: 200px; }
+  code, .mono { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12.5px; }
+  a { color: var(--acc); text-decoration: none; } a:hover { text-decoration: underline; }
+  .pill { display:inline-block; padding: 2px 8px; border-radius: 999px; font-size: 11px; border:1px solid var(--line); color: var(--mute); margin-left: 6px; vertical-align: middle; }
+  .pill.ok { border-color: var(--ok); color: var(--ok); } .pill.warn { border-color: var(--warn); color: var(--warn); }
+  footer { color: var(--mute); font-size: 12px; margin-top: 24px; }
+  @media (max-width: 480px) { .v { font-size: 18px; } td:first-child { width: 120px; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>stockcurve <small id="pair">·</small></h1>
+  <p class="sub">Pyth-anchored Meteora DBC pool quoted in a tokenized stock. Snapshot <span id="at" class="mono">…</span>, live quote price from Jupiter <span id="live" class="mono"></span>.</p>
+
+  <div class="grid">
+    <div class="card"><div class="k">Pool price</div><div class="v" id="poolPrice">…</div></div>
+    <div class="card"><div class="k">Reference (Pyth)</div><div class="v" id="refPrice">…</div></div>
+    <div class="card"><div class="k">Basis vs reference</div><div class="v" id="basis">…</div></div>
+    <div class="card"><div class="k">Lifecycle</div><div class="v" id="stage">…</div></div>
+  </div>
+
+  <div class="card" style="margin-bottom:16px">
+    <div class="k">Curve band · start → reference → graduation</div>
+    <div class="band" id="band"><div class="rail"></div></div>
+    <div class="k" style="margin-top:14px">Graduation progress <span id="progressTxt" class="mono"></span></div>
+    <div class="bar"><i id="progress" style="width:0"></i></div>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="k">Quote reserve (share units)</div><div class="v" id="reserve">…</div></div>
+    <div class="card"><div class="k">Trading fees earned (quote)</div><div class="v" id="fees">…</div></div>
+    <div class="card"><div class="k">Float sold</div><div class="v" id="sold">…</div></div>
+    <div class="card"><div class="k">Fee schedule</div><div class="v" id="feeSched" style="font-size:14px">…</div></div>
+  </div>
+
+  <div class="card">
+    <div class="k" style="margin-bottom:6px">On-chain</div>
+    <table id="chain"></table>
+  </div>
+
+  <div class="card" style="margin-top:16px">
+    <div class="k" style="margin-bottom:6px">Reference provenance</div>
+    <table id="prov"></table>
+  </div>
+
+  <footer>Built __BUILT_AT__ · <a href="https://github.com/ExpertVagabond/stockcurve">source</a> · demo token is a hackathon artifact, not a claim on shares.</footer>
+</main>
+<script>
+(async () => {
+  const [s, l, p] = await Promise.all(["status", "launch", "plan"].map(n => fetch(`data/${n}.json`).then(r => r.json())));
+  const $ = id => document.getElementById(id);
+  const f = (n, d = 6) => Number(n).toFixed(d);
+  const usd = n => "$" + Number(n).toFixed(4);
+  const solscan = (t, x) => `<a href="https://solscan.io/${t}/${x}" target="_blank" rel="noopener">${x}</a>`;
+  const bps = s.pool.basisBps;
+
+  $("pair").textContent = `${s.symbol} / ${s.quote}`;
+  $("at").textContent = new Date(s.at).toISOString().replace("T", " ").slice(0, 16) + " UTC";
+  $("poolPrice").innerHTML = `${f(s.pool.priceQuote, 8)} <small>${s.quote} · ${usd(s.pool.priceUsd)}</small>`;
+  $("refPrice").innerHTML = `${f(s.reference.refPriceQuote, 8)} <small>${s.quote} · ${usd(s.reference.refPriceUsd)}</small>`;
+  $("basis").innerHTML = `<span class="${Math.abs(bps) < 100 ? "ok" : bps > 0 ? "warn" : "acc"}">${bps >= 0 ? "+" : ""}${bps.toFixed(0)} bps</span>`;
+  $("stage").innerHTML = s.pool.isMigrated ? `<span class="ok">Graduated</span> <small>DAMM v2 live</small>` : s.pool.progressPct >= 100 ? `<span class="warn">Curve complete</span> <small>awaiting migration</small>` : `<span class="acc">On curve</span> <small>${s.pool.progressPct.toFixed(1)}%</small>`;
+  $("progressTxt").textContent = `${s.pool.progressPct.toFixed(1)}% · ${f(s.pool.quoteReserve, 8)} / ${f(s.pool.threshold, 8)} ${s.quote} (≈ $${Number(s.pool.thresholdUsd).toFixed(2)})`;
+  $("progress").style.width = Math.min(100, s.pool.progressPct) + "%";
+  $("reserve").innerHTML = `${f(s.pool.quoteReserveDisplay, 8)} <small>× multiplier ${s.quoteMint.scaledUiMultiplier.toFixed(5)} · raw ${f(s.pool.quoteReserve, 8)}</small>`;
+  $("fees").innerHTML = `${f(s.fees.totalTradingQuote, 8)} <small>${s.quote} · unclaimed ${f(s.fees.partnerUnclaimedQuote, 8)}</small>`;
+  $("sold").innerHTML = `${f(s.pool.baseSold, 4)} <small>tokens = ${f(s.pool.baseSold * s.unit, 4)} shares of ${p.float * p.unit} floated</small>`;
+  $("feeSched").textContent = s.fees.schedule;
+
+  // band: start … graduation, ticks at reference + current
+  const lo = s.pool.startPriceQuote, hi = s.pool.graduationPriceQuote, ref = s.reference.refPriceQuote, cur = s.pool.priceQuote;
+  const pct = x => Math.max(0, Math.min(100, (x - lo) / (hi - lo) * 100));
+  const band = $("band");
+  const cps = p.checkpoints, w = p.summary.weights, colors = ["#3a4a6a", "#4a6ab0", "#5a8ae0"];
+  for (let i = 0; i < cps.length - 1; i++) { const d = document.createElement("div"); d.className = "seg"; d.style.left = pct(cps[i]) + "%"; d.style.width = (pct(cps[i + 1]) - pct(cps[i])) + "%"; d.style.background = colors[i]; d.title = `segment ${i + 1}, weight ${w[i]}`; band.appendChild(d); }
+  for (const [x, txt, cls] of [[lo, "start −" + p.summary.discountBps + "bps", ""], [ref, "reference", ""], [hi, "graduate +" + p.summary.premiumBps + "bps", ""], [cur, "pool " + f(cur, 6), "cur"]]) {
+    const t = document.createElement("div"); t.className = "tick " + cls; t.style.left = pct(x) + "%"; band.appendChild(t);
+    const lab = document.createElement("label"); lab.className = cls; lab.style.left = pct(x) + "%"; lab.textContent = txt; band.appendChild(lab);
+  }
+
+  const rows = [
+    ["DBC pool", solscan("account", s.poolAddress)], ["DBC config", solscan("account", s.config)], ["Base mint " + s.symbol, solscan("token", s.baseMint)],
+    ["Quote mint " + s.quote, solscan("token", s.quoteMint.mint) + ' <span class="pill ok">Meteora token badge</span>'],
+    ...(l.dammV2Pool ? [["DAMM v2 pool", solscan("account", l.dammV2Pool)]] : []),
+    ...Object.entries(l.txs || {}).map(([k, v]) => [k, solscan("tx", v)]),
+  ];
+  $("chain").innerHTML = rows.map(([k, v]) => `<tr><td>${k}</td><td class="mono">${v}</td></tr>`).join("");
+  const age = sec => sec < 120 ? `${sec}s` : sec < 7200 ? `${Math.round(sec / 60)}m` : sec < 172800 ? `${(sec / 3600).toFixed(1)}h` : `${(sec / 86400).toFixed(1)}d`;
+  const prov = [
+    [p.base + " (base)", `$${Number(s.reference.baseUsd).toFixed(2)} via <b>${s.reference.baseSource}</b>, age ${age(s.reference.baseAgeSec)} ${s.reference.baseStale ? '<span class="pill warn">stale — flagged</span>' : '<span class="pill ok">fresh</span>'}`],
+    [s.quote + " (quote)", `$${Number(s.reference.quoteUsd).toFixed(2)} via <b>${s.reference.quoteSource}</b>, age ${age(s.reference.quoteAgeSec ?? 0)}`],
+    ["Resolver order", "Pyth Pro (Lazer) → Pyth push-oracle account on Solana → Jupiter price → issuer-supplied. Source and age are recorded in the plan the config was built from."],
+  ];
+  $("prov").innerHTML = prov.map(([k, v]) => `<tr><td>${k}</td><td>${v}</td></tr>`).join("");
+
+  // live quote price so the basis moves between snapshots
+  try {
+    const j = await fetch(`https://lite-api.jup.ag/price/v3?ids=${s.quoteMint.mint}`).then(r => r.json());
+    const live = j[s.quoteMint.mint]?.usdPrice;
+    if (live) {
+      $("live").textContent = `${s.quote} $${live.toFixed(2)}`;
+      const liveRefQuote = s.reference.refPriceUsd / live;
+      const liveBps = (s.pool.priceQuote / liveRefQuote - 1) * 1e4;
+      $("basis").innerHTML += ` <small>live ${liveBps >= 0 ? "+" : ""}${liveBps.toFixed(0)} bps</small>`;
+    }
+  } catch {}
+})();
+</script>
+</body>
+</html>
