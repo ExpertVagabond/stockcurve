@@ -4,7 +4,7 @@ import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { PublicKey } from "@solana/web3.js";
 import { getMint, getExtensionData, ExtensionType, TOKEN_2022_PROGRAM_ID } from "@solana/spl-token";
 import { DynamicBondingCurveClient, getPriceFromSqrtPrice, feeNumeratorToBps } from "@meteora-ag/dynamic-bonding-curve-sdk";
-import { connection } from "../src/config.mjs";
+import { connection, XSTOCKS } from "../src/config.mjs";
 import { resolveUsd } from "../src/prices.mjs";
 
 const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
@@ -18,7 +18,7 @@ const [ps, progress, feeMetrics, refBase, refQuote] = await Promise.all([
   client.state.getPool(pool),
   client.state.getPoolQuoteTokenCurveProgress(pool),
   client.state.getPoolFeeMetrics(pool),
-  resolveUsd({ pythSymbol: `Equity.US.${plan.base}/USD` }),
+  resolveUsd({ pythSymbol: `Equity.US.${plan.base}/USD`, twinMint: XSTOCKS[`${plan.base}x`]?.mint }),
   resolveUsd({ pythSymbol: plan.quote.symbol === "USDC" ? undefined : `Crypto.${plan.quote.symbol.toUpperCase()}/USD`, mint: plan.quote.mint }),
 ]);
 const cfg = await client.state.getPoolConfig(ps.poolState.config);

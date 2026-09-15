@@ -76,7 +76,9 @@ export async function jupiterPrice(mint) {
 
 /**
  * Resolve a USD reference for an asset.
- * @param {{pythSymbol?: string, mint?: string, manual?: number, maxAgeSec?: number}} a
+ * @param {{pythSymbol?: string, mint?: string, twinMint?: string, manual?: number, maxAgeSec?: number}} a
+ *   twinMint: an on-chain tokenized twin of the same underlying (GME → GMEx). Its live secondary-market
+ *   price is a valid reference when the Pyth equity feed is unavailable and the push account is stale.
  */
 export async function resolveUsd(a) {
   const tried = [];
@@ -84,6 +86,13 @@ export async function resolveUsd(a) {
     const l = await pythLazer(a.pythSymbol);
     if (l.ok) return { ...l, tried };
     tried.push(`lazer: ${l.why}`);
+  }
+  if (a.twinMint) {
+    const j = await jupiterPrice(a.twinMint);
+    if (j.ok) return { ...j, source: "jupiter-xstock-twin", tried };
+    tried.push(`twin: ${j.why}`);
+  }
+  if (a.pythSymbol) {
     const o = await pythOnChain(a.pythSymbol);
     if (o.ok && o.ageSec <= (a.maxAgeSec ?? 3600)) return { ...o, tried };
     if (o.ok) tried.push(`onchain: stale ${(o.ageSec / 86400).toFixed(1)}d ($${o.price})`); else tried.push(`onchain: ${o.why}`);

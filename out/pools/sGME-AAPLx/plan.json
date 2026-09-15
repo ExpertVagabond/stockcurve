@@ -1,44 +1,47 @@
 {
-  "createdAt": "2026-09-15T20:53:42.642Z",
+  "createdAt": "2026-09-15T20:23:44.366Z",
   "base": "GME",
-  "unit": 0.05,
+  "unit": 0.1,
   "float": 5,
   "quote": {
-    "symbol": "SPYx",
-    "mint": "XsoCS1TfEyfFhfvj8EtZ528L3CaKBDBRqRapnBbDF2W",
+    "symbol": "AAPLx",
+    "mint": "XsbEhLAtcf6HdfpFZ5xEMdqW8nfAvcsP5bdudRLJzJp",
     "decimals": 8
   },
   "reference": {
     "base": {
       "ok": true,
-      "price": 21.22920625707047,
-      "source": "jupiter-xstock-twin",
-      "feed": "Xsf9mBktVB9BSU5kf4nHxPq5hCBJ2j2ui3ecFGxPRGc",
-      "ageSec": 0,
+      "price": 18.645000000000003,
+      "conf": 0.02329,
+      "source": "pyth-onchain",
+      "feed": "Equity.US.GME/USD@6AvVgYACju3WKAMSMZibU8UtDeQhF6si9f1vyrdthiJp",
+      "ageSec": 2766200,
+      "stale": true,
       "tried": [
-        "lazer: HTTP 403: Not entitled: feed 1160 (no grant accepts this feed (asset type 'equity', instrument type 'spot', exchange 3))"
+        "lazer: HTTP 403: Not entitled: feed 1160 (no grant accepts this feed (asset type 'equity', instrument type 'spot', exchange 3))",
+        "onchain: stale 32.0d ($18.645000000000003)"
       ]
     },
     "quote": {
       "ok": true,
-      "price": 756.5078160629402,
+      "price": 330.6192408594224,
       "source": "jupiter-v3",
-      "feed": "XsoCS1TfEyfFhfvj8EtZ528L3CaKBDBRqRapnBbDF2W",
+      "feed": "XsbEhLAtcf6HdfpFZ5xEMdqW8nfAvcsP5bdudRLJzJp",
       "ageSec": 0,
       "tried": [
-        "lazer: HTTP 403: Not entitled: feed 1843 (no grant accepts this feed (asset type 'crypto', instrument type 'spot'))",
-        "onchain: stale 3.4d ($769.9149999900001)"
+        "lazer: HTTP 403: Not entitled: feed 1792 (no grant accepts this feed (asset type 'crypto', instrument type 'spot'))",
+        "onchain: stale 3.3d ($334.09228842)"
       ]
     }
   },
   "summary": {
-    "referencePriceQuote": 0.0014031055467181213,
-    "startPriceQuote": 0.001192639714710403,
-    "graduationPriceQuote": 0.0014732608240540274,
-    "migrationQuoteThreshold": 0.00354903,
-    "migrationQuoteThresholdUsd": 2.6848689344418566,
+    "referencePriceQuote": 0.005639417703438428,
+    "startPriceQuote": 0.004793505047922664,
+    "graduationPriceQuote": 0.005921388588610349,
+    "migrationQuoteThreshold": 0.01426441,
+    "migrationQuoteThresholdUsd": 4.716088405507554,
     "feeSchedule": "300→30 bps exp over 3600s (60 periods), dynamic fee on",
-    "unit": 0.05,
+    "unit": 0.1,
     "float": 5,
     "discountBps": 1500,
     "premiumBps": 500,
@@ -49,10 +52,10 @@
     ]
   },
   "checkpoints": [
-    0.001192639714710403,
-    0.0013329502693822152,
-    0.0014031055467181213,
-    0.0014732608240540274
+    0.004793505047922664,
+    0.005357446818266507,
+    0.005639417703438428,
+    0.005921388588610349
   ],
   "configParams": {
     "poolFees": {
@@ -78,12 +81,12 @@
     "migrationOption": 1,
     "tokenType": 0,
     "tokenDecimal": 9,
-    "migrationQuoteThreshold": "056a57",
+    "migrationQuoteThreshold": "15c409",
     "partnerLiquidityPercentage": 0,
     "partnerPermanentLockedLiquidityPercentage": 100,
     "creatorLiquidityPercentage": 0,
     "creatorPermanentLockedLiquidityPercentage": 0,
-    "sqrtStartPrice": "02cbb4b247cb63d9",
+    "sqrtStartPrice": "059ad99e99626cde",
     "lockedVesting": {
       "amountPerPeriod": "00",
       "cliffDurationFromMigrationTime": "00",
@@ -129,16 +132,16 @@
     "padding": [],
     "curve": [
       {
-        "sqrtPrice": "02f4a2c5d9692320",
-        "liquidity": "07d9dcfd85ee91589b63f500"
+        "sqrtPrice": "05ece81c6e7a47f2",
+        "liquidity": "0fbd61db054173316f278300"
       },
       {
-        "sqrtPrice": "03084abf6dbc97d5",
-        "liquidity": "178d96f891cbb409d22bdf00"
+        "sqrtPrice": "0614503c46be3d73",
+        "liquidity": "2f3825910fc459944780a800"
       },
       {
-        "sqrtPrice": "031b766b36e3e049",
-        "liquidity": "1f6773f617ba45626d8fd400"
+        "sqrtPrice": "063abf27a7ecb2f0",
+        "liquidity": "3ef5876c1505ccc5c889ce00"
       }
     ],
     "migrationFee": {

@@ -18,7 +18,7 @@ const manualBase = arg("manual-base") ? Number(arg("manual-base")) : undefined;
 const quote = quoteSym === "USDC" ? { ...USDC, sym: "USDC" } : { ...XSTOCKS[quoteSym], sym: quoteSym };
 if (!quote.mint) throw new Error(`unknown quote ${quoteSym}`);
 
-const refBase = await resolveUsd({ pythSymbol: `Equity.US.${base}/USD`, manual: manualBase });
+const refBase = await resolveUsd({ pythSymbol: `Equity.US.${base}/USD`, twinMint: XSTOCKS[`${base}x`]?.mint, manual: manualBase });
 const refQuote = quoteSym === "USDC" ? { price: 1, source: "peg", feed: "USDC", ageSec: 0, tried: [] }
   : await resolveUsd({ pythSymbol: quote.pythUsd, mint: quote.mint });
 

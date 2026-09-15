@@ -1,0 +1,45 @@
+{
+  "at": "2026-09-15T20:36:45.238Z",
+  "poolAddress": "J1gcmbH3QthJahRdXqEAXc7eDbYE6JoWYqGVViGvFLbm",
+  "symbol": "sGME",
+  "quote": "AAPLx",
+  "unit": 0.1,
+  "reference": {
+    "baseUsd": 18.645000000000003,
+    "baseSource": "pyth-onchain",
+    "baseAgeSec": 2766983,
+    "baseStale": true,
+    "quoteUsd": 330.7147010258631,
+    "quoteSource": "jupiter-v3",
+    "refPriceQuote": 0.005637789896295507,
+    "refPriceUsd": 1.8645000000000005
+  },
+  "pool": {
+    "priceQuote": 0.005921387901950477,
+    "priceUsd": 1.958290029651715,
+    "basisBps": 503.03046206336523,
+    "startPriceQuote": 0.004793505047922664,
+    "graduationPriceQuote": 0.005921388588610349,
+    "quoteReserve": 0.01426441,
+    "quoteReserveDisplay": 0.014302413349380023,
+    "threshold": 0.01426441,
+    "thresholdUsd": 4.717450088460332,
+    "progressPct": 100,
+    "isMigrated": 1,
+    "baseSold": 2.591033243,
+    "activationPoint": 1789503989,
+    "ageSec": 616
+  },
+  "fees": {
+    "totalTradingQuote": 0.0002683,
+    "partnerUnclaimedQuote": 0.0002683,
+    "currentBaseFeeBps": 300,
+    "schedule": "300→30 bps exp over 3600s (60 periods), dynamic fee on"
+  },
+  "quoteMint": {
+    "mint": "XsbEhLAtcf6HdfpFZ5xEMdqW8nfAvcsP5bdudRLJzJp",
+    "scaledUiMultiplier": 1.0026642075893797
+  },
+  "config": "8de9pBxf2o4hmXo2kxhiLRvhmjuBmQjJQdiPTn5FQXC2",
+  "baseMint": "71cwbrMGTMTAt9m8wbuYt8k3eW6VUGKuLW8Yzn961vuP"
+}
