@@ -1,0 +1,154 @@
+{
+  "createdAt": "2026-09-15T23:02:26.266Z",
+  "base": "HOOD",
+  "preipo": false,
+  "unit": 0.01,
+  "float": 5,
+  "quote": {
+    "symbol": "SOL",
+    "mint": "So11111111111111111111111111111111111111112",
+    "decimals": 9
+  },
+  "reference": {
+    "base": {
+      "ok": true,
+      "price": 108.60487889003798,
+      "source": "jupiter-xstock-twin",
+      "feed": "XsvNBAYkrDRNhA7wPHQfX3ZUXZyZLdnCQDfHZ56bzpg",
+      "ageSec": 0,
+      "tried": [
+        "lazer: HTTP 403: Not entitled: feed 1182 (no grant accepts this feed (asset type 'equity', instrument type 'spot', exchange 1))"
+      ]
+    },
+    "quote": {
+      "ok": true,
+      "price": 97.08157494,
+      "bid": 97.08133589,
+      "ask": 97.08839705,
+      "source": "pyth-lazer",
+      "feed": "Crypto.SOL/USD#6",
+      "ageSec": 0,
+      "tried": []
+    }
+  },
+  "summary": {
+    "referencePriceQuote": 0.01118697126176206,
+    "startPriceQuote": 0.00950892557249775,
+    "graduationPriceQuote": 0.011746319824850164,
+    "migrationQuoteThreshold": 0.028711452,
+    "migrationQuoteThresholdUsd": 2.7873529789742126,
+    "feeSchedule": "300→30 bps exp over 3600s (60 periods), dynamic fee on",
+    "profile": "issuer",
+    "listingFeePct": 3,
+    "dammFeeBps": 20,
+    "creationFeeSol": 0.02,
+    "unit": 0.01,
+    "float": 5,
+    "discountBps": 1500,
+    "premiumBps": 500,
+    "weights": [
+      1,
+      3,
+      4
+    ]
+  },
+  "checkpoints": [
+    0.00950892557249775,
+    0.010627622698673957,
+    0.01118697126176206,
+    0.011746319824850164
+  ],
+  "configParams": {
+    "poolFees": {
+      "baseFee": {
+        "cliffFeeNumerator": "01c9c380",
+        "firstFactor": 60,
+        "secondFactor": "3c",
+        "thirdFactor": "0178",
+        "baseFeeMode": 1
+      },
+      "dynamicFee": {
+        "binStep": 1,
+        "binStepU128": "068db8bac710cb",
+        "filterPeriod": 10,
+        "decayPeriod": 120,
+        "reductionFactor": 5000,
+        "maxVolatilityAccumulator": 14460000,
+        "variableFeeControl": 286
+      }
+    },
+    "activationType": 1,
+    "collectFeeMode": 0,
+    "migrationOption": 1,
+    "tokenType": 0,
+    "tokenDecimal": 9,
+    "migrationQuoteThreshold": "01b61a1c",
+    "partnerLiquidityPercentage": 0,
+    "partnerPermanentLockedLiquidityPercentage": 100,
+    "creatorLiquidityPercentage": 0,
+    "creatorPermanentLockedLiquidityPercentage": 0,
+    "sqrtStartPrice": "18f6a8bdf6f39b23",
+    "lockedVesting": {
+      "amountPerPeriod": "00",
+      "cliffDurationFromMigrationTime": "00",
+      "frequency": "00",
+      "numberOfPeriod": "00",
+      "cliffUnlockAmount": "00"
+    },
+    "migrationFeeOption": 6,
+    "tokenSupply": {
+      "preMigrationTokenSupply": "012a05f200",
+      "postMigrationTokenSupply": "012a05f200"
+    },
+    "creatorTradingFeePercentage": 0,
+    "migratedPoolFee": {
+      "collectFeeMode": 0,
+      "dynamicFee": 1,
+      "poolFeeBps": 20
+    },
+    "poolCreationFee": "01312d00",
+    "partnerLiquidityVestingInfo": {
+      "vestingPercentage": 0,
+      "bpsPerPeriod": 0,
+      "numberOfPeriods": 0,
+      "cliffDurationFromMigrationTime": 0,
+      "frequency": 0
+    },
+    "creatorLiquidityVestingInfo": {
+      "vestingPercentage": 0,
+      "bpsPerPeriod": 0,
+      "numberOfPeriods": 0,
+      "cliffDurationFromMigrationTime": 0,
+      "frequency": 0
+    },
+    "migratedPoolBaseFeeMode": 0,
+    "migratedPoolMarketCapFeeSchedulerParams": {
+      "numberOfPeriod": 0,
+      "sqrtPriceStepBps": 0,
+      "schedulerExpirationDuration": 0,
+      "reductionFactor": "00"
+    },
+    "enableFirstSwapWithMinFee": false,
+    "compoundingFeeBps": 0,
+    "padding": [],
+    "curve": [
+      {
+        "sqrtPrice": "1a64214484b399e6",
+        "liquidity": "47219bba15c05b48dabce400"
+      },
+      {
+        "sqrtPrice": "1b13a4a085ba8167",
+        "liquidity": "d564d32e414111da9036ac00"
+      },
+      {
+        "sqrtPrice": "1bbed20e526757b5",
+        "liquidity": "011c866ee857016d236af39000"
+      }
+    ],
+    "migrationFee": {
+      "feePercentage": 3,
+      "creatorFeePercentage": 0
+    },
+    "tokenUpdateAuthority": 1
+  }
+}

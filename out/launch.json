@@ -1,10 +1,14 @@
 {
-  "referencePriceQuote": 0.016544613287500544,
-  "startPriceQuote": 0.014062921294375462,
-  "graduationPriceQuote": 0.017371843951875573,
-  "migrationQuoteThreshold": 0.04184815,
-  "migrationQuoteThresholdUsd": 4.035290557786808,
+  "referencePriceQuote": 0.01118697126176206,
+  "startPriceQuote": 0.00950892557249775,
+  "graduationPriceQuote": 0.011746319824850164,
+  "migrationQuoteThreshold": 0.028711452,
+  "migrationQuoteThresholdUsd": 2.7873529789742126,
   "feeSchedule": "300→30 bps exp over 3600s (60 periods), dynamic fee on",
+  "profile": "issuer",
+  "listingFeePct": 3,
+  "dammFeeBps": 20,
+  "creationFeeSol": 0.02,
   "unit": 0.01,
   "float": 5,
   "discountBps": 1500,
@@ -14,20 +18,20 @@
     3,
     4
   ],
-  "name": "stockcurve RDDT 0.01sh",
-  "symbol": "sRDDT",
-  "uri": "https://raw.githubusercontent.com/ExpertVagabond/stockcurve/main/meta/sRDDT.json",
+  "name": "stockcurve HOOD 0.01sh",
+  "symbol": "sHOOD",
+  "uri": "https://raw.githubusercontent.com/ExpertVagabond/stockcurve/main/meta/sHOOD.json",
   "atomic": true,
-  "openingBuy": 0.024529339,
-  "openedAtPrice": 0.01654993633066554,
-  "config": "EUgBm5zmTaqVGDwaX1FeM9gJ1AYdAtorrpDPZdR6rN3A",
-  "baseMint": "9xoZEQzwgbNSu9MizzEaCweYiM7nBrdbkdC6Wu6wwyx5",
-  "pool": "GretDMXwL3Na7AtVvQzaAuQhVw8zVwsttqVxkYKXE3FP",
+  "openingBuy": 0.01682925,
+  "openedAtPrice": 0.011190570552324246,
+  "config": "2NEDFzx7o9menoSdkQumSpGSuaZ3bPzPRii5SDK9p5oo",
+  "baseMint": "GTYiDSS4eLS831r4YZ79z3HtpyC77vgwXenbULM7PqpM",
+  "pool": "2gZ7X2AZH7gEXirrju5NwJVuLKVVivXVH2RWrWw7qTiu",
   "quoteMint": "So11111111111111111111111111111111111111112",
   "tokenBadge": null,
   "txs": {
-    "createConfig": "4kqpyEYoyjAKgTaKMaSJCnZx7CEuKfetAfmmDeznBi3Q1mrnhZXAEhKBQbeW1NFFskDihNRG8oe67UGfmjC8vPuP",
-    "createPoolWithFirstBuy": "5nA1XC87vSFsVAH3FLWz3aa4eBVyTuD32FujmrFpw7uZid2RFrPLKqcTX9C1qSGAS6WgNFEbqcpT76n66pxXzibg"
+    "createConfig": "4LfAjCRQ68R41fqngE8ic1VMEHdZ5UoNmUN5v5jQ73nDrqMXrpyAxHHcBZcN6nYmWedhVTHgpzL5bEGKE53Nvqz7",
+    "createPoolWithFirstBuy": "3oo3saZXuNgHCCVpr7VpdXsjf4ECtQE7zvXYaf2nhJKif3mNhrguZgimTyREVwdNVzTjEiLUweSHwcz2pohKY71s"
   },
-  "launchedAt": "2026-09-15T22:21:48.927Z"
+  "launchedAt": "2026-09-15T23:05:19.764Z"
 }

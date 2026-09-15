@@ -49,6 +49,12 @@ Targets: Main track + Best Use of Meteora DBC ($5k) + Stocknized Agent on Clawpu
 - Console: 5 pools. README summary table. docs/submission.md = paste-ready text + links.
 - Known: Pyth MCP get_symbols intermittently returns an error string; resolver now tolerates it.
 
+## Pool 6 + issuer profile (2026-09-15 ~23:30 UTC)
+- curve.mjs PROFILES {demo, issuer}; issuer = 3% listing fee (Customizable), DAMM v2 20bps+dynamic, 0.02 SOL creation fee.
+- sHOOD/SOL 2gZ7X2AZH7gEXirrju5NwJVuLKVVivXVH2RWrWw7qTiu atomic launch (+3bps), keeper graduated (native-SOL balance bug fixed),
+  DAMM v2 3oW76MEC…, claim.mjs claimed trading 0.000618 SOL + creation 0.018 SOL + listing 3% (txs in launch.json). Net +0.0195 SOL.
+- Console: 6 pools, revenue card on title page, ISSUER tag. Wallet ≈ 0.31 SOL.
+
 ## Needs Matthew (interactive)
 1. Register + submit on hackathons.solana.com (links: repo, console; video optional).
 2. Pyth Terminal: equity/xStock feed grant on the Pro token (free grant = crypto majors only; all stock feeds 403).

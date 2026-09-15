@@ -55,7 +55,10 @@ async function reference(plan) {
 
 const spent = new Map(); // pool → quote spent so far
 const tokenProgramOf = async (mint) => (await connection.getAccountInfo(mint)).owner;
+const WSOL_MINT = new PublicKey("So11111111111111111111111111111111111111112");
 async function balance(mint) {
+  // Native SOL quote: the SDK wraps on the fly, so spendable balance is lamports minus a rent/fee reserve.
+  if (mint.equals(WSOL_MINT)) { const l = await connection.getBalance(me); return BigInt(Math.max(0, l - 30_000_000)); }
   const prog = await tokenProgramOf(mint);
   const ata = getAssociatedTokenAddressSync(mint, me, false, prog);
   return getAccount(connection, ata, "confirmed", prog).then((a) => a.amount).catch(() => 0n);

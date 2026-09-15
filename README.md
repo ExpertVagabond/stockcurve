@@ -42,7 +42,7 @@ its first transaction *is* the creation — there is no block in which a sniper 
 DBC pool [`GretDMXwL3Na7AtVvQzaAuQhVw8zVwsttqVxkYKXE3FP`](https://solscan.io/account/GretDMXwL3Na7AtVvQzaAuQhVw8zVwsttqVxkYKXE3FP)
 · [creation+buy tx](https://solscan.io/tx/5nA1XC87vSFsVAH3FLWz3aa4eBVyTuD32FujmrFpw7uZid2RFrPLKqcTX9C1qSGAS6WgNFEbqcpT76n66pxXzibg). Left live on the curve at fair value.
 
-Five pools, five quote/reference combinations, one day, ~0.4 SOL. Console for all pools:
+Six pools, one day, ~0.45 SOL. Console for all pools:
 **https://stockcurve.purplesquirrelnetworks.workers.dev**
 
 | Pool | Quote | Reference | Launch | Status |
@@ -52,6 +52,7 @@ Five pools, five quote/reference combinations, one day, ~0.4 SOL. Console for al
 | pOPENAI/USDC | USDC | PreStocks mark (pre-IPO) | manual | graduated |
 | sDKNG/AAPLx | xStock | Backpack DKNG twin, live | manual; **keeper did everything else** | graduated |
 | sRDDT/SOL | SOL | Backpack RDDT twin, live | **atomic** create+buy | live on curve, +3 bps |
+| sHOOD/SOL | SOL | Backpack HOOD twin, live | atomic, **issuer profile**, keeper-graduated | graduated; listing + creation + trading fees claimed |
 
 ## Why a stock needs a different curve
 
@@ -108,6 +109,24 @@ The reference price comes from [`src/prices.mjs`](src/prices.mjs), which records
 The mainnet run above used source 2 for GME (32 days stale, flagged in `out/plan.json`) because the
 free Pyth Pro grant covers crypto majors only; with an equity grant the same command uses source 1
 unchanged.
+
+## Fee profiles — where the revenue is
+
+`src/curve.mjs` ships two profiles. `demo` is what pools 1–5 used. **`issuer`** is the revenue configuration,
+and pool 6 (`sHOOD / SOL`, [`2gZ7X2AZH7gEXirrju5NwJVuLKVVivXVH2RWrWw7qTiu`](https://solscan.io/account/2gZ7X2AZH7gEXirrju5NwJVuLKVVivXVH2RWrWw7qTiu))
+ran it end-to-end with every stream **claimed on-chain**:
+
+| Stream | Setting | Claimed |
+|---|---|---|
+| Listing fee | 3% of the quote raised, once, at graduation (`migrationFee.feePercentage`) | [tx](https://solscan.io/tx/5ZL2uECtiMm7u12HRcAqriB8Q6dFZk7G4mc2ecTcpaWUV6K636sKxwokDFHHguaNcHBeVQHDwEwzFwisHzPZfuyX) |
+| Pool creation fee | 0.02 SOL per pool launched on the config, 90% to partner | [tx](https://solscan.io/tx/2nsL4LYT16ABSLxvPdoxwW75JsqVGebF51ktbo8zZG2cZ7Q1bPwUFwAUS4qB56Sk65QDjGuPvtvVXJAp6QUXkUeh) |
+| Curve trading fees | 300→30 bps scheduler + dynamic, 80% partner after protocol | [tx](https://solscan.io/tx/58FaHH1KK9inxxmrPXWwMpemGp4CNded1Y6jpjbbEhGzrchE6qC9Vp18w5H9EzCMM1x8piRxZtKrz2e2B4yrroqs) |
+| DAMM v2 pool fees | 20 bps + dynamic fee (`Customizable`), LP 100% permanently locked to partner — accrues forever | ongoing |
+
+Equity underwriters take 3–7% of an IPO raise; the listing fee is that, in the stock token, with no effect on
+trading. The DAMM v2 stream is the compounding one — tokenized stocks on Solana trade 24/7. `scripts/claim.mjs`
+claims all three and re-reads the breakdown. The business is being the partner-of-record for other issuers'
+launches: `--profile issuer` is one flag.
 
 ## The keeper (not a sniper)
 

@@ -78,7 +78,7 @@ footer{padding:30px var(--gutter) 50px;color:var(--fg-3);font-size:13px;border-t
 </header>
 
 <main class="rows">
-  <section class="row"><div class="row-head"><h2>Across five launches</h2><span class="count">mainnet · 2026-09-15</span></div><div class="stat-rail" id="stats"></div></section>
+  <section class="row"><div class="row-head"><h2>Across six launches</h2><span class="count">mainnet · 2026-09-15</span></div><div class="stat-rail" id="stats"></div></section>
   <section class="row" id="live"><div class="row-head"><h2>Live on the curve</h2><span class="count" id="liveCount"></span></div><div class="rail-wrap"><div class="rail" id="railLive"></div></div></section>
   <section class="row" id="graduated"><div class="row-head"><h2>Graduated to DAMM v2</h2><span class="count" id="gradCount"></span></div><div class="rail-wrap"><div class="rail" id="railGrad"></div></div></section>
   <section class="row"><div class="row-head"><h2>By quote token</h2><span class="count">xStocks · Backpack · USDC · SOL</span></div><div class="rail-wrap"><div class="rail" id="railQuote"></div></div></section>
@@ -91,6 +91,7 @@ footer{padding:30px var(--gutter) 50px;color:var(--fg-3);font-size:13px;border-t
     <div class="grid"><div class="card"><div class="k">Pool price</div><div class="v" id="poolPrice"></div></div><div class="card"><div class="k">Reference</div><div class="v" id="refPrice"></div></div><div class="card"><div class="k">Basis</div><div class="v" id="basis"></div></div><div class="card"><div class="k">Lifecycle</div><div class="v" id="stage"></div></div></div>
     <div class="card"><div class="k">Curve band · start → reference → graduation</div><div class="band" id="band"></div><div class="k" style="margin-top:14px">Graduation progress <span id="progressTxt" class="mono"></span></div><div class="bar"><i id="progress"></i></div></div>
     <div class="grid" style="margin-top:10px"><div class="card"><div class="k">Quote reserve</div><div class="v" id="reserve"></div></div><div class="card"><div class="k">Trading fees earned</div><div class="v" id="fees"></div></div><div class="card"><div class="k">Float sold</div><div class="v" id="sold"></div></div><div class="card"><div class="k">Fee schedule</div><div class="v" id="feeSched" style="font-size:13px;font-family:Inter,sans-serif"></div></div></div>
+    <div class="card" id="revCard" hidden><div class="k">Issuer revenue · claimed on-chain</div><div class="v" id="rev" style="font-size:15px"></div></div>
     <div class="sec"><h3>On-chain</h3><table id="chain"></table></div>
     <div class="sec"><h3>Reference provenance</h3><table id="prov"></table></div>
   </div>
@@ -109,7 +110,7 @@ const QGROUP = q => q === "USDC" ? "USDC" : q === "SOL" ? "SOL" : "xStock";
 const poster = p => `posters/${p.launch.symbol}-poster.png`;
 const billboard = p => `posters/${p.launch.symbol}-billboard.png`;
 const stageOf = p => p.status.pool.isMigrated ? "graduated" : p.status.pool.progressPct >= 100 ? "complete" : "live";
-const launchMode = p => p.launch.atomic ? "atomic launch" : (p.launch.txs?.keeperBuyDiscount ? "keeper-operated" : "manual");
+const launchMode = p => (p.plan.summary.profile === "issuer" ? "issuer profile · " : "") + (p.launch.atomic ? "atomic launch" : (p.launch.txs?.keeperBuyDiscount ? "keeper-operated" : "manual"));
 
 window.addEventListener("scroll", () => $("nav").classList.toggle("solid", scrollY > 40));
 
@@ -151,6 +152,9 @@ function openSheet(p) {
   $("fees").innerHTML = `${f(s.fees.totalTradingQuote, 8)} <small>${s.quote} · unclaimed ${f(s.fees.partnerUnclaimedQuote, 8)}</small>`;
   $("sold").innerHTML = `${f(s.pool.baseSold, 4)} <small>= ${f(s.pool.baseSold * s.unit, 4)} ${s.preipo ? "PreStocks units" : "shares"} of ${+(plan.float * plan.unit).toPrecision(4)}</small>`;
   $("feeSched").textContent = s.fees.schedule;
+  const r = l.revenue, prof = plan.summary.profile || "demo";
+  $("revCard").hidden = !r;
+  if (r) $("rev").innerHTML = `<span class="ok">listing fee ${r.listingFeePct}%</span> = ${Number(r.listingFeeQuote || 0).toFixed(6)} ${s.quote} · trading fees ${Number(r.tradingFeeQuote).toFixed(6)} ${s.quote} · creation fee ${r.creationFeePartnerSol ?? (r.creationFeeSol * 0.9)} SOL · DAMM v2 ${plan.summary.dammFeeBps} bps on locked LP, forever <small>profile: ${prof}</small>`;
   const band = $("band"); band.innerHTML = '<div class="rail0"></div>';
   const lo = s.pool.startPriceQuote, hi = s.pool.graduationPriceQuote, ref = s.reference.refPriceQuote, cur = s.pool.priceQuote;
   const pct = x => Math.max(0, Math.min(100, (x - lo) / (hi - lo) * 100));
@@ -178,11 +182,11 @@ $("close").onclick = closeSheet; $("sheet").addEventListener("click", e => { if 
   hero(live[0] || pools[pools.length - 1]);
   $("liveCount").textContent = `${live.length} pool${live.length === 1 ? "" : "s"}`; $("gradCount").textContent = `${grad.length} pools`;
   live.forEach(p => $("railLive").appendChild(tile(p, p.launch.atomic ? "atomic" : "live")));
-  grad.forEach(p => $("railGrad").appendChild(tile(p, p.launch.txs?.keeperBuyDiscount ? "keeper" : "")));
+  grad.forEach(p => $("railGrad").appendChild(tile(p, p.plan.summary.profile === "issuer" ? "issuer" : p.launch.txs?.keeperBuyDiscount ? "keeper" : "")));
   [...pools].sort((a, b) => QGROUP(a.status.quote).localeCompare(QGROUP(b.status.quote))).forEach(p => $("railQuote").appendChild(tile(p, p.status.quote)));
   [...pools].sort((a, b) => a.status.reference.baseSource.localeCompare(b.status.reference.baseSource)).forEach(p => $("railRef").appendChild(tile(p, (REF[p.status.reference.baseSource] || p.status.reference.baseSource).split(" ")[0])));
   const fees = pools.reduce((a, p) => a + p.status.fees.totalTradingQuote * p.status.reference.quoteUsd, 0);
-  const stats = [["Pools on mainnet", pools.length, "one day"], ["Quote tokens", new Set(pools.map(p => p.status.quote)).size, "AAPLx · SPYx · USDC · SOL"], ["Graduated to DAMM v2", grad.length, "100% LP locked"], ["Reference sources", new Set(pools.map(p => p.status.reference.baseSource)).size, "Pyth · twins · pre-IPO mark"], ["Fees earned", "$" + fees.toFixed(2), "at demo float"], ["Sniper window", "0 blocks", "atomic launch"]];
+  const stats = [["Pools on mainnet", pools.length, "one day"], ["Quote tokens", new Set(pools.map(p => p.status.quote)).size, "AAPLx · SPYx · USDC · SOL"], ["Graduated to DAMM v2", grad.length, "100% LP locked"], ["Reference sources", new Set(pools.map(p => p.status.reference.baseSource)).size, "Pyth · twins · pre-IPO mark"], ["Fees earned", "$" + fees.toFixed(2), "at demo float"], ["Revenue streams", pools.filter(p => p.launch.revenue).length ? "3 claimed" : "—", "listing · creation · trading"], ["Sniper window", "0 blocks", "atomic launch"]];
   $("stats").innerHTML = stats.map(([k, v, s]) => `<div class="stat"><div class="k">${k}</div><div class="v">${v} <small>${s}</small></div></div>`).join("");
   const want = pools.find(p => location.hash.slice(1) === p.name); if (want) openSheet(want);
 })();
