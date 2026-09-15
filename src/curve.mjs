@@ -47,7 +47,8 @@ export function buildEquityCurve(p) {
       tokenQuoteDecimal: o.quoteDecimals,
       tokenAuthorityOption: TokenAuthorityOption.Immutable,
       totalTokenSupply: o.float,
-      leftover: 0,
+      // 1% of float (0 for tiny floats) absorbs fixed-supply rounding on low-decimal quotes; returns to leftoverReceiver after migration
+      leftover: o.leftover ?? Math.round(o.float * 0.01),
     },
     fee: {
       baseFeeParams: {

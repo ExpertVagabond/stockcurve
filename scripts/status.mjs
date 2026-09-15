@@ -6,6 +6,7 @@ import { getMint, getExtensionData, ExtensionType, TOKEN_2022_PROGRAM_ID } from 
 import { DynamicBondingCurveClient, getPriceFromSqrtPrice, feeNumeratorToBps } from "@meteora-ag/dynamic-bonding-curve-sdk";
 import { connection, XSTOCKS } from "../src/config.mjs";
 import { resolveUsd } from "../src/prices.mjs";
+import { resolvePreIpo } from "../src/preipo.mjs";
 
 const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
 const launch = JSON.parse(readFileSync("out/launch.json", "utf8"));
@@ -18,13 +19,13 @@ const [ps, progress, feeMetrics, refBase, refQuote] = await Promise.all([
   client.state.getPool(pool),
   client.state.getPoolQuoteTokenCurveProgress(pool),
   client.state.getPoolFeeMetrics(pool),
-  resolveUsd({ pythSymbol: `Equity.US.${plan.base}/USD`, twinMint: XSTOCKS[`${plan.base}x`]?.mint }),
-  resolveUsd({ pythSymbol: plan.quote.symbol === "USDC" ? undefined : `Crypto.${plan.quote.symbol.toUpperCase()}/USD`, mint: plan.quote.mint }),
+  plan.preipo ? resolvePreIpo(plan.base) : resolveUsd({ pythSymbol: `Equity.US.${plan.base}/USD`, twinMint: XSTOCKS[`${plan.base}x`]?.mint }),
+  plan.quote.symbol === "USDC" ? { price: 1, source: "peg", ageSec: 0 } : resolveUsd({ pythSymbol: `Crypto.${plan.quote.symbol.toUpperCase()}/USD`, mint: plan.quote.mint }),
 ]);
 const cfg = await client.state.getPoolConfig(ps.poolState.config);
 
 // xStocks carry a ScaledUiAmount multiplier (corporate actions). Raw units × multiplier = display units.
-const qMint = await getMint(connection, new PublicKey(plan.quote.mint), "confirmed", TOKEN_2022_PROGRAM_ID).catch(() => null);
+const qMint = plan.quote.symbol === "USDC" ? null : await getMint(connection, new PublicKey(plan.quote.mint), "confirmed", TOKEN_2022_PROGRAM_ID).catch(() => null);
 let multiplier = 1;
 if (qMint) {
   const ext = getExtensionData(ExtensionType.ScaledUiAmountConfig, qMint.tlvData);
@@ -39,6 +40,7 @@ const threshold = Number(cfg.migrationQuoteThreshold.toString()) / 10 ** qDec;
 const now = Math.floor(Date.now() / 1000);
 const status = {
   at: new Date().toISOString(), poolAddress: pool.toBase58(), symbol: launch.symbol, quote: plan.quote.symbol, unit: plan.unit,
+  preipo: refBase.context || null,
   reference: { baseUsd: refBase.price, baseSource: refBase.source, baseAgeSec: refBase.ageSec, baseStale: !!refBase.stale, quoteUsd: refQuote.price, quoteSource: refQuote.source, refPriceQuote, refPriceUsd: refBase.price * plan.unit },
   pool: { priceQuote: poolPrice, priceUsd: poolPrice * refQuote.price, basisBps, startPriceQuote: plan.summary.startPriceQuote, graduationPriceQuote: plan.summary.graduationPriceQuote,
     quoteReserve, quoteReserveDisplay: quoteReserve * multiplier, threshold, thresholdUsd: threshold * refQuote.price, progressPct: Number(progress) * 100, isMigrated: ps.poolState.isMigrated,
