@@ -1,5 +1,5 @@
 {
-  "at": "2026-09-16T15:35:42.810Z",
+  "at": "2026-09-16T16:07:54.843Z",
   "poolAddress": "FqLxggcrgbstMa2nMJi5mkQnKSYGZqDmnrG1j3qy7ZG9",
   "symbol": "sRKLB2",
   "quote": "SOL",
@@ -10,30 +10,30 @@
     "baseSource": "median(twin-ondo+clawpump)",
     "baseAgeSec": 0,
     "baseStale": false,
-    "quoteUsd": 97.03001003,
+    "quoteUsd": 97.01947677,
     "quoteSource": "pyth-lazer",
-    "refPriceQuote": 0.6554656022518184,
+    "refPriceQuote": 0.6555367651753822,
     "refPriceUsd": 63.59983396081393
   },
   "pool": {
     "priceQuote": 0.6213535036168569,
-    "priceUsd": 60.28993668811927,
-    "basisBps": -520.4254581441203,
+    "priceUsd": 60.28339181011376,
+    "basisBps": -521.4545296994877,
     "startPriceQuote": 0.6213535033358842,
     "graduationPriceQuote": 0.6867591352659773,
     "quoteReserve": 5e-9,
     "quoteReserveDisplay": 5e-9,
     "threshold": 1.351642402,
-    "thresholdUsd": 131.14987582303328,
+    "thresholdUsd": 131.135638622186,
     "progressPct": 3.69920327492064e-7,
     "isMigrated": 0,
     "baseSold": 0,
     "activationPoint": 1789565919,
-    "ageSec": 7023
+    "ageSec": 8955
   },
   "fees": {
     "totalTradingQuote": 0.00670683,
-    "partnerUnclaimedQuote": 0.000598456,
+    "partnerUnclaimedQuote": 0,
     "currentBaseFeeBps": 300,
     "schedule": "300→30 bps exp over 3600s (60 periods), dynamic fee on"
   },

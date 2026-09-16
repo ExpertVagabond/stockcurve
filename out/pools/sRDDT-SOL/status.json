@@ -1,35 +1,35 @@
 {
-  "at": "2026-09-16T15:35:31.287Z",
+  "at": "2026-09-16T16:07:45.586Z",
   "poolAddress": "GretDMXwL3Na7AtVvQzaAuQhVw8zVwsttqVxkYKXE3FP",
   "symbol": "sRDDT",
   "quote": "SOL",
   "unit": 0.01,
   "preipo": null,
   "reference": {
-    "baseUsd": 158.088674494263,
+    "baseUsd": 157.95060134575303,
     "baseSource": "median(twin-backpack+twin-ondo+clawpump)",
     "baseAgeSec": 0,
     "baseStale": false,
-    "quoteUsd": 97.01947012000001,
+    "quoteUsd": 97.01773116,
     "quoteSource": "pyth-lazer",
-    "refPriceQuote": 0.016294530808994175,
-    "refPriceUsd": 1.5808867449426298
+    "refPriceQuote": 0.01628059113083809,
+    "refPriceUsd": 1.5795060134575303
   },
   "pool": {
     "priceQuote": 0.01654993633087583,
-    "priceUsd": 1.6056660533413103,
-    "basisBps": 156.7430967332162,
+    "priceUsd": 1.605637273664028,
+    "basisBps": 165.43944742126504,
     "startPriceQuote": 0.014062921294375462,
     "graduationPriceQuote": 0.017371843951875573,
     "quoteReserve": 0.023793459,
     "quoteReserveDisplay": 0.023793459,
     "threshold": 0.04184815,
-    "thresholdUsd": 4.060085338502279,
+    "thresholdUsd": 4.060012566243354,
     "progressPct": 56.85665674587766,
     "isMigrated": 0,
     "baseSold": 1.526233379,
     "activationPoint": 1789510907,
-    "ageSec": 62024
+    "ageSec": 63958
   },
   "fees": {
     "totalTradingQuote": 0.000597463,
