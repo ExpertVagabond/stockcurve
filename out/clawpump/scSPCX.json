@@ -1,0 +1,72 @@
+{
+  "request": {
+    "name": "stockcurve SPCX agent",
+    "symbol": "scSPCX",
+    "description": "Stocknized agent token paired with Backpack/Sunrise SPCX (SpaceX) via Clawpump, pooled on Meteora. Issuer-side keeper + console: stockcurve.purplesquirrelnetworks.workers.dev",
+    "imageUrl": "https://stockcurve.purplesquirrelnetworks.workers.dev/meta/pSPACEX.png",
+    "agentId": "stockcurve-spcx-agent",
+    "agentName": "stockcurve SPCX agent",
+    "walletAddress": "8nqQzTU5bqH3yjfi2ST1XvaaqWw447enCqnZkxHXTsKF",
+    "pumpQuoteMint": "SPCXxcqXj6e5dJDVNovHN8744zkbhM2bYudU45BimGb",
+    "pumpCreatorFeeBps": 100
+  },
+  "preflight": {
+    "payment": {
+      "method": "sol",
+      "amountLamports": 9218000,
+      "amountSol": 0.009218,
+      "payTo": "49CfXAr58cCTGJnYsbm16fEsE5JRpdR8QQP8E1ZinGCq",
+      "payFrom": "8nqQzTU5bqH3yjfi2ST1XvaaqWw447enCqnZkxHXTsKF",
+      "validForSeconds": 900,
+      "breakdown": {
+        "creationFeeSol": 0.009218,
+        "devBuySol": 0
+      }
+    },
+    "retryWith": {
+      "txSignature": "<signature of that SOL transfer>",
+      "preflightToken": "eyJ2IjoxLCJpYXQiOjE3ODk1NTc4MjgsImV4cCI6MTc4OTU1ODcyOCwicGF5bG9hZEhhc2giOiI4ZWFjMmU2ZDVlYWE1MTdiZjMyOGJmZGFkMWNkOTVkYmQ0NDk5MzUzODZjYjFhYzk1MDA1ZjM5NWQyMGZhYTQwIiwicmVjaXBpZW50IjoiNDlDZlhBcjU4Y0NUR0puWXNibTE2ZkVzRTVKUnBkUjhRUVA4RTFaaW5HQ3EiLCJhbW91bnRMYW1wb3J0cyI6OTIxODAwMCwiZnVuZGluZ0xhbXBvcnRzIjo5MjE4MDAwfQ.MgOwlw4QqOrlACukRkOhX98Bp484zoRW3JXE14-c7BE"
+    },
+    "meta": {
+      "timestamp": "2026-09-16T11:23:48.944Z",
+      "requestId": "4282f8f7-1eda-43dd-8493-eef17b28a633"
+    }
+  },
+  "paymentTx": "BP1bZWQieHk2kA16n3ZwXcFAZU6ZSA17HpunQ5WCuhMqRXuWg3mngFWcYnrbMq3zhJBDJT8g7pzPLfPCzKSrUuu",
+  "response": {
+    "success": true,
+    "fundingSource": "self-funded",
+    "paymentVerified": {
+      "method": "sol",
+      "txSignature": "BP1bZWQieHk2kA16n3ZwXcFAZU6ZSA17HpunQ5WCuhMqRXuWg3mngFWcYnrbMq3zhJBDJT8g7pzPLfPCzKSrUuu",
+      "sender": "8nqQzTU5bqH3yjfi2ST1XvaaqWw447enCqnZkxHXTsKF",
+      "amount": 0.009218,
+      "launchDevBuySol": 0
+    },
+    "mintAddress": "2QSXUQVQZ7RxjsifbT8tnJocJHbpEt5SCUypLeCjVCcH",
+    "pumpQuoteAsset": {
+      "mint": "SPCXxcqXj6e5dJDVNovHN8744zkbhM2bYudU45BimGb",
+      "symbol": "SPCX",
+      "name": "SpaceX",
+      "decimals": 6,
+      "imageUrl": "https://s3-symbol-logo.tradingview.com/spacex.svg",
+      "priceUsd": 142.36205685227938,
+      "tokenProgram": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+      "creatorFeeBps": 100
+    },
+    "txHash": "3t7XYjYJKeeYLyNyXTzUTMLF2NJYguk9pQUWEq81hoqFftk5zhhFCopfM4G5Pvf6EsyhE56LtF6tGtca4v3ZH6bY",
+    "pumpUrl": "https://pump.fun/coin/2QSXUQVQZ7RxjsifbT8tnJocJHbpEt5SCUypLeCjVCcH",
+    "explorerUrl": "https://solscan.io/tx/3t7XYjYJKeeYLyNyXTzUTMLF2NJYguk9pQUWEq81hoqFftk5zhhFCopfM4G5Pvf6EsyhE56LtF6tGtca4v3ZH6bY",
+    "earnings": {
+      "feeShare": "75%",
+      "note": "Trading fees will be collected hourly and distributed to your wallet.",
+      "checkEarnings": "https://agents.clawpump.tech//api/fees/earnings?agentId=stockcurve-spcx-agent",
+      "dashboard": "https://agents.clawpump.tech//agent/stockcurve-spcx-agent"
+    },
+    "meta": {
+      "timestamp": "2026-09-16T11:24:22.819Z",
+      "requestId": "eeac37ad-ed76-42b8-b93f-0d0df89d0729"
+    }
+  },
+  "at": "2026-09-16T11:24:22.727Z"
+}

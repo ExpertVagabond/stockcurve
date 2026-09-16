@@ -1,0 +1,18 @@
+{
+  "pair": "GYN1e3YjRrWuAZDVJthgW1wYJBPaciZxmW1gfDRaFkHP",
+  "x": "2QSXUQVQZ7RxjsifbT8tnJocJHbpEt5SCUypLeCjVCcH",
+  "y": "SPCXxcqXj6e5dJDVNovHN8744zkbhM2bYudU45BimGb",
+  "activeId": -6982,
+  "binStep": 25,
+  "feeBps": 100,
+  "widthBps": 500,
+  "position": "6FwXrynn28N7KBFvCC7nWAkubjG7ZWP3rT74xFMhLXcs",
+  "xAmt": 140000,
+  "yAmt": 0.0037,
+  "price": 2.68e-8,
+  "txs": {
+    "create": "51dj8vTWX2XQkNsKzC638L3gdBMyvqMdKGuA36RDkcd8CqB49nhV6qVYWQ7mY7tHdhMRCfdkDhP1oSm1hpPCKccu",
+    "addLiquidity": "2W8M5C6Dir6PPjkSYPsU5WSFx3Se8y4d7YBtZEwSuhgtsvtLDNpKyXiEs1yZCwP9TrYdZBQhif86w32PvV6MYc76"
+  },
+  "at": "2026-09-16T11:26:05.160Z"
+}

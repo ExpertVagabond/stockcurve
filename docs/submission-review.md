@@ -36,7 +36,7 @@ fee sweep**, an issuer **console**, a **sizing tool**, 17 tests, and a 2-minute 
 ### Stocknized Agent on Clawpump ($5k) — "Launch your token with a stock-paired liquidity pool using clawpump and Meteora"
 | Requirement | Evidence |
 |---|---|
-| Launched through Clawpump | `scSNDK` via the partner API, paired with Backpack SNDK — mint `CUnDgEpz…UGkm`, pump.fun curve with Token-2022 stock quote, 75% fee share to the keeper wallet. `scripts/clawpump-launch.mjs`. |
+| Launched through Clawpump | Two agent tokens via the partner API (Clawpump allows one token per agent id): `scSPCX` paired with Backpack/Sunrise **SPCX** (mint `2QSXUQVQ…VCcH`, DLMM pair `GYN1e3Yj…FkHP`) and `scSNDK` paired with Backpack SNDK — mint `CUnDgEpz…UGkm`, pump.fun curve with Token-2022 stock quote, 75% fee share to the keeper wallet. `scripts/clawpump-launch.mjs`. |
 | **That token on Meteora, stock-paired** | DLMM pair `7LvHsXj3…Yb2y` scSNDK/SNDK, two-sided position at curve price (`meteora-pair.mjs`). The sentence is satisfied literally: launched with Clawpump, pooled on Meteora, paired with a stock. |
 | Meteora stock-paired pool | sRKLB-DK/DKNG (Backpack quote), sGME/AAPLx, sGME-SPY/SPYx (xStock quotes) — all Meteora DBC → DAMM v2. |
 | "Agent" | the keeper: autonomous discover / buy / graduate / migrate / exit / claim; agentId `stockcurve-keeper` on Clawpump. |

@@ -1,35 +1,35 @@
 {
-  "at": "2026-09-16T04:14:32.973Z",
+  "at": "2026-09-16T11:07:48.506Z",
   "poolAddress": "eMbF1jwsZ1YNBjcNmYK15FQrAyX8Hz4ksjtvvoSxZ25",
   "symbol": "sDKNG",
   "quote": "AAPLx",
   "unit": 0.02,
   "preipo": null,
   "reference": {
-    "baseUsd": 23.537789336078404,
+    "baseUsd": 24.562763162779223,
     "baseSource": "twin-backpack",
     "baseAgeSec": 0,
     "baseStale": false,
-    "quoteUsd": 330.7298186436839,
+    "quoteUsd": 332.00112957145353,
     "quoteSource": "jupiter",
-    "refPriceQuote": 0.0014233847696350083,
-    "refPriceUsd": 0.4707557867215681
+    "refPriceQuote": 0.0014796794935297236,
+    "refPriceUsd": 0.4912552632555845
   },
   "pool": {
     "priceQuote": 0.0015427496902661556,
-    "priceUsd": 0.5102333252743252,
-    "basisBps": 838.5991137291393,
+    "priceUsd": 0.5121946398143737,
+    "basisBps": 426.2422843069902,
     "startPriceQuote": 0.0012488930237255628,
     "graduationPriceQuote": 0.0015427502057786364,
     "quoteReserve": 0.00594628,
     "quoteReserveDisplay": 0.0059621221243045764,
     "threshold": 0.00594628,
-    "thresholdUsd": 1.966612106004565,
+    "thresholdUsd": 1.9741716767481428,
     "progressPct": 100,
     "isMigrated": 1,
     "baseSold": 4.145645614,
     "activationPoint": 1789510366,
-    "ageSec": 21706
+    "ageSec": 46502
   },
   "fees": {
     "totalTradingQuote": 0.00014222,

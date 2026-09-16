@@ -21,11 +21,13 @@
     "track": "Stocknized Agent on Clawpump",
     "sponsor": "Clawpump",
     "ask": "Launch your token with a stock-paired liquidity pool using clawpump and Meteora",
-    "thing": "scSNDK: launched through Clawpump's API paired with Backpack SNDK, then pooled on Meteora (DLMM scSNDK/SNDK)",
-    "link": "https://solscan.io/account/7LvHsXj3LFmpwCx6mDbsj7erpVdDJsNDznLhzkwWYb2y",
-    "linkLabel": "scSNDK/SNDK Meteora DLMM pair",
-    "link2": "https://pump.fun/coin/CUnDgEpzGQNkwQKDCNoyv1SB6YvBygUSCekSPgnsUGkm",
-    "link2Label": "scSNDK on Clawpump / pump.fun"
+    "thing": "Two Stocknized agent tokens launched through Clawpump's API, each paired with a Backpack/Sunrise stock and pooled on Meteora: scSPCX/SPCX (SpaceX, Sunrise's flagship) and scSNDK/SNDK",
+    "link": "https://solscan.io/account/GYN1e3YjRrWuAZDVJthgW1wYJBPaciZxmW1gfDRaFkHP",
+    "linkLabel": "scSPCX/SPCX Meteora DLMM pair",
+    "link2": "https://pump.fun/coin/2QSXUQVQZ7RxjsifbT8tnJocJHbpEt5SCUypLeCjVCcH",
+    "link2Label": "scSPCX on Clawpump / pump.fun",
+    "link3": "https://solscan.io/account/7LvHsXj3LFmpwCx6mDbsj7erpVdDJsNDznLhzkwWYb2y",
+    "link3Label": "scSNDK/SNDK Meteora DLMM pair"
   },
   {
     "track": "Best Use of PreStocks",

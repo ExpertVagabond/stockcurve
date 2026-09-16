@@ -1,35 +1,35 @@
 {
-  "at": "2026-09-16T04:14:38.439Z",
+  "at": "2026-09-16T11:07:52.050Z",
   "poolAddress": "J1gcmbH3QthJahRdXqEAXc7eDbYE6JoWYqGVViGvFLbm",
   "symbol": "sGME",
   "quote": "AAPLx",
   "unit": 0.1,
   "preipo": null,
   "reference": {
-    "baseUsd": 21.397417208416094,
-    "baseSource": "median(twin-xstocks+twin-ondo)",
+    "baseUsd": 21.435706866370644,
+    "baseSource": "median(twin-ondo+twin-xstocks)",
     "baseAgeSec": 0,
     "baseStale": false,
-    "quoteUsd": 330.7298186436839,
+    "quoteUsd": 332.00112957145353,
     "quoteSource": "jupiter",
-    "refPriceQuote": 0.006469757488504198,
-    "refPriceUsd": 2.1397417208416094
+    "refPriceQuote": 0.00645651624560429,
+    "refPriceUsd": 2.1435706866370645
   },
   "pool": {
     "priceQuote": 0.005921387901950477,
-    "priceUsd": 1.9583795469309855,
-    "basisBps": -847.5890905155137,
+    "priceUsd": 1.9659074720782979,
+    "basisBps": -828.8190152361774,
     "startPriceQuote": 0.004793505047922664,
     "graduationPriceQuote": 0.005921388588610349,
     "quoteReserve": 0.01426441,
     "quoteReserveDisplay": 0.014302413349380023,
     "threshold": 0.01426441,
-    "thresholdUsd": 4.717665732359151,
+    "thresholdUsd": 4.7358002326703375,
     "progressPct": 100,
     "isMigrated": 1,
     "baseSold": 2.591033243,
     "activationPoint": 1789503989,
-    "ageSec": 28089
+    "ageSec": 52883
   },
   "fees": {
     "totalTradingQuote": 0.0002683,
