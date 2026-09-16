@@ -1,5 +1,5 @@
 {
-  "at": "2026-09-16T02:41:52.492Z",
+  "at": "2026-09-16T04:15:18.487Z",
   "poolAddress": "5hTGV4FQJkuNLBS9CJG2iAgunQp74EETNM9fcpj4r4tC",
   "symbol": "sRKLB",
   "quote": "SOL",
@@ -10,26 +10,26 @@
     "baseSource": "twin-ondo",
     "baseAgeSec": 0,
     "baseStale": false,
-    "quoteUsd": 97.44082748,
+    "quoteUsd": 97.31175509,
     "quoteSource": "pyth-lazer",
-    "refPriceQuote": 0.006517499946955672,
+    "refPriceQuote": 0.006526144630161729,
     "refPriceUsd": 0.6350705879322168
   },
   "pool": {
     "priceQuote": 0.006886863226977273,
-    "priceUsd": 0.6710616515782485,
-    "basisBps": 566.7254054894632,
+    "priceUsd": 0.6701727476819395,
+    "basisBps": 552.7284748615901,
     "startPriceQuote": 0.006230971522754821,
     "graduationPriceQuote": 0.006886863261992172,
     "quoteReserve": 0.017196785,
     "quoteReserveDisplay": 0.017196785,
     "threshold": 0.017196785,
-    "thresholdUsd": 1.6756689603956516,
+    "thresholdUsd": 1.6734493302553857,
     "progressPct": 100,
     "isMigrated": 1,
     "baseSold": 2.577869164,
     "activationPoint": 1789515643,
-    "ageSec": 10869
+    "ageSec": 16475
   },
   "fees": {
     "totalTradingQuote": 0.000426446,

@@ -32,7 +32,7 @@
   "tokenBadge": null,
   "txs": {
     "createPoolWithFirstBuy": "43ZLdkoDtim9RCsNarmeuEA8sSy51vUg7R8d8qaqFFdWZfVya9rNZhzXaVHz2EPD9uHRUr124KpdjkK1rLot4gNd",
-    "withdrawLp": "QJVT7Vtb3TMq4HeSUyqSDZiRrpTj6WY5GVmDrEcRBchaQ69AwGV68SJ8s52f7gCTnrwGUP9emN5K4G7xsoTnKqq",
+    "withdrawLp": "4iZ2UJHWf2PSRNAGyVdrQZE5qHHhu1CujWaupSUyMRAGixTxZhMb2BQQeY8JxLQEz5hXmJCHNRQhAQiDq4adAt8w",
     "createConfig": "67GRoH6bBQMoV6jwg7DPB3zEPMnMG7j72CUSXZwZhrbkd7aCZPukupcKiFt6u5pio3gVVvpFu3po2qf1KYcBtbER",
     "keeperBuyDiscount": "41eGVbRXDaxy4m2D9JWG7k4Lh3NUuycqJp2xtkT5Wv6kHTSTopm28LoPwkngJrzjG989HoQxpi6e1AfbU1UdE2FB",
     "keeperGraduate": "5BYu98nbR4ZHQcxh5qfiFzLxLkoT9iLBvjSFzFRfhXFU1WyF1AW5YEfSoofn8yuMejmexGGUvrw7QaYTKAWbXEqa",
@@ -42,11 +42,11 @@
   },
   "launchedAt": "2026-09-15T23:53:45.165Z",
   "lp": {
-    "unlockedPct": 90,
-    "withdrawnFrac": 0.5,
-    "quoteReturned": 0.402019356,
-    "baseReturned": 2.430709799,
-    "at": "2026-09-15T23:56:30.878Z"
+    "unlockedPct": 81.81,
+    "withdrawnFrac": 1,
+    "quoteReturned": 0.394295541,
+    "baseReturned": 2.478324728,
+    "at": "2026-09-16T03:59:18.136Z"
   },
   "dammV2Pool": "836qKA34uSMYGCpQQBRpmhuhjVsftdyjbphwNAqrH8jb",
   "partnerUnlockedLpPct": 90,

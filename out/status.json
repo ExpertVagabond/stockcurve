@@ -1,35 +1,35 @@
 {
-  "at": "2026-09-16T02:41:59.703Z",
+  "at": "2026-09-16T04:15:24.839Z",
   "poolAddress": "229XVFnwBhJyPdmCpA6f1q3udV6xmScYZQVxduKeet4D",
   "symbol": "sTSLA-QQ",
   "quote": "QQQx",
   "unit": 0.01,
   "preipo": null,
   "reference": {
-    "baseUsd": 356.255,
+    "baseUsd": 357.0675,
     "baseSource": "pyth-lazer",
     "baseAgeSec": 0,
     "baseStale": false,
-    "quoteUsd": 705.1674999999999,
+    "quoteUsd": 706.7099999999999,
     "quoteSource": "pyth-lazer",
-    "refPriceQuote": 0.005052062098721226,
-    "refPriceUsd": 3.56255
+    "refPriceQuote": 0.005052532156047036,
+    "refPriceUsd": 3.570675
   },
   "pool": {
     "priceQuote": 0.005305880073432699,
-    "priceUsd": 3.7415341866823524,
-    "basisBps": 502.404700796768,
+    "priceUsd": 3.7497185066956225,
+    "basisBps": 501.4276199755563,
     "startPriceQuote": 0.004800559166643013,
     "graduationPriceQuote": 0.005305881184184383,
     "quoteReserve": 0.0052996,
     "quoteReserveDisplay": 0.0053099588811467025,
     "threshold": 0.00529959,
-    "thresholdUsd": 3.7370986313249994,
+    "thresholdUsd": 3.7452732488999994,
     "progressPct": 100,
     "isMigrated": 1,
     "baseSold": 1.031144049,
     "activationPoint": 1789522890,
-    "ageSec": 3629
+    "ageSec": 9234
   },
   "fees": {
     "totalTradingQuote": 0.00013157,

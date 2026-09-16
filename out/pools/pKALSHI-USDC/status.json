@@ -1,5 +1,5 @@
 {
-  "at": "2026-09-16T02:41:24.845Z",
+  "at": "2026-09-16T04:14:27.141Z",
   "poolAddress": "4gckR2ZJ4TGWRu8aC7cMQgn5tP2wVLrwc3xGBn8dfZoc",
   "symbol": "pKALSHI",
   "quote": "USDC",
@@ -8,11 +8,11 @@
     "prestocks": {
       "symbol": "KALSHI",
       "mint": "PreLWGkkeqG1s4HEfFZSy9moCrJ7btsHuUtfcCeoRua",
-      "mark": 868.5003249,
-      "token": 838.7860000205054,
-      "basisBps": -342.1337220906151,
-      "markValuation": 31589139880,
-      "impliedValuation": 30508368879,
+      "mark": 868.24292433,
+      "token": 845.6598219164474,
+      "basisBps": -260.10119726549317,
+      "markValuation": 31579777693,
+      "impliedValuation": 30758383894,
       "supply": 904.904434985
     },
     "tessera": {
@@ -20,7 +20,7 @@
       "mint": "TKLSidmLVt3cqGaaodG8tyRzoANfQwoh67AccjmubeZ",
       "mark": 413.8,
       "markValuation": 14000000000,
-      "holders": 2604
+      "holders": 2605
     }
   },
   "reference": {
@@ -47,7 +47,7 @@
     "isMigrated": 1,
     "baseSold": 6.186881033,
     "activationPoint": 1789522068,
-    "ageSec": 4416
+    "ageSec": 9999
   },
   "fees": {
     "totalTradingQuote": 0.062443,
