@@ -7,10 +7,20 @@ import { connection, loadKeypair, withPriority } from "../src/config.mjs";
 
 const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
 const DRY = process.argv.includes("--dry");
+const PRETTY = process.argv.includes("--pretty");
 const kp = loadKeypair(), me = kp.publicKey;
 const client = DynamicBondingCurveClient.create(connection, "confirmed");
 mkdirSync("out", { recursive: true });
-const log = (ev) => { const line = JSON.stringify({ at: new Date().toISOString(), ...ev }); console.log(line); appendFileSync("out/sweep.log", line + "\n"); };
+const c = { g: "\x1b[32m", y: "\x1b[33m", m: "\x1b[35m", d: "\x1b[2m", r: "\x1b[0m", w: "\x1b[1m" };
+const log = (ev) => {
+  const line = JSON.stringify({ at: new Date().toISOString(), ...ev }); appendFileSync("out/sweep.log", line + "\n");
+  if (!PRETTY) return console.log(line);
+  if (ev.ev === "own-pool" || ev.ev === "inbound-pool") {
+    const acts = Object.entries(ev.acts).map(([k, v]) => `${k}:${String(v).startsWith("ERR") ? c.y + "err" : String(v).startsWith("already") ? c.d + "claimed" : c.g + (v === "dry" ? "would claim" : "claimed")}${c.r}`).join("  ");
+    console.log(`${ev.inbound ? c.m + "inbound" : c.d + "own    "}${c.r} ${ev.pool.slice(0, 10)}…  ${ev.migrated ? "graduated" : "on curve "}  unclaimed ${ev.unclaimedQuote.padStart(9)}  ${acts || c.d + "nothing to claim" + c.r}`);
+  } else if (ev.ev === "sweep-done") console.log(`${c.w}sweep${c.r} ${ev.configs} configs · ${ev.pools} pools · ${ev.inbound} inbound · ${ev.poolsWithClaims} with fees${ev.dry ? c.d + " (dry run)" + c.r : ""}`);
+  else if (ev.ev === "skip") console.log(`${c.d}skip ${ev.config.slice(0, 10)}… ${ev.why}${c.r}`);
+};
 
 // configs we own = every config in out/pools whose feeClaimer is us (+ --config override)
 const configs = new Set(arg("config") ? [arg("config")] : []);
