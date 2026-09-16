@@ -1,0 +1,42 @@
+{
+  "name": "stockcurve SPACEX pre-IPO (Tessera)",
+  "symbol": "pSPACEX",
+  "description": "stockcurve pre-IPO demo pool token: 1 pSPACEX = 0.001 of a Tessera T-SpaceX token-unit, launched atomically on a Meteora Dynamic Bonding Curve quoted in USDC with the curve anchored to Tessera's T-SpaceX mark price and monitored against PreStocks' SPACEX mark and secondary price. The two issuers value SpaceX 2.3x apart; a neutral curve is the venue for that question. Hackathon demo (Stocklana 2026); not a claim on SpaceX equity or on any Tessera or PreStocks token.",
+  "image": "https://stockcurve.purplesquirrelnetworks.workers.dev/meta/pSPACEX.png",
+  "external_url": "https://github.com/ExpertVagabond/stockcurve",
+  "attributes": [
+    {
+      "trait_type": "quote",
+      "value": "USDC"
+    },
+    {
+      "trait_type": "reference",
+      "value": "Tessera T-SpaceX mark price"
+    },
+    {
+      "trait_type": "cross-check",
+      "value": "PreStocks SPACEX mark + secondary price"
+    },
+    {
+      "trait_type": "unit",
+      "value": "0.001 Tessera token"
+    },
+    {
+      "trait_type": "curve",
+      "value": "lean: -5% start / +5% graduation, weights 1:1:6"
+    },
+    {
+      "trait_type": "launch",
+      "value": "atomic: create + opening buy in one tx"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "https://stockcurve.purplesquirrelnetworks.workers.dev/meta/pSPACEX.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image"
+  }
+}

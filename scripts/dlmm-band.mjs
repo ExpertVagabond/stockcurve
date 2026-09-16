@@ -26,7 +26,7 @@ const cfg = await client.state.getPoolConfig(ps.poolState.config);
 const X = ps.poolState.baseMint, Y = cfg.quoteMint, xDec = 9, yDec = plan.quote.decimals;
 
 // reference in quote per base token (same resolver as the keeper)
-const refBase = plan.preipo ? await resolvePreIpo(plan.base) : await resolveUsdRobust({ pythSymbol: `Equity.US.${plan.base}/USD`, twins: twinsOf(plan.base), manual: plan.reference?.base?.source === "manual" ? plan.reference.base.price : undefined }, { force: true });
+const refBase = plan.preipo ? await resolvePreIpo(plan.base, plan.preipoAnchor || "prestocks") : await resolveUsdRobust({ pythSymbol: `Equity.US.${plan.base}/USD`, twins: twinsOf(plan.base), manual: plan.reference?.base?.source === "manual" ? plan.reference.base.price : undefined }, { force: true });
 const refQuote = plan.quote.symbol === "USDC" ? { price: 1 } : await resolveUsdRobust({ pythSymbol: plan.quote.symbol === "SOL" ? "Crypto.SOL/USD" : undefined, mint: plan.quote.mint }, { force: true });
 const refPrice = (refBase.price * plan.unit) / refQuote.price;
 const pricePerLamport = Number(DLMM.getPricePerLamport(xDec, yDec, refPrice));

@@ -24,7 +24,7 @@ const raiseUsd = arg("raise-usd") ? Number(arg("raise-usd")) : undefined; // USD
 const quote = quoteSym === "USDC" ? { ...USDC, sym: "USDC" } : quoteSym === "SOL" ? { ...SOL, sym: "SOL" } : { ...(XSTOCKS[quoteSym] || BACKPACK[quoteSym] || ONDO[quoteSym]), sym: quoteSym };
 if (!quote.mint) throw new Error(`unknown quote ${quoteSym}`);
 
-const refBase = preipo ? await resolvePreIpo(preipo) : await resolveUsdRobust({ pythSymbol: `Equity.US.${base}/USD`, twins: twinsOf(base), manual: manualBase }, { twapSec, maxSpreadPct: maxSpread, force });
+const refBase = preipo ? await resolvePreIpo(preipo, arg("anchor", "prestocks")) : await resolveUsdRobust({ pythSymbol: `Equity.US.${base}/USD`, twins: twinsOf(base), manual: manualBase }, { twapSec, maxSpreadPct: maxSpread, force });
 const refQuote = quoteSym === "USDC" ? { price: 1, source: "peg", feed: "USDC", ageSec: 0, tried: [] }
   : await resolveUsdRobust({ pythSymbol: quote.pythUsd || (quoteSym === "SOL" ? "Crypto.SOL/USD" : undefined), mint: quote.mint }, { twapSec, maxSpreadPct: maxSpread, force });
 
@@ -39,7 +39,7 @@ validateConfigParameters({ ...built.configParams, leftoverReceiver: "8nqQzTU5bqH
 const cp = built.configParams;
 const s = built.summary;
 const fmt = (n, d = 8) => Number(n).toFixed(d);
-console.log(`\n== stockcurve plan: ${base}${preipo ? " (pre-IPO)" : ""} (unit ${unit} ${preipo ? "PreStocks-token" : "share"}) / ${quote.sym} ==`);
+console.log(`\n== stockcurve plan: ${base}${preipo ? " (pre-IPO)" : ""} (unit ${unit} ${preipo ? (arg("anchor", "prestocks") === "tessera" ? "Tessera-token" : "PreStocks-token") : "share"}) / ${quote.sym} ==`);
 if (refBase.context) { const c = refBase.context; if (c.prestocks) console.log(`prestocks  mark $${c.prestocks.mark.toFixed(2)}  secondary token $${c.prestocks.token.toFixed(2)} (${c.prestocks.basisBps >= 0 ? "+" : ""}${c.prestocks.basisBps.toFixed(0)} bps)  valuation $${(c.prestocks.markValuation / 1e9).toFixed(0)}B`); if (c.tessera) console.log(`tessera    ${c.tessera.symbol} mark $${c.tessera.mark.toFixed(2)}  valuation $${(c.tessera.markValuation / 1e9).toFixed(0)}B  (${c.prestocks ? (c.tessera.markValuation / c.prestocks.markValuation).toFixed(2) + "× PreStocks" : ""})`); }
 console.log(`base ref   $${fmt(refBase.price, 2)}  [${refBase.source}${refBase.stale ? " STALE" : ""}]${refBase.robust ? `  spread ${refBase.robust.spreadPct.toFixed(2)}%${refBase.robust.lowConfidenceOnly ? " ⚠ low-liquidity source only" : ""}` : ""}`);
 if (refBase.robust) for (const src of refBase.robust.sources) console.log(`             ${src.src}:${src.label} $${src.price.toFixed(2)} (${src.conf}${src.liquidityUsd ? ", $" + Math.round(src.liquidityUsd / 1000) + "k liq" : ""})`);
@@ -55,7 +55,7 @@ console.log(`fees       ${s.feeSchedule}; profile ${s.profile}: listing fee ${s.
 
 mkdirSync("out", { recursive: true });
 const plan = {
-  createdAt: new Date().toISOString(), base, preipo: !!preipo, unit, float: floatUsed, raiseUsd: raiseUsd ?? null, quote: { symbol: quote.sym, mint: quote.mint, decimals: quote.decimals },
+  createdAt: new Date().toISOString(), base, preipo: !!preipo, preipoAnchor: preipo ? arg("anchor", "prestocks") : null, unit, float: floatUsed, raiseUsd: raiseUsd ?? null, quote: { symbol: quote.sym, mint: quote.mint, decimals: quote.decimals },
   reference: { base: refBase, quote: refQuote }, summary: s, checkpoints: built.checkpoints,
   configParams: JSON.parse(JSON.stringify(cp, (k, v) => (v && v._bn !== undefined) || (v && v.words) ? v.toString() : v)),
 };

@@ -31,7 +31,7 @@ if (!tokenBadge && !["USDC", "SOL"].includes(plan.quote.symbol)) throw new Error
 // Drift guard: the ladder was built for plan.reference; if the live reference moved, the ±band would be wrong from block one.
 {
   const maxDrift = Number(arg("max-drift", "1"));
-  const live = plan.preipo ? await resolvePreIpo(plan.base) : await resolveUsdRobust({ pythSymbol: `Equity.US.${plan.base}/USD`, twins: twinsOf(plan.base), manual: plan.reference?.base?.source === "manual" ? plan.reference.base.price : undefined }, { force: true });
+  const live = plan.preipo ? await resolvePreIpo(plan.base, plan.preipoAnchor || "prestocks") : await resolveUsdRobust({ pythSymbol: `Equity.US.${plan.base}/USD`, twins: twinsOf(plan.base), manual: plan.reference?.base?.source === "manual" ? plan.reference.base.price : undefined }, { force: true });
   const driftPct = (live.price / plan.reference.base.price - 1) * 100;
   console.log(`drift guard: plan ref $${plan.reference.base.price.toFixed(2)} → live $${live.price.toFixed(2)} (${driftPct >= 0 ? "+" : ""}${driftPct.toFixed(2)}%)`);
   if (Math.abs(driftPct) > maxDrift && !process.argv.includes("--force")) { console.error(`reference drifted ${driftPct.toFixed(2)}% > ${maxDrift}% since the plan — re-run plan.mjs (or --force)`); process.exit(2); }

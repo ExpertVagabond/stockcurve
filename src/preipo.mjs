@@ -8,7 +8,9 @@ const ALIASES = { SPACEX: ["SPACEX", "T-SpaceX"], OPENAI: ["OPENAI", "T-OpenAI"]
 
 export async function fetchPreIpo() {
   // Each provider fails independently: a 500 from one must not take the other (or the anchor) down.
-  const safe = (url) => fetch(url).then((r) => (r.ok ? r.json() : Promise.reject(new Error(`${url} HTTP ${r.status}`)))).then((j) => (Array.isArray(j) ? j : Promise.reject(new Error(`${url} non-array`)))).catch((e) => { console.warn(`preipo: ${e.message}`); return []; });
+  // Tessera's API flaps (intermittent 500s); retry with backoff before treating a provider as absent.
+  const once = (url) => fetch(url).then((r) => (r.ok ? r.json() : Promise.reject(new Error(`${url} HTTP ${r.status}`)))).then((j) => (Array.isArray(j) ? j : Promise.reject(new Error(`${url} non-array`))));
+  const safe = async (url) => { for (let i = 0; i < 4; i++) { try { return await once(url); } catch (e) { if (i === 3) { console.warn(`preipo: ${e.message} (after 4 tries)`); return []; } await new Promise((r) => setTimeout(r, 800 * (i + 1))); } } };
   const [pre, tess] = await Promise.all([safe(PRESTOCKS), safe(TESSERA)]);
   return {
     prestocks: pre.map((t) => ({ provider: "prestocks", symbol: t.symbol, mint: t.contract_address, mark: t.markPrice, token: t.tokenPrice, markValuation: t.markValuation, impliedValuation: t.impliedValuation, supply: t.supply, url: t.external_url })),
@@ -16,16 +18,19 @@ export async function fetchPreIpo() {
   };
 }
 
-/** Reference for a pre-IPO company: PreStocks mark price is the anchor; everything else is context. */
-export async function resolvePreIpo(name) {
+/** Reference for a pre-IPO company. anchor = "prestocks" (default) or "tessera": that provider's mark price is the anchor,
+ *  the other is context. The two providers' per-token units differ, so the anchor also defines what "1 unit" means. */
+export async function resolvePreIpo(name, anchor = process.env.PREIPO_ANCHOR || "prestocks") {
   const { prestocks, tessera } = await fetchPreIpo();
   const names = ALIASES[name.toUpperCase()] || [name];
   const p = prestocks.find((t) => names.includes(t.symbol));
   const t = tessera.find((x) => names.includes(x.symbol));
   if (!p && !t) throw new Error(`no pre-IPO reference for ${name}`);
-  const anchor = p ? { price: p.mark, source: "prestocks-mark", feed: `${p.symbol}@${p.mint}` } : { price: t.mark, source: "tessera-mark", feed: `${t.symbol}@${t.mint}` };
+  const useT = anchor === "tessera" ? !!t : !p;
+  if (anchor === "tessera" && !t) throw new Error(`Tessera has no ${name} token (API down or unlisted)`);
+  const a = useT ? { price: t.mark, source: "tessera-mark", feed: `${t.symbol}@${t.mint}`, anchor: "tessera" } : { price: p.mark, source: "prestocks-mark", feed: `${p.symbol}@${p.mint}`, anchor: "prestocks" };
   return {
-    ok: true, ...anchor, ageSec: 0, tried: [],
+    ok: true, ...a, ageSec: 0, tried: [],
     context: {
       prestocks: p && { symbol: p.symbol, mint: p.mint, mark: p.mark, token: p.token, basisBps: (p.token / p.mark - 1) * 1e4, markValuation: p.markValuation, impliedValuation: p.impliedValuation, supply: p.supply },
       tessera: t && { symbol: t.symbol, mint: t.mint, mark: t.mark, markValuation: t.markValuation, holders: t.holders },

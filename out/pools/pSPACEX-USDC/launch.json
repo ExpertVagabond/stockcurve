@@ -33,7 +33,16 @@
   "tokenBadge": null,
   "txs": {
     "createConfig": "4thWkwiDevp636mHm9DhgVDySEFgRwoKoGPCY8PZXghx8LbAoHAGNexaeLeBY1sceiuaSRfCjefQWZBzXVTRVdXC",
-    "createPoolWithFirstBuy": "5i3GaazrNNLkZicDpnnkN7hKzjmpp6vCAPwQjrrYr2ha2VhpEEymbMXtEbpMv4SwHUt1m1VP15ZsAeufBcx6N91h"
+    "createPoolWithFirstBuy": "5i3GaazrNNLkZicDpnnkN7hKzjmpp6vCAPwQjrrYr2ha2VhpEEymbMXtEbpMv4SwHUt1m1VP15ZsAeufBcx6N91h",
+    "claimTradingFee": "RF3pKe1eLbi4sWSM95foPjEfhmXQqmNd21PCy4PztGDBuQFq6DiMh8s3NRTWijmf9Jt7HqAdwyLUV7kDhsePbwB",
+    "claimCreationFee": "4efaQLeFGF8C5SG7ohWFUah9hDj78DUZ3sTHAfFcz9Bp1ySfTkx588X2zz11amCbmCJSxubfYS37cDmZTDMuwZ2S",
+    "withdrawMigrationFee": "4KQoJPAhnc4M935v54wabB4A9kgYhr66ZV7K8iWr7RjhPHy6NrZSfWckdA46MB3qm1eQKg3VCxc39NyBNojVVZAQ"
   },
-  "launchedAt": "2026-09-16T01:09:21.052Z"
+  "launchedAt": "2026-09-16T01:09:21.052Z",
+  "revenue": {
+    "tradingFeeQuote": 0.088172,
+    "listingFeePct": 3,
+    "creationFeeSol": 0.02,
+    "claimedAt": "2026-09-16T01:10:49.511Z"
+  }
 }

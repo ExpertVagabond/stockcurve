@@ -35,7 +35,12 @@ def caption_png(text):  # this ffmpeg has no drawtext: render the caption bar wi
     path = f"demo/raw/cap{_cap}.png"; im.save(path); return path
 
 run = lambda *a: subprocess.run(["ffmpeg", "-y", "-loglevel", "error", *a], check=True)
-run("-loop", "1", "-i", "demo/raw/card-title.png", "-t", "5", "-r", "30", "-pix_fmt", "yuv420p", "-vf", "fade=t=in:st=0:d=0.6,fade=t=out:st=4.4:d=0.6", "demo/raw/seg0.mp4")
+VO = "demo/raw/vo"
+def dur(path): return float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", path], capture_output=True, text=True).stdout.strip() or 0)
+def vo_audio(name): return [f"[{name}]adelay=600|600,loudnorm=I=-16:TP=-1.5:LRA=11[a]"]
+t0 = dur(f"{VO}/00-title.wav") + 1.6
+run("-loop", "1", "-i", "demo/raw/card-title.png", "-i", f"{VO}/00-title.wav", "-t", f"{t0:.2f}", "-r", "30", "-pix_fmt", "yuv420p",
+    "-filter_complex", f"[0:v]fade=t=in:st=0:d=0.6,fade=t=out:st={t0 - 0.6:.2f}:d=0.6[v];[1:a]adelay=600|600,apad,loudnorm=I=-16:TP=-1.5:LRA=11[a]", "-map", "[v]", "-map", "[a]", "-c:a", "aac", "-shortest", "demo/raw/seg0.mp4")
 # console: two caption windows
 def with_captions(src, out, caps, scale=False):
     # caps: [(text, start, end)] → overlay chain
@@ -44,12 +49,22 @@ def with_captions(src, out, caps, scale=False):
     chain = f"[0:v]scale={W}:{H}[v0]" if scale else "[0:v]null[v0]"
     for i, (_, a, b) in enumerate(caps):
         chain += f";[v{i}][{i + 1}:v]overlay=0:{H - 120}:enable='between(t,{a},{b})'[v{i + 1}]"
-    run(*inputs, "-filter_complex", chain, "-map", f"[v{len(caps)}]", "-r", "30", "-pix_fmt", "yuv420p", out)
+    vo = {"demo/raw/seg1.mp4": f"{VO}/01-console.wav", "demo/raw/seg2.mp4": f"{VO}/02-terminal.wav"}.get(out)
+    if vo:
+        n = len(caps) + 1; inputs.extend(["-i", vo])
+        need = dur(vo) + 1.4; have = dur(src)
+        pad = f";[v{len(caps)}]tpad=stop_mode=clone:stop_duration={max(0, need - have):.2f}[vp]" if need > have else f";[v{len(caps)}]null[vp]"
+        chain += pad + f";[{n}:a]adelay=600|600,apad,loudnorm=I=-16:TP=-1.5:LRA=11[a]"
+        run(*inputs, "-filter_complex", chain, "-map", "[vp]", "-map", "[a]", "-r", "30", "-pix_fmt", "yuv420p", "-c:a", "aac", "-shortest", out)
+    else:
+        run(*inputs, "-filter_complex", chain, "-map", f"[v{len(caps)}]", "-r", "30", "-pix_fmt", "yuv420p", out)
 with_captions("demo/raw/console.webm", "demo/raw/seg1.mp4", [("The console: every pool, its reference, basis and lifecycle", 0, 12), ("Title page: curve band, graduation, fees claimed, provenance", 12, 60)], scale=True)
 import json as _j
 m = {x["cmd"]: x["t"] for x in _j.load(open("demo/raw/marks.json"))}
 with_captions("demo/raw/term.mp4", "demo/raw/seg2.mp4", [("plan: median-of-twins reference, TWAP, USD-sized graduation", 0, m[2]), ("keeper: discovers the pool, buys the discount, graduates, migrates, exits at target", m[2], m[4]), ("status: pool vs reference, basis, fees", m[4], m[6]), ("fee sweep across every config we own", m[6], 999)])
-run("-loop", "1", "-i", "demo/raw/card-end.png", "-t", "6", "-r", "30", "-pix_fmt", "yuv420p", "-vf", "fade=t=in:st=0:d=0.6", "demo/raw/seg3.mp4")
+t3 = dur(f"{VO}/03-end.wav") + 1.8
+run("-loop", "1", "-i", "demo/raw/card-end.png", "-i", f"{VO}/03-end.wav", "-t", f"{t3:.2f}", "-r", "30", "-pix_fmt", "yuv420p",
+    "-filter_complex", "[0:v]fade=t=in:st=0:d=0.6[v];[1:a]adelay=600|600,apad,loudnorm=I=-16:TP=-1.5:LRA=11[a]", "-map", "[v]", "-map", "[a]", "-c:a", "aac", "-shortest", "demo/raw/seg3.mp4")
 open("demo/raw/concat.txt", "w").write("".join(f"file 'seg{i}.mp4'\n" for i in range(4)))
-run("-f", "concat", "-safe", "0", "-i", "demo/raw/concat.txt", "-c:v", "libx264", "-crf", "20", "-preset", "medium", "-pix_fmt", "yuv420p", "-movflags", "+faststart", "demo/stockcurve-demo.mp4")
+run("-f", "concat", "-safe", "0", "-i", "demo/raw/concat.txt", "-c:v", "libx264", "-crf", "20", "-preset", "medium", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "160k", "-movflags", "+faststart", "demo/stockcurve-demo.mp4")
 print(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration,size", "-of", "csv=p=0", "demo/stockcurve-demo.mp4"], capture_output=True, text=True).stdout.strip())

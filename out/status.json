@@ -1,46 +1,46 @@
 {
-  "at": "2026-09-16T00:52:33.546Z",
-  "poolAddress": "ERBiYKkLF15Uqgx3vpPpDw4kgWhnYzz5ADR1YWJWhm1b",
-  "symbol": "sRKLB-DK",
-  "quote": "DKNG",
-  "unit": 0.01,
+  "at": "2026-09-16T01:08:21.493Z",
+  "poolAddress": "EnrkDGJc1L77nsBmpAcbLs9SssALuf7McSWPYvLw7fEt",
+  "symbol": "sSNDK",
+  "quote": "SOL",
+  "unit": 0.010002808745277326,
   "preipo": null,
   "reference": {
-    "baseUsd": 63.50705879322168,
-    "baseSource": "twin-ondo",
+    "baseUsd": 1534.8798639238266,
+    "baseSource": "median(twin-backpack+twin-ondo)",
     "baseAgeSec": 0,
     "baseStale": false,
-    "quoteUsd": 24.68197539660831,
-    "quoteSource": "jupiter-v3",
-    "refPriceQuote": 0.025730136171332765,
-    "refPriceUsd": 0.6350705879322168
+    "quoteUsd": 96.82528065,
+    "quoteSource": "pyth-lazer",
+    "refPriceQuote": 0.15856509397896928,
+    "refPriceUsd": 15.353109725807325
   },
   "pool": {
-    "priceQuote": 0.026890377422640718,
-    "priceUsd": 0.6637076339511297,
-    "basisBps": 450.92697667128425,
-    "startPriceQuote": 0.02432942251318239,
-    "graduationPriceQuote": 0.026890414356675274,
-    "quoteReserve": 0.067146,
-    "quoteReserveDisplay": 0.067146,
-    "threshold": 0.067146,
-    "thresholdUsd": 1.6572959199806614,
+    "priceQuote": 0.16539175380278995,
+    "priceUsd": 16.01410297915084,
+    "basisBps": 430.5272776318669,
+    "startPriceQuote": 0.14964015822245333,
+    "graduationPriceQuote": 0.16539175382481683,
+    "quoteReserve": 0.895166682,
+    "quoteReserveDisplay": 0.895166682,
+    "threshold": 0.895166681,
+    "thresholdUsd": 86.67476511635401,
     "progressPct": 100,
     "isMigrated": 1,
-    "baseSold": 2.577808618,
-    "activationPoint": 1789517274,
-    "ageSec": 2679
+    "baseSold": 5.587597849,
+    "activationPoint": 1789516422,
+    "ageSec": 4479
   },
   "fees": {
-    "totalTradingQuote": 0.001666,
+    "totalTradingQuote": 0.022153226,
     "partnerUnclaimedQuote": 0,
     "currentBaseFeeBps": 300,
-    "schedule": "300→30 bps exp over 3600s (60 periods), dynamic fee on"
+    "schedule": "300→30 bps exp (config), dynamic fee on"
   },
   "quoteMint": {
-    "mint": "DKNGQFNGQmoBdXSRGKJ8tTu7uPDasw5JDcfMmWniNfow",
+    "mint": "So11111111111111111111111111111111111111112",
     "scaledUiMultiplier": 1
   },
-  "config": "6ZwFMUBpPJZSifaqqTxzkCeaULMDYQfkfRKQSDRosLEt",
-  "baseMint": "83w1NmxsrdorqAhzow771CGuUzHiM7YRvqURCE4HwL3w"
+  "config": "CsrQWn2JUD4fevJ4vz8Fahe1pgo2wzxWs718Qf9LREX4",
+  "baseMint": "5wRwerHe62QNbYuF8CA9B6zZf3fDmc1akxRFpnB9P6Ui"
 }
