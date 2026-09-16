@@ -13,6 +13,7 @@
   "dependencies": {
     "@coral-xyz/anchor": "^0.32.1",
     "@meteora-ag/cp-amm-sdk": "^1.4.8",
+    "@meteora-ag/dlmm": "^1.9.14",
     "@meteora-ag/dynamic-bonding-curve-sdk": "^1.5.12",
     "@pythnetwork/hermes-client": "^2.1.0",
     "@solana/spl-token": "^0.4.15",

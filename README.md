@@ -175,6 +175,20 @@ buyers between reference and +5%. After graduation the raise (minus the listing 
 | `issuer` | revenue: 3% listing + 0.02 SOL creation + curve fees + 20 bps DAMM v2 on locked LP | pools 6–8, all three streams claimed on-chain |
 | `seed` | a self-funded venue with recoverable capital: partner LP 90% withdrawable, 10% locked | pool 9 `sSNDK/SOL` [`EnrkDGJc1L77nsBmpAcbLs9SssALuf7McSWPYvLw7fEt`](https://solscan.io/account/EnrkDGJc1L77nsBmpAcbLs9SssALuf7McSWPYvLw7fEt): keeper funded the 0.895 SOL raise, graduated, then [withdrew 50% of the unlocked LP](https://solscan.io/tx/QJVT7Vtb3TMq4HeSUyqSDZiRrpTj6WY5GVmDrEcRBchaQ69AwGV68SJ8s52f7gCTnrwGUP9emN5K4G7xsoTnKqq) — 0.402 SOL + 2.43 sSNDK back in the wallet (`scripts/lp.mjs`) |
 
+### After graduation: market-make the basis (DLMM band)
+
+`scripts/dlmm-band.mjs` creates a DLMM pair at the reference bin (if none exists) and opens a two-sided **Curve**
+position ± `--width-bps` around it. On the SNDK venue: pair [`HGJHSe53E1UynSd36dyApZYcRd2tAjVxBJ1srnyZ2Vpy`](https://solscan.io/account/HGJHSe53E1UynSd36dyApZYcRd2tAjVxBJ1srnyZ2Vpy),
+position `D2tqGBkg…UD99`, 25 bins (±3%), 0.94 sSNDK + 0.159 SOL, 20 bps — concentrated liquidity where a stock
+actually trades, next to the full-range DAMM v2 pool. This is the fee engine for a real venue.
+
+### Inbound launches and the fee sweep (the launchpad's back office)
+
+- `keeper.mjs --watch` now recognises a pool created **by someone else on one of our configs** ("inbound"), claims its
+  creation fee on sight, logs it to `out/inbound.jsonl`, and does *not* trade it (unknown ticker → no reference).
+- `scripts/sweep.mjs` walks every config we own (`getPoolsFeesByConfig`) and claims trading, creation and listing fees on
+  every pool, ours or inbound. First run: 9 configs, 10 pools, 6 with fees to claim, 0 inbound yet.
+
 ## The keeper (not a sniper)
 
 Pool 2 was sniped 5 seconds after creation by a flash-loan bot that then sold back at a loss. A
@@ -247,6 +261,9 @@ scripts/claim.mjs   claim trading + creation + listing fees on a pool
 scripts/lp.mjs      DAMM v2 positions; withdraw unlocked LP (seed profile)
 scripts/size.mjs    size a real pool for a target raise, both curve shapes
 scripts/refresh.mjs re-snapshot every pool, rebuild + deploy the console
+scripts/dlmm-band.mjs  DLMM pair + concentrated two-sided band around reference
+scripts/sweep.mjs   claim every fee stream on every pool of every config we own (inbound included)
+scripts/clawpump-launch.mjs  stock-paired launch through Clawpump's partner API
 scripts/swap.mjs    Jupiter swap between SOL / USDC / xStocks
 scripts/scan-*.mjs  research probes: xStock badges, Backpack (1,158 mints), pre-IPO, on-chain Pyth
 docs/research-findings.md   Backpack/pre-IPO/Clawpump/sniper findings with numbers

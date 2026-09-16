@@ -1,35 +1,35 @@
 {
-  "at": "2026-09-16T00:11:35.052Z",
+  "at": "2026-09-16T00:28:00.088Z",
   "poolAddress": "2gZ7X2AZH7gEXirrju5NwJVuLKVVivXVH2RWrWw7qTiu",
   "symbol": "sHOOD",
   "quote": "SOL",
   "unit": 0.01,
   "preipo": null,
   "reference": {
-    "baseUsd": 109.06762769515348,
-    "baseSource": "jupiter-xstock-twin",
+    "baseUsd": 108.70039918342677,
+    "baseSource": "median(twin-backpack+twin-ondo+twin-xstocks)",
     "baseAgeSec": 0,
     "baseStale": false,
-    "quoteUsd": 96.98648879,
+    "quoteUsd": 97.11551272,
     "quoteSource": "pyth-lazer",
-    "refPriceQuote": 0.011245651745503661,
-    "refPriceUsd": 1.0906762769515348
+    "refPriceQuote": 0.011192897626646724,
+    "refPriceUsd": 1.0870039918342678
   },
   "pool": {
     "priceQuote": 0.011746319700080209,
-    "priceUsd": 1.1392343039155852,
-    "basisBps": 445.2102607363151,
+    "priceUsd": 1.1407498602463262,
+    "basisBps": 494.4403959489119,
     "startPriceQuote": 0.00950892557249775,
     "graduationPriceQuote": 0.011746319824850164,
     "quoteReserve": 0.028711453,
     "quoteReserveDisplay": 0.028711453,
     "threshold": 0.028711452,
-    "thresholdUsd": 2.784622917542623,
+    "thresholdUsd": 2.788327381915669,
     "progressPct": 100,
     "isMigrated": 1,
     "baseSold": 2.629035037,
     "activationPoint": 1789513518,
-    "ageSec": 3977
+    "ageSec": 4962
   },
   "fees": {
     "totalTradingQuote": 0.000617556,

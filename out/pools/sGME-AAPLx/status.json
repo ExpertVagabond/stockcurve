@@ -1,39 +1,39 @@
 {
-  "at": "2026-09-16T00:11:28.430Z",
+  "at": "2026-09-16T00:27:53.496Z",
   "poolAddress": "J1gcmbH3QthJahRdXqEAXc7eDbYE6JoWYqGVViGvFLbm",
   "symbol": "sGME",
   "quote": "AAPLx",
   "unit": 0.1,
   "preipo": null,
   "reference": {
-    "baseUsd": 21.3856877891553,
-    "baseSource": "jupiter-xstock-twin",
+    "baseUsd": 21.359072355336288,
+    "baseSource": "median(twin-xstocks+twin-ondo)",
     "baseAgeSec": 0,
     "baseStale": false,
-    "quoteUsd": 331.66344755417305,
+    "quoteUsd": 331.1010391949156,
     "quoteSource": "jupiter-v3",
-    "refPriceQuote": 0.006448008650595184,
-    "refPriceUsd": 2.13856877891553
+    "refPriceQuote": 0.006450922777914459,
+    "refPriceUsd": 2.135907235533629
   },
   "pool": {
     "priceQuote": 0.005921387901950477,
-    "priceUsd": 1.963907925866467,
-    "basisBps": -816.7184276281913,
+    "priceUsd": 1.9605776878120038,
+    "basisBps": -820.8668653993357,
     "startPriceQuote": 0.004793505047922664,
     "graduationPriceQuote": 0.005921388588610349,
     "quoteReserve": 0.01426441,
     "quoteReserveDisplay": 0.014302413349380023,
     "threshold": 0.01426441,
-    "thresholdUsd": 4.730983397926222,
+    "thresholdUsd": 4.722960974502346,
     "progressPct": 100,
     "isMigrated": 1,
     "baseSold": 2.591033243,
     "activationPoint": 1789503989,
-    "ageSec": 13499
+    "ageSec": 14484
   },
   "fees": {
     "totalTradingQuote": 0.0002683,
-    "partnerUnclaimedQuote": 0.0002683,
+    "partnerUnclaimedQuote": 0,
     "currentBaseFeeBps": 300,
     "schedule": "300→30 bps exp over 3600s (60 periods), dynamic fee on"
   },

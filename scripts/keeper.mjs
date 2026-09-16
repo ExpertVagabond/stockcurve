@@ -203,7 +203,18 @@ if (arg("pool")) {
     loadRegistry();
     const entry = registry.get(found.config);
     log({ ev: "pool-created", ...found, ours: !!entry, sig: signature });
-    if (entry) tracked.set(found.pool, entry);
+    if (!entry) return;
+    // Inbound: someone else launched on OUR config. We don't know their ticker's reference, so we don't trade it —
+    // we claim the creation fee now, record it, and let sweep.mjs collect trading/listing fees over time.
+    const st = await client.state.getPool(new PublicKey(found.pool)).catch(() => null);
+    if (st && !st.poolState.creator.equals(me)) {
+      log({ ev: "inbound", pool: found.pool, config: found.config, creator: st.poolState.creator.toBase58() });
+      try { const tx = await client.partner.claimPartnerPoolCreationFee({ pool: new PublicKey(found.pool), feeReceiver: me }); const sig2 = await sendTx("claim-creation-fee", tx); log({ ev: "inbound-creation-fee", pool: found.pool, sig: sig2 }); }
+      catch (e) { log({ ev: "inbound-creation-fee", pool: found.pool, err: e.message.slice(0, 120) }); }
+      appendFileSync("out/inbound.jsonl", JSON.stringify({ at: new Date().toISOString(), pool: found.pool, config: found.config, creator: st.poolState.creator.toBase58(), sig: signature }) + "\n");
+      return;
+    }
+    tracked.set(found.pool, entry);
   }, "confirmed");
   for (const e of registry.values()) if (e.launch.pool && !(await client.state.getPool(new PublicKey(e.launch.pool))).poolState.isMigrated) tracked.set(e.launch.pool, e);
 } else {

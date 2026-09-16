@@ -4,7 +4,7 @@
   "graduationPriceQuote": 0.16539175382481683,
   "migrationQuoteThreshold": 0.895166681,
   "migrationQuoteThresholdUsd": 86.79342979014407,
-  "feeSchedule": "300\u219230 bps exp (config), dynamic fee on",
+  "feeSchedule": "300→30 bps exp (config), dynamic fee on",
   "unit": 0.010002808745277326,
   "float": 12,
   "discountBps": 500,
@@ -36,7 +36,9 @@
     "createConfig": "67GRoH6bBQMoV6jwg7DPB3zEPMnMG7j72CUSXZwZhrbkd7aCZPukupcKiFt6u5pio3gVVvpFu3po2qf1KYcBtbER",
     "keeperBuyDiscount": "41eGVbRXDaxy4m2D9JWG7k4Lh3NUuycqJp2xtkT5Wv6kHTSTopm28LoPwkngJrzjG989HoQxpi6e1AfbU1UdE2FB",
     "keeperGraduate": "5BYu98nbR4ZHQcxh5qfiFzLxLkoT9iLBvjSFzFRfhXFU1WyF1AW5YEfSoofn8yuMejmexGGUvrw7QaYTKAWbXEqa",
-    "migrateToDammV2": "5PF4ZnKqHFwSvVdpgbV7sMHc3ji8aVqz8i5C5ycwajuV4eu72JLRvFMEf1YWyTnNGUMEvsCWiuGWUS7cnA2vuvts"
+    "migrateToDammV2": "5PF4ZnKqHFwSvVdpgbV7sMHc3ji8aVqz8i5C5ycwajuV4eu72JLRvFMEf1YWyTnNGUMEvsCWiuGWUS7cnA2vuvts",
+    "dlmmCreatePair": "5N9DzT2VRHYT4CAMrVR2Ve4pWoLEjBmVnjqbGEgbVitDToNgmjzYNFRCNZgfqWRbtm486xpLDXyZShD6DpX3hkvV",
+    "dlmmAddLiquidity": "2kzRHg8R2yXY6LexpnxPrtwjAmYHUoG2NNYGMNHcwwo5LsJhZ4umt3K6zuzcAaYZEoRXNTnWGJFRggSxnhaGBoL"
   },
   "launchedAt": "2026-09-15T23:53:45.165Z",
   "lp": {
@@ -48,5 +50,19 @@
   },
   "dammV2Pool": "836qKA34uSMYGCpQQBRpmhuhjVsftdyjbphwNAqrH8jb",
   "partnerUnlockedLpPct": 90,
-  "curve": "lean"
+  "curve": "lean",
+  "dlmm": {
+    "pair": "HGJHSe53E1UynSd36dyApZYcRd2tAjVxBJ1srnyZ2Vpy",
+    "position": "D2tqGBkgLjm1uVaoqd6AKbztG1ffNqhn1aMBuxrMUD99",
+    "activeId": -738,
+    "minBinId": -750,
+    "maxBinId": -726,
+    "binStep": 25,
+    "feeBps": 20,
+    "widthBps": 300,
+    "base": 1,
+    "quote": 0.15,
+    "referencePrice": 0.15817204400383472,
+    "at": "2026-09-16T00:25:35.288Z"
+  }
 }

@@ -34,10 +34,8 @@ fixed-now, known-and-accepted, and next.
 
 1. ~~Reference = median of sources + TWAP~~ **done**: `resolveUsdRobust` (median across Pyth/twins/Jupiter, `--twap`, `--max-spread`, low-liquidity flag).
 2. ~~Graduation in USD terms~~ **done**: `--raise-usd` sizes the float; launch-time **drift guard** refuses if the reference moved > 1% since the plan.
-3. **Post-graduation liquidity**: route part of migrated LP into a DLMM band around reference (market-making the basis), not
-   only a full-range DAMM v2 position.
-4. **Pool-creation watcher for third-party launches** on our shared configs (the launchpad's inbound side) + creation-fee
-   claim sweep across all pools on a config (`getPoolsFeesByConfig`).
+3. ~~DLMM band~~ **done**: `dlmm-band.mjs` — pair at reference bin + ±width Curve position (live on sSNDK/SOL).
+4. ~~Inbound watcher + fee sweep~~ **done**: keeper claims creation fee on inbound pools; `sweep.mjs` claims all streams on all pools per config.
 5. **Console**: live RPC read of DBC/DAMM price in the browser (currently snapshot + live quote price from Jupiter).
 6. **Clawpump** registration once a `cpk_` key exists; **Pyth** equity grant for RKLB-class names.
 7. Ondo twins as *quotes* (all 28 badged) — untested; thin liquidity makes inventory acquisition the constraint.

@@ -94,6 +94,11 @@ Targets: Main track + Best Use of Meteora DBC ($5k) + Stocknized Agent on Clawpu
   with Backpack SNDK on pump.fun (Token-2022 quote), 75% fee share → hot wallet. out/clawpump/scSNDK.json.
 - Still pending: Pyth equity grant (tab open), Helius RPC key (tab open), submission form.
 
+## DLMM band + inbound watcher + sweep (2026-09-16 ~03:40 UTC)
+- dlmm-band.mjs (DLMM SDK via CJS require — ESM build broken): sSNDK/SOL pair HGJHSe53… at ref bin −738, position D2tqGBkg… 25 bins ±3%,
+  0.94 sSNDK + 0.159 SOL, 20 bps. sweep.mjs: 9 configs/10 pools, claimed trading fees on 6. keeper: inbound detection + creation-fee claim.
+- Pyth key re-verified: same token, equity/xStock/index still 403 — needs an entitlement on the Pyth Terminal account (pythdata.app opened).
+
 ## Needs Matthew (interactive)
 1. Register + submit on hackathons.solana.com (links: repo, console; video optional).
 2. Pyth Terminal: equity/xStock feed grant on the Pro token (free grant = crypto majors only; all stock feeds 403).

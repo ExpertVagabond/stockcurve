@@ -1,5 +1,5 @@
 {
-  "at": "2026-09-16T00:11:44.735Z",
+  "at": "2026-09-16T00:28:08.248Z",
   "poolAddress": "ERBiYKkLF15Uqgx3vpPpDw4kgWhnYzz5ADR1YWJWhm1b",
   "symbol": "sRKLB-DK",
   "quote": "DKNG",
@@ -7,29 +7,29 @@
   "preipo": null,
   "reference": {
     "baseUsd": 63.50705879322168,
-    "baseSource": "jupiter-xstock-twin",
+    "baseSource": "twin-ondo",
     "baseAgeSec": 0,
     "baseStale": false,
-    "quoteUsd": 24.76424564999733,
+    "quoteUsd": 24.686332518397407,
     "quoteSource": "jupiter-v3",
-    "refPriceQuote": 0.025644657095875854,
+    "refPriceQuote": 0.025725594818871236,
     "refPriceUsd": 0.6350705879322168
   },
   "pool": {
     "priceQuote": 0.026890377422640718,
-    "priceUsd": 0.6659199121154168,
-    "basisBps": 485.7621305317439,
+    "priceUsd": 0.663824798600515,
+    "basisBps": 452.7718841762396,
     "startPriceQuote": 0.02432942251318239,
     "graduationPriceQuote": 0.026890414356675274,
     "quoteReserve": 0.067146,
     "quoteReserveDisplay": 0.067146,
     "threshold": 0.067146,
-    "thresholdUsd": 1.6628200384147207,
+    "thresholdUsd": 1.6575884832803123,
     "progressPct": 100,
     "isMigrated": 1,
     "baseSold": 2.577808618,
     "activationPoint": 1789517274,
-    "ageSec": 230
+    "ageSec": 1214
   },
   "fees": {
     "totalTradingQuote": 0.001666,

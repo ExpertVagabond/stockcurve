@@ -1,39 +1,39 @@
 {
-  "at": "2026-09-16T00:11:51.351Z",
+  "at": "2026-09-16T00:28:15.225Z",
   "poolAddress": "EnrkDGJc1L77nsBmpAcbLs9SssALuf7McSWPYvLw7fEt",
   "symbol": "sSNDK",
   "quote": "SOL",
   "unit": 0.010002808745277326,
   "preipo": null,
   "reference": {
-    "baseUsd": 1529.9252256066436,
-    "baseSource": "jupiter-xstock-twin",
+    "baseUsd": 1534.9900797657972,
+    "baseSource": "median(twin-backpack+twin-ondo)",
     "baseAgeSec": 0,
     "baseStale": false,
-    "quoteUsd": 96.96215604,
+    "quoteUsd": 97.10551987000001,
     "quoteSource": "pyth-lazer",
-    "refPriceQuote": 0.15783012725093815,
-    "refPriceUsd": 15.30354942631852
+    "refPriceQuote": 0.1581188403537791,
+    "refPriceUsd": 15.354212193795256
   },
   "pool": {
     "priceQuote": 0.16539175380278995,
-    "priceUsd": 16.03674103995538,
-    "basisBps": 479.09905944822475,
+    "priceUsd": 16.06045223523097,
+    "basisBps": 459.96501319755635,
     "startPriceQuote": 0.14964015822245333,
     "graduationPriceQuote": 0.16539175382481683,
     "quoteReserve": 0.895166682,
     "quoteReserveDisplay": 0.895166682,
     "threshold": 0.895166681,
-    "thresholdUsd": 86.7972914049309,
+    "thresholdUsd": 86.92562592880746,
     "progressPct": 100,
     "isMigrated": 1,
     "baseSold": 5.587597849,
     "activationPoint": 1789516422,
-    "ageSec": 1089
+    "ageSec": 2073
   },
   "fees": {
     "totalTradingQuote": 0.022153226,
-    "partnerUnclaimedQuote": 0.022153226,
+    "partnerUnclaimedQuote": 0,
     "currentBaseFeeBps": 300,
     "schedule": "300→30 bps exp (config), dynamic fee on"
   },
