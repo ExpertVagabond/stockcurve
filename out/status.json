@@ -1,46 +1,46 @@
 {
-  "at": "2026-09-16T13:19:37.398Z",
-  "poolAddress": "229XVFnwBhJyPdmCpA6f1q3udV6xmScYZQVxduKeet4D",
-  "symbol": "sTSLA-QQ",
-  "quote": "QQQx",
-  "unit": 0.01,
+  "at": "2026-09-16T13:39:59.503Z",
+  "poolAddress": "FqLxggcrgbstMa2nMJi5mkQnKSYGZqDmnrG1j3qy7ZG9",
+  "symbol": "sRKLB2",
+  "quote": "SOL",
+  "unit": 1,
   "preipo": null,
   "reference": {
-    "baseUsd": 357.61999999999995,
-    "baseSource": "pyth-lazer",
+    "baseUsd": 63.50705879322168,
+    "baseSource": "twin-ondo",
     "baseAgeSec": 0,
     "baseStale": false,
-    "quoteUsd": 707.9800899999999,
+    "quoteUsd": 96.83847897,
     "quoteSource": "pyth-lazer",
-    "refPriceQuote": 0.005051271992691207,
-    "refPriceUsd": 3.5761999999999996
+    "refPriceQuote": 0.6558039683057786,
+    "refPriceUsd": 63.50705879322168
   },
   "pool": {
-    "priceQuote": 0.005305880073432699,
-    "priceUsd": 3.7564574519180884,
-    "basisBps": 504.04745796680305,
-    "startPriceQuote": 0.004800559166643013,
-    "graduationPriceQuote": 0.005305881184184383,
-    "quoteReserve": 0.0052996,
-    "quoteReserveDisplay": 0.0053099588811467025,
-    "threshold": 0.00529959,
-    "thresholdUsd": 3.7520042051630993,
-    "progressPct": 100,
-    "isMigrated": 1,
-    "baseSold": 1.031144049,
-    "activationPoint": 1789522890,
-    "ageSec": 41887
+    "priceQuote": 0.6554417675932668,
+    "priceUsd": 63.47198382714019,
+    "basisBps": -5.523002757172879,
+    "startPriceQuote": 0.6213535033358842,
+    "graduationPriceQuote": 0.6867591352659773,
+    "quoteReserve": 0.246751183,
+    "quoteReserveDisplay": 0.246751183,
+    "threshold": 1.351642402,
+    "thresholdUsd": 130.89099432103728,
+    "progressPct": 18.255655684882843,
+    "isMigrated": 0,
+    "baseSold": 0.385018177,
+    "activationPoint": 1789565919,
+    "ageSec": 80
   },
   "fees": {
-    "totalTradingQuote": 0.00013157,
-    "partnerUnclaimedQuote": 0,
+    "totalTradingQuote": 0.006108374,
+    "partnerUnclaimedQuote": 0.006108374,
     "currentBaseFeeBps": 300,
     "schedule": "300→30 bps exp over 3600s (60 periods), dynamic fee on"
   },
   "quoteMint": {
-    "mint": "Xs8S1uUs1zvS2p7iwtsG3b6fkhpvmwz4GYU3gWAmWHZ",
-    "scaledUiMultiplier": 1.0019546533977475
+    "mint": "So11111111111111111111111111111111111111112",
+    "scaledUiMultiplier": 1
   },
-  "config": "2DPrUfYbNm6RM3HdZwMqf3ZfYuK6X4bSq2iMLiNgYtwp",
-  "baseMint": "6SKtvzkhFrys6V8CAhoxxVdCHX3DwR7GFWnt3Q2cGMhQ"
+  "config": "39iUXwSrjgzNShSeFVjePJCebD9d5WJ1t4tr9d5dWwKB",
+  "baseMint": "9YqPRZ8WJQPedegF5v1V5G1X9cgGg6Lz5v15Lsy7Cw1y"
 }
