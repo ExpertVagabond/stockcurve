@@ -1,7 +1,22 @@
 {
-  "at": "2026-09-16T13:50:21.330Z",
+  "at": "2026-09-16T15:11:59.395Z",
   "wallet": "8nqQzTU5bqH3yjfi2ST1XvaaqWw447enCqnZkxHXTsKF",
   "agents": [
+    {
+      "symbol": "BONKCLAW",
+      "mint": "8z8MZcqJd4phpNN7C69iJQrhW5LG3dwJsP932n6z8oyJ",
+      "wallet": "8nqQzTU5bqH3yjfi2ST1XvaaqWw447enCqnZkxHXTsKF",
+      "quote": "739dnZEG4yaBWFsY8L8ZwrfhGG6dhtCSercW8Umspump",
+      "creator": "3f5j4iWEezxDBqi1hfPVcPzRvXAkLfNTJo23FN8BHkgv",
+      "curve": "on curve",
+      "replies": 0,
+      "holders": 1,
+      "vol24h": 0,
+      "pumpUrl": "https://pump.fun/coin/8z8MZcqJd4phpNN7C69iJQrhW5LG3dwJsP932n6z8oyJ",
+      "pairVol24h": 0,
+      "position": null,
+      "launchedAt": "2026-09-16T15:11:16.037Z"
+    },
     {
       "symbol": "scSNDK",
       "mint": "CUnDgEpzGQNkwQKDCNoyv1SB6YvBygUSCekSPgnsUGkm",

@@ -1,35 +1,35 @@
 {
-  "at": "2026-09-16T13:51:53.777Z",
+  "at": "2026-09-16T15:04:32.163Z",
   "poolAddress": "Enj6KRMbth9gqVFLEat9u8LC5wmfL8qjvrU9ojuWJqE6",
   "symbol": "sPLTR",
   "quote": "SOL",
   "unit": 0.0062751387499902144,
   "preipo": null,
   "reference": {
-    "baseUsd": 172.06117178272652,
-    "baseSource": "median(twin-xstocks+twin-ondo)",
+    "baseUsd": 172.51316569407237,
+    "baseSource": "median(twin-ondo+twin-xstocks)",
     "baseAgeSec": 0,
     "baseStale": false,
-    "quoteUsd": 97.25084034,
+    "quoteUsd": 97.18595146,
     "quoteSource": "pyth-lazer",
-    "refPriceQuote": 0.011102297138489797,
-    "refPriceUsd": 1.0797077264225101
+    "refPriceQuote": 0.011138894404670328,
+    "refPriceUsd": 1.082544050930356
   },
   "pool": {
     "priceQuote": 0.011746319700080209,
-    "priceUsd": 1.142339461735097,
-    "basisBps": 580.080458626615,
+    "priceUsd": 1.141577256205637,
+    "basisBps": 545.3191971684367,
     "startPriceQuote": 0.00950892557249775,
     "graduationPriceQuote": 0.011746319824850164,
     "quoteReserve": 0.028711453,
     "quoteReserveDisplay": 0.028711453,
     "threshold": 0.028711452,
-    "thresholdUsd": 2.7922128343815733,
+    "thresholdUsd": 2.79034978041812,
     "progressPct": 100,
     "isMigrated": 1,
     "baseSold": 2.629035038,
     "activationPoint": 1789514889,
-    "ageSec": 51824
+    "ageSec": 56183
   },
   "fees": {
     "totalTradingQuote": 0.000716691,

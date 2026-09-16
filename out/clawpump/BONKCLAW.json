@@ -1,0 +1,72 @@
+{
+  "request": {
+    "name": "BonkClaw",
+    "symbol": "BONKCLAW",
+    "description": "BonkClaw: a Stocknized agent token paired with CLAW on Clawpump, pooled on Meteora by the stockcurve keeper. Holders, volume and creator fees tracked on the stockcurve console. Stocklana hackathon.",
+    "imageUrl": "https://stockcurve.purplesquirrelnetworks.workers.dev/meta/clawpump-agent-launch.png",
+    "agentId": "stockcurve-bonkclaw",
+    "agentName": "BonkClaw agent",
+    "walletAddress": "8nqQzTU5bqH3yjfi2ST1XvaaqWw447enCqnZkxHXTsKF",
+    "pumpQuoteMint": "739dnZEG4yaBWFsY8L8ZwrfhGG6dhtCSercW8Umspump",
+    "pumpCreatorFeeBps": 300
+  },
+  "preflight": {
+    "payment": {
+      "method": "sol",
+      "amountLamports": 9147000,
+      "amountSol": 0.009147,
+      "payTo": "49CfXAr58cCTGJnYsbm16fEsE5JRpdR8QQP8E1ZinGCq",
+      "payFrom": "8nqQzTU5bqH3yjfi2ST1XvaaqWw447enCqnZkxHXTsKF",
+      "validForSeconds": 900,
+      "breakdown": {
+        "creationFeeSol": 0.009147,
+        "devBuySol": 0
+      }
+    },
+    "retryWith": {
+      "txSignature": "<signature of that SOL transfer>",
+      "preflightToken": "eyJ2IjoxLCJpYXQiOjE3ODk1NzE0NDMsImV4cCI6MTc4OTU3MjM0MywicGF5bG9hZEhhc2giOiIzM2U2NjAzYzMxNmMxMGM0ZDc0ZmQ4YmEyMzcwNjg3MjQ4MDk2NGRhOWRiNGE4N2M1OWUzMjU4NTM3ZjljNzVlIiwicmVjaXBpZW50IjoiNDlDZlhBcjU4Y0NUR0puWXNibTE2ZkVzRTVKUnBkUjhRUVA4RTFaaW5HQ3EiLCJhbW91bnRMYW1wb3J0cyI6OTE0NzAwMCwiZnVuZGluZ0xhbXBvcnRzIjo5MTQ3MDAwfQ.YVF0vUmDANuVkuVN3AkDGLnPXPm87uAAgZcmSZE2baU"
+    },
+    "meta": {
+      "timestamp": "2026-09-16T15:10:43.749Z",
+      "requestId": "d47aef69-b28c-44ab-8e63-09977fdf8bb0"
+    }
+  },
+  "paymentTx": "4urHPQr2wLYbJNhYybyhXZThUztW826daQ2nDqC6udSCutAmP9GNV7Q7NU4zrZboUedaZU6ayBmJic2gWWqPpWeY",
+  "response": {
+    "success": true,
+    "fundingSource": "self-funded",
+    "paymentVerified": {
+      "method": "sol",
+      "txSignature": "4urHPQr2wLYbJNhYybyhXZThUztW826daQ2nDqC6udSCutAmP9GNV7Q7NU4zrZboUedaZU6ayBmJic2gWWqPpWeY",
+      "sender": "8nqQzTU5bqH3yjfi2ST1XvaaqWw447enCqnZkxHXTsKF",
+      "amount": 0.009147,
+      "launchDevBuySol": 0
+    },
+    "mintAddress": "8z8MZcqJd4phpNN7C69iJQrhW5LG3dwJsP932n6z8oyJ",
+    "pumpQuoteAsset": {
+      "mint": "739dnZEG4yaBWFsY8L8ZwrfhGG6dhtCSercW8Umspump",
+      "symbol": "CLAW",
+      "name": "clawpump.tech",
+      "decimals": 6,
+      "imageUrl": "https://pump.mypinata.cloud/ipfs/QmfN6XKWnb2bJizSoaZwNqwpDLT5iZRgkitCvDjNkkDo8g?img-width=256",
+      "priceUsd": 0.005405835311246828,
+      "tokenProgram": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA",
+      "creatorFeeBps": 300
+    },
+    "txHash": "5XaEAjfz5nYVq7k1F2n2GBPoLoLcZ5jyn6DDhD1tLYXbszE1RpYbth7wTKAhczEMhcBg3JMLwpXceHsEdxsWJ2Qx",
+    "pumpUrl": "https://pump.fun/coin/8z8MZcqJd4phpNN7C69iJQrhW5LG3dwJsP932n6z8oyJ",
+    "explorerUrl": "https://solscan.io/tx/5XaEAjfz5nYVq7k1F2n2GBPoLoLcZ5jyn6DDhD1tLYXbszE1RpYbth7wTKAhczEMhcBg3JMLwpXceHsEdxsWJ2Qx",
+    "earnings": {
+      "feeShare": "75%",
+      "note": "Trading fees will be collected hourly and distributed to your wallet.",
+      "checkEarnings": "https://agents.clawpump.tech//api/fees/earnings?agentId=stockcurve-bonkclaw",
+      "dashboard": "https://agents.clawpump.tech//agent/stockcurve-bonkclaw"
+    },
+    "meta": {
+      "timestamp": "2026-09-16T15:11:16.073Z",
+      "requestId": "3175becb-3dd8-48c9-9a0a-dbe068165aa8"
+    }
+  },
+  "at": "2026-09-16T15:11:16.037Z"
+}

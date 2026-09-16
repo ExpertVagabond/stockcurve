@@ -1,3 +1,5 @@
+import { readFileSync } from "node:fs";
+import { homedir } from "node:os";
 // Reference-price resolver. Every result carries provenance {source, ageSec, feed} so the curve
 // config can record exactly what it was anchored to. Order of preference:
 //   1. Pyth Pro (Lazer) HTTP latest_price — live, needs a token with a grant for that feed
@@ -69,6 +71,14 @@ export async function pythOnChain(symbol) {
   return { ok: true, price: price * 10 ** expo, conf: conf * 10 ** expo, source: "pyth-onchain", feed: `${symbol}@${pda.toBase58()}`, ageSec: now() - publishTime };
 }
 
+// Clawpump partner API price (their curated + Jupiter merge). Only used when a key is present in ~/.config/clawpump/clawpump.env.
+export function loadClawpumpKey() { try { return readFileSync(`${homedir()}/.config/clawpump/clawpump.env`, "utf8").match(/CLAWPUMP_API_KEY=(\S+)/)?.[1] || null; } catch { return null; } }
+export async function clawpumpPrice(mint) {
+  const key = loadClawpumpKey(); if (!key) return { ok: false, why: "no key" };
+  const r = await fetch(`https://clawpump.tech/api/v1/price?mint=${mint}`, { headers: { Authorization: `Bearer ${key}` } });
+  if (!r.ok) return { ok: false, why: `http ${r.status}` };
+  const j = await r.json(); return j.price > 0 ? { ok: true, price: Number(j.price), liquidityUsd: j.liquidity ?? null, source: j.source, ageSec: j.updatedAt ? (Date.now() - Date.parse(j.updatedAt)) / 1000 : null } : { ok: false, why: "no price" };
+}
 export async function jupiterPrice(mint) {
   const j = await (await fetch(`https://lite-api.jup.ag/price/v3?ids=${mint}`)).json();
   const p = j[mint];
@@ -93,6 +103,7 @@ export async function resolveUsdRobust(a, o = {}) {
     const jobs = [];
     for (const sym of [a.pythSymbol, ...(a.pythSymbols || [])].filter(Boolean)) jobs.push(pythLazer(sym).then((r) => r.ok && srcs.push({ src: "pyth-lazer", label: sym, price: r.price, liquidityUsd: null, conf: "high" })).catch(() => {}));
     for (const t of a.twins || []) jobs.push(jupiterPrice(t.mint).then((r) => r.ok && srcs.push({ src: `twin-${t.issuer}`, label: t.symbol, price: r.price, liquidityUsd: r.liquidityUsd, conf: (r.liquidityUsd ?? 0) >= LOW_LIQ_USD ? "high" : "low" })).catch(() => {}));
+    for (const t of a.twins || []) jobs.push(clawpumpPrice(t.mint).then((r) => r.ok && srcs.push({ src: "clawpump", label: t.symbol, price: r.price, liquidityUsd: r.liquidityUsd, conf: (r.liquidityUsd ?? 0) >= LOW_LIQ_USD ? "high" : "low" })).catch(() => {}));
     if (a.mint) jobs.push(jupiterPrice(a.mint).then((r) => r.ok && srcs.push({ src: "jupiter", label: a.mint.slice(0, 6), price: r.price, liquidityUsd: r.liquidityUsd, conf: (r.liquidityUsd ?? 0) >= LOW_LIQ_USD ? "high" : "low" })).catch(() => {}));
     if (a.pythSymbol) jobs.push(pythOnChain(a.pythSymbol).then((r) => r.ok && r.ageSec <= 3600 && srcs.push({ src: "pyth-onchain", label: a.pythSymbol, price: r.price, liquidityUsd: null, conf: "high" })).catch(() => {}));
     await Promise.all(jobs);
