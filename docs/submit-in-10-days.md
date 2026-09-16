@@ -27,3 +27,27 @@ dashboard already has, and cutting the video before the six sentences exist.
 ## The whole thing in one line
 Identity → six sentences → six launches → live page and sponsor replies → product surface → automation → submit → one real
 launch → video → follow-ups → buffer.
+
+## The APIs, in the order you need them (Stocklana stack)
+
+Each one unlocks the next. Get the key on day zero; first call it on the day listed.
+
+| # | Day | API | What it does for you | First call |
+|---|---|---|---|---|
+| 1 | 0 | **Helius RPC** (`mainnet.helius-rpc.com/?api-key=`) | Reads and writes to Solana without the public RPC's 429s; enhanced tx history for audits; DAS for holder counts. Everything else sits on it. | `getSlot`, then a balance read of the project wallet. |
+| 2 | 0 | **X developer app** (OAuth 1.0a for posting, OAuth 2.0 for third-party connects) | Posts from the project and agent handles; the same app authorizes every account. Reading is what costs; post-only stays cheap. | Authorize the project handle; post nothing yet. |
+| 3 | 1 | **Jupiter lite API** (`lite-api.jup.ag/price/v3`, `/swap/v1`) | Live USD prices for any mint (the twin prices your reference is a median of) and swaps between anything; no key. | `price/v3?ids=<twin mints>`: is there a price at all? |
+| 4 | 1 | **Pyth** (Pro/Lazer `latest_price` with a token; MCP `get_symbols` for ids) | The equity reference when your key is entitled to the feed; authoritative over twins. Ask for entitlements the day you get the key; most equities 403 by default. | One `Equity.US.TSLA/USD` call to learn what the key returns. |
+| 5 | 1 | **PreStocks** (`prestocks.com/api/prestocks`) and **Tessera** (`rest-api.tessera.pe/v1/public/token-details`) | Pre-IPO mark prices and mints; reference-only (their tokens can't be a DBC quote). Public, no key; Tessera flaps, retry. | Fetch both, diff the valuations for the same company. |
+| 6 | 2 | **Meteora DBC SDK** (`@meteora-ag/dynamic-bonding-curve-sdk`) | Builds the config (curve, fees, profile), creates the pool, atomic first buy, quotes and swaps, migration to DAMM v2, fee claims. `deriveTokenBadgeAddress` tells you which stock mints can be a quote. | Badge check on every stock mint, then one config + pool. |
+| 7 | 2 | **Clawpump partner API** (`clawpump.tech/api/v1`, `cpk_` key) | `GET /pump-pairs` lists the stock quotes it can pair; `POST /launch/self-funded` mints an agent token on a stock pair (preflight → pay → confirm); `/price` is a second reference source. Agent routes need the key linked to the dashboard account. | `/pump-pairs`, then one self-funded launch. |
+| 8 | 2 | **Clawpump dashboard** (not an API: Launch Token → Meteora) | Their native "agent token on a Meteora DBC curve quoted in a stock"; the track's sentence, done in their UI. SAID identity, prospectus, marketplace, x402 endpoint live here too. | Launch the agent's own token paired with a Sunrise stock. |
+| 9 | 3 | **DexScreener** (`api.dexscreener.com/tokens/v1/solana/<mint>`) | Pair, liquidity, volume, price change for anything graduated; the console's market data. Doesn't tick pump.fun curve prices. | Read your own pools; expect empty until they trade. |
+| 10 | 4 | **Cloudflare Workers** (`wrangler deploy`, `wrangler secret put`) | Hosts the console and the launch page; a Worker route proxies RPC so the Helius key never reaches the browser; serves token metadata. | Deploy the static console; add `/rpc` when the launch page ships. |
+| 11 | 5 | **Meteora DLMM SDK** (`@meteora-ag/dlmm`, `createRequire` import) | Concentrated liquidity around the reference after graduation; also the stock-paired pool under any Clawpump token. Fees come from flow here. | One ±5% band on a graduated pool. |
+| 12 | 5 | **Meteora cp-amm SDK** (`@meteora-ag/cp-amm-sdk`) | Reads the DAMM v2 pool the curve migrated into: vault balances, positions, unlocked vs locked LP, fee claims, withdrawals. | Read a migrated pool's vaults; withdraw the seed profile's unlocked LP. |
+| 13 | 7 | **PumpPortal** (`pumpportal.fun/api/data` stream, `/api/trade-local`) | Only if you go near pump.fun: launch stream is free, per-token trade streams need a funded key, `trade-local` builds unsigned buys/sells. Route sells through Jupiter instead when a pool is on Meteora. | The launch stream; nothing else until you've read the ledger. |
+| 14 | 9 | **Solana hackathons form** (`hackathons.solana.com/…/submit`, wallet sign-in) | The submission itself. Links only to things that resolve. | Submit on day six; edit in place after. |
+
+What "in order" means: nothing on this list is called before the one above it exists. Prices before curves, curves before
+pools, pools before pages, pages before posts, and the form last.
