@@ -2,7 +2,7 @@
 
 **Project name:** stockcurve
 
-**One-liner:** A Meteora DBC launch primitive for tokenized-stock pairs: pools quoted in the stock token itself, curves anchored to a live reference price, a keeper that runs the lifecycle, and an atomic launch with no sniper window. Five pools on mainnet in one day.
+**One-liner:** A Meteora DBC launch primitive for tokenized-stock pairs: pools quoted in the stock token itself, curves anchored to a live reference price, a keeper that runs the lifecycle, and an atomic launch with no sniper window. Ten pools on mainnet in a day, three fee profiles proven on-chain, one Clawpump stock-paired launch.
 
 **Links**
 - GitHub: https://github.com/ExpertVagabond/stockcurve
