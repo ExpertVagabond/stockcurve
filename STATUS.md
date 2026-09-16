@@ -121,6 +121,10 @@ Targets: Main track + Best Use of Meteora DBC ($5k) + Stocknized Agent on Clawpu
   resolver now makes Pyth authoritative when present (twins = context). pyth-compare.mjs = "use one feed, compare both".
 - Helius RPC wired (~/.config/stockcurve/rpc.env) → 0 429s. Wallet 0.28 SOL.
 
+## One thing per track (2026-09-16 ~07:30 UTC)
+- site/tracks.json is the single source → console "One thing per track" row, README top table, submission.md list. All six links verified
+  on-chain: sRDDT still on curve (56.9%), others graduated, scSNDK/SNDK DLMM pair exists.
+
 ## Needs Matthew (interactive)
 1. Register + submit on hackathons.solana.com (links: repo, console; video optional).
 2. Pyth Terminal: equity/xStock feed grant on the Pro token (free grant = crypto majors only; all stock feeds 403).
