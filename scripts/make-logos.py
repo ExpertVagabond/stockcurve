@@ -72,6 +72,7 @@ for path in sorted(glob.glob("meta/*.json")):
     bd.text((x1 - 14, yt - 96), "graduate", font=ImageFont.truetype("/System/Library/Fonts/SFNSMono.ttf", 26), fill=FG, anchor="rm")
     bd.text((x0 - 14, yb + 30), "start −15%", font=ImageFont.truetype("/System/Library/Fonts/SFNSMono.ttf", 26), fill=MUTE, anchor="lm")
     B.save(path[:-5] + "-billboard.png", optimize=True)
-    m["image"] = RAW + os.path.basename(out)
+    if not m.get("image","").startswith("https://stockcurve."): m["image"] = RAW + os.path.basename(out)
+    m["properties"] = {"files": [{"uri": m["image"], "type": "image/png"}], "category": "image"}
     json.dump(m, open(path, "w"), indent=2)
     print(out, "→", m["image"])

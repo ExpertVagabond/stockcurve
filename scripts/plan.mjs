@@ -2,7 +2,7 @@
 // Usage: node scripts/plan.mjs --base GME --quote AAPLx [--unit 0.1] [--float 5] [--discount 1500] [--premium 500] [--manual-base 18.65]
 import { mkdirSync, writeFileSync } from "node:fs";
 import { validateConfigParameters, getPriceFromSqrtPrice } from "@meteora-ag/dynamic-bonding-curve-sdk";
-import { XSTOCKS, BACKPACK, USDC, SOL, twinOf } from "../src/config.mjs";
+import { XSTOCKS, BACKPACK, ONDO, USDC, SOL, twinOf } from "../src/config.mjs";
 import { resolveUsd } from "../src/prices.mjs";
 import { buildEquityCurve, DEFAULTS } from "../src/curve.mjs";
 import { resolvePreIpo } from "../src/preipo.mjs";
@@ -19,7 +19,7 @@ const manualBase = arg("manual-base") ? Number(arg("manual-base")) : undefined;
 const profile = arg("profile", "demo");
 const curve = arg("curve", "standard");
 
-const quote = quoteSym === "USDC" ? { ...USDC, sym: "USDC" } : quoteSym === "SOL" ? { ...SOL, sym: "SOL" } : { ...(XSTOCKS[quoteSym] || BACKPACK[quoteSym]), sym: quoteSym };
+const quote = quoteSym === "USDC" ? { ...USDC, sym: "USDC" } : quoteSym === "SOL" ? { ...SOL, sym: "SOL" } : { ...(XSTOCKS[quoteSym] || BACKPACK[quoteSym] || ONDO[quoteSym]), sym: quoteSym };
 if (!quote.mint) throw new Error(`unknown quote ${quoteSym}`);
 
 const refBase = preipo ? await resolvePreIpo(preipo) : await resolveUsd({ pythSymbol: `Equity.US.${base}/USD`, twinMint: twinOf(base), manual: manualBase });

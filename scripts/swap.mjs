@@ -2,10 +2,10 @@
 // Usage: node scripts/swap.mjs --from AAPLx --to SPYx --amount 0.02      (amount in human units of --from)
 import { PublicKey, VersionedTransaction } from "@solana/web3.js";
 import { getAssociatedTokenAddressSync, getAccount, TOKEN_2022_PROGRAM_ID, TOKEN_PROGRAM_ID } from "@solana/spl-token";
-import { connection, loadKeypair, XSTOCKS, USDC, WSOL } from "../src/config.mjs";
+import { connection, loadKeypair, XSTOCKS, BACKPACK, ONDO, USDC, WSOL } from "../src/config.mjs";
 
 const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
-const tok = (s) => s === "SOL" ? { mint: WSOL, decimals: 9, prog: TOKEN_PROGRAM_ID } : s === "USDC" ? { ...USDC, prog: TOKEN_PROGRAM_ID } : { ...XSTOCKS[s], prog: TOKEN_2022_PROGRAM_ID };
+const tok = (s) => s === "SOL" ? { mint: WSOL, decimals: 9, prog: TOKEN_PROGRAM_ID } : s === "USDC" ? { ...USDC, prog: TOKEN_PROGRAM_ID } : { ...(XSTOCKS[s] || BACKPACK[s] || ONDO[s]), prog: TOKEN_2022_PROGRAM_ID };
 const fromS = arg("from", "SOL"), toS = arg("to", "AAPLx");
 const from = tok(fromS), to = tok(toS);
 if (!from?.mint || !to?.mint) throw new Error("unknown token");

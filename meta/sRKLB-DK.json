@@ -1,0 +1,42 @@
+{
+  "name": "stockcurve RKLB/DKNG 0.01sh",
+  "symbol": "sRKLB-DK",
+  "description": "stockcurve demo pool token: 1 sRKLB-DK = 0.01 share-unit of a Rocket Lab reference, launched atomically on a Meteora Dynamic Bonding Curve QUOTED IN the Backpack Securities DKNG token (a Meteora-badged tokenized stock) with the reference anchored live to the Ondo RKLBon token via Jupiter. Three issuers in one pool family: xStocks, Backpack, Ondo. Lean curve, issuer profile. Hackathon demo (Stocklana 2026), not a claim on Rocket Lab or DraftKings shares.",
+  "image": "https://stockcurve.purplesquirrelnetworks.workers.dev/meta/sRKLB-DK.png",
+  "external_url": "https://github.com/ExpertVagabond/stockcurve",
+  "attributes": [
+    {
+      "trait_type": "quote",
+      "value": "DKNG (Backpack Securities)"
+    },
+    {
+      "trait_type": "reference",
+      "value": "RKLBon (Ondo, via Jupiter) / Equity.US.RKLB/USD"
+    },
+    {
+      "trait_type": "unit",
+      "value": "0.01 share"
+    },
+    {
+      "trait_type": "curve",
+      "value": "lean: -5% start / +5% graduation, weights 1:1:6"
+    },
+    {
+      "trait_type": "profile",
+      "value": "issuer: 3% listing fee, 20 bps DAMM v2, 0.02 SOL creation fee"
+    },
+    {
+      "trait_type": "launch",
+      "value": "atomic: create + opening buy in one tx"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "https://stockcurve.purplesquirrelnetworks.workers.dev/meta/sRKLB-DK.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image"
+  }
+}

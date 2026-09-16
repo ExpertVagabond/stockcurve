@@ -89,12 +89,45 @@ export const BACKPACK = {
   MRVL: { mint: "MRVLSjkR2ceUBukujaD3xCyHP1H3B2SzpsNTZF546jo", decimals: 6, underlying: "MRVL", issuer: "backpack" },
 };
 
+// Ondo Global Markets tokenized stocks on Solana (vanity ...ondo mints). All 28 Meteora-badged (scripts/scan-ondo.mjs, 2026-09-16).
+// Thin DEX liquidity but Jupiter prices track the underlying (RKLBon $63.51 vs $63.55 close) — usable as reference twins.
+export const ONDO = {
+  AAPLon: { mint: "123mYEnRLM2LLYsJW3K6oyYh8uP1fngj732iG638ondo", decimals: 9, underlying: "AAPL", issuer: "ondo", pythUsd: "Crypto.AAPLON/USD" },
+  TSLAon: { mint: "KeGv7bsfR4MheC1CkmnAVceoApjrkvBhHYjWb67ondo", decimals: 9, underlying: "TSLA", issuer: "ondo", pythUsd: "Crypto.TSLAON/USD" },
+  NVDAon: { mint: "gEGtLTPNQ7jcg25zTetkbmF7teoDLcrfTnQfmn2ondo", decimals: 9, underlying: "NVDA", issuer: "ondo", pythUsd: "Crypto.NVDAON/USD" },
+  MSFTon: { mint: "FRmH6iRkMr33DLG6zVLR7EM4LojBFAuq6NtFzG6ondo", decimals: 9, underlying: "MSFT", issuer: "ondo", pythUsd: "Crypto.MSFTON/USD" },
+  AMZNon: { mint: "14Tqdo8V1FhzKsE3W2pFsZCzYPQxxupXRcqw9jv6ondo", decimals: 9, underlying: "AMZN", issuer: "ondo" },
+  GOOGLon: { mint: "bbahNA5vT9WJeYft8tALrH1LXWffjwqVoUbqYa1ondo", decimals: 9, underlying: "GOOGL", issuer: "ondo", pythUsd: "Crypto.GOOGLON/USD" },
+  METAon: { mint: "fDxs5y12E7x7jBwCKBXGqt71uJmCWsAQ3Srkte6ondo", decimals: 9, underlying: "META", issuer: "ondo" },
+  SPYon: { mint: "k18WJUULWheRkSpSquYGdNNmtuE2Vbw1hpuUi92ondo", decimals: 9, underlying: "SPY", issuer: "ondo" },
+  QQQon: { mint: "HrYNm6jTQ71LoFphjVKBTdAE4uja7WsmLG8VxB8ondo", decimals: 9, underlying: "QQQ", issuer: "ondo" },
+  SQQQon: { mint: "D1tu7Fnm3cCpKyyPXrqm5GXShPqMj7a2SEjjq9fondo", decimals: 9, underlying: "SQQQ", issuer: "ondo" },
+  TQQQon: { mint: "14W1itEkV7k1W819mLSknFTaMmkCtPokbF2tRkPUondo", decimals: 9, underlying: "TQQQ", issuer: "ondo" },
+  COINon: { mint: "5u6KDiNJXxX4rGMfYT4BApZQC5CuDNrG6MHkwp1ondo", decimals: 9, underlying: "COIN", issuer: "ondo", pythUsd: "Crypto.COINON/USD" },
+  HOODon: { mint: "BVdXGvmgi6A9oAiwWvBvP76fyTqcCNRJMM7zMN6ondo", decimals: 9, underlying: "HOOD", issuer: "ondo", pythUsd: "Crypto.HOODON/USD" },
+  PLTRon: { mint: "HfsnTS5qtdStwec9DfBrunRqnAMYMMz1kjv9Hu9ondo", decimals: 9, underlying: "PLTR", issuer: "ondo" },
+  RIOTon: { mint: "i6f3DvZBuLpnGSqS8x6WPeStJ7jNe5KewD6afD5ondo", decimals: 9, underlying: "RIOT", issuer: "ondo" },
+  PPLTon: { mint: "DwRtkbsaQMGAS3oMeEGYh6M5vH4X9WECsQgqHjAondo", decimals: 9, underlying: "PPLT", issuer: "ondo" },
+  MSTRon: { mint: "FSz4ouiqXpHuGPcpacZfTzbMjScoj5FfzHkiyu2ondo", decimals: 9, underlying: "MSTR", issuer: "ondo", pythUsd: "Crypto.MSTRON/USD" },
+  GMEon: { mint: "aznKt8v32CwYMEcTcB4bGTv8DXWStCpHrcCtyy7ondo", decimals: 9, underlying: "GME", issuer: "ondo" },
+  AMDon: { mint: "14diAn5z8kjrKwSC8WLqvBqqe5YmihJhjxRxd8Z6ondo", decimals: 9, underlying: "AMD", issuer: "ondo" },
+  NFLXon: { mint: "g4KnPrxPLeeKkwvDmZFMtYQPM64eHeShbD55vK6ondo", decimals: 9, underlying: "NFLX", issuer: "ondo" },
+  AVGOon: { mint: "1FWZtdWN7y38BSXGzbs8D6Shk88oL9atDNgbVz9ondo", decimals: 9, underlying: "AVGO", issuer: "ondo" },
+  CRCLon: { mint: "6xHEyem9hmkGtVq6XGCiQUGpPsHBaoYuYdFNZa5ondo", decimals: 9, underlying: "CRCL", issuer: "ondo", pythUsd: "Crypto.CRCLON/USD" },
+  GLDon: { mint: "hWfiw4mcxT8rnNFkk6fsCQSxoxgZ9yVhB6tyeVcondo", decimals: 9, underlying: "GLD", issuer: "ondo" },
+  TLTon: { mint: "KaSLSWByKy6b9FrCYXPEJoHmLpuFZtTCJk1F1Z9ondo", decimals: 9, underlying: "TLT", issuer: "ondo" },
+  IWMon: { mint: "dvj2kKFSyjpnyYSYppgFdAEVfgjMEoQGi9VaV23ondo", decimals: 9, underlying: "IWM", issuer: "ondo" },
+  SNDKon: { mint: "EJmUVvDqAdfH5zEohkdS4234bi3c6iunqEMobjmondo", decimals: 9, underlying: "SNDK", issuer: "ondo" },
+  RKLBon: { mint: "E9VQY3VnrpVSekFByzRmfeK1kxgM3UiKCoVVbdUondo", decimals: 9, underlying: "RKLB", issuer: "ondo" },
+  RDDTon: { mint: "HXFrTf9v9NdjGUTnx4sojR3Cf92hoBsQFUxKTN7ondo", decimals: 9, underlying: "RDDT", issuer: "ondo" },
+};
+
 export const USDC = { mint: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v", decimals: 6 };
 export const WSOL = "So11111111111111111111111111111111111111112";
 export const SOL = { mint: WSOL, decimals: 9, pythUsd: "Crypto.SOL/USD" }; // wrapped SOL: permissionless DBC quote
 
-/** Live on-chain twin of an underlying ticker: xStock first, then Backpack. */
-export const twinOf = (ticker) => XSTOCKS[`${ticker}x`]?.mint || BACKPACK[ticker]?.mint;
+/** Live on-chain twin of an underlying ticker: xStock, then Backpack, then Ondo. */
+export const twinOf = (ticker) => XSTOCKS[`${ticker}x`]?.mint || BACKPACK[ticker]?.mint || ONDO[`${ticker}on`]?.mint;
 
 export const PYTH_PUSH_ORACLE = new PublicKey("pythWSnswVUd12oZpeFP8e9CVaEqJg25g1Vtc2biRsT");
 export const LAZER_HTTP = "https://pyth-lazer-0.dourolabs.app/v1/latest_price";
