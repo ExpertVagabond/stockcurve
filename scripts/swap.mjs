@@ -5,7 +5,13 @@ import { getAssociatedTokenAddressSync, getAccount, TOKEN_2022_PROGRAM_ID, TOKEN
 import { connection, loadKeypair, XSTOCKS, BACKPACK, ONDO, USDC, WSOL } from "../src/config.mjs";
 
 const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
-const tok = (s) => s === "SOL" ? { mint: WSOL, decimals: 9, prog: TOKEN_PROGRAM_ID } : s === "USDC" ? { ...USDC, prog: TOKEN_PROGRAM_ID } : { ...(XSTOCKS[s] || BACKPACK[s] || ONDO[s]), prog: TOKEN_2022_PROGRAM_ID };
+// Symbols from the maps, or a raw mint as "<mint>:<decimals>[:t22]"
+const tok = (s) => {
+  if (s === "SOL") return { mint: WSOL, decimals: 9, prog: TOKEN_PROGRAM_ID };
+  if (s === "USDC") return { ...USDC, prog: TOKEN_PROGRAM_ID };
+  if (s.includes(":")) { const [mint, dec, t22] = s.split(":"); return { mint, decimals: Number(dec), prog: t22 ? TOKEN_2022_PROGRAM_ID : TOKEN_PROGRAM_ID }; }
+  return { ...(XSTOCKS[s] || BACKPACK[s] || ONDO[s]), prog: TOKEN_2022_PROGRAM_ID };
+};
 const fromS = arg("from", "SOL"), toS = arg("to", "AAPLx");
 const from = tok(fromS), to = tok(toS);
 if (!from?.mint || !to?.mint) throw new Error("unknown token");
@@ -16,7 +22,7 @@ const bal = async (t) => t.mint === WSOL ? (await connection.getBalance(owner)) 
   : Number((await getAccount(connection, getAssociatedTokenAddressSync(new PublicKey(t.mint), owner, false, t.prog), "confirmed", t.prog).catch(() => ({ amount: 0n }))).amount) / 10 ** t.decimals;
 console.log(`before: ${await bal(from)} ${fromS}, ${await bal(to)} ${toS}, SOL ${(await connection.getBalance(owner)) / 1e9}`);
 
-const q = await (await fetch(`https://lite-api.jup.ag/swap/v1/quote?inputMint=${from.mint}&outputMint=${to.mint}&amount=${amount}&slippageBps=100`)).json();
+const q = await (await fetch(`https://lite-api.jup.ag/swap/v1/quote?inputMint=${from.mint}&outputMint=${to.mint}&amount=${amount}&slippageBps=${process.argv.includes("--direct") ? "300&onlyDirectRoutes=true" : "100"}`)).json();
 if (!q.outAmount) throw new Error("quote failed: " + JSON.stringify(q).slice(0, 200));
 console.log(`quote: ${amount / 10 ** from.decimals} ${fromS} -> ${Number(q.outAmount) / 10 ** to.decimals} ${toS} (impact ${Number(q.priceImpactPct).toFixed(4)}%) via ${q.routePlan.map((r) => r.swapInfo.label).join(" > ")}`);
 const sw = await (await fetch("https://lite-api.jup.ag/swap/v1/swap", { method: "POST", headers: { "Content-Type": "application/json" },

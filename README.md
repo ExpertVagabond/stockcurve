@@ -57,6 +57,8 @@ Ten pools, ~1.6 SOL all-in. Audit of the whole thing: [docs/audit.md](docs/audit
 | sSNDK/SOL | SOL | Backpack SNDK twin, live ($373k liq) | atomic, lean, **seed profile**, keeper self-funded the raise | graduated; **50% of unlocked LP withdrawn** back to the wallet |
 | sRKLB-DK/DKNG | **Backpack DKNG** | **Ondo RKLBon** twin, live | atomic, lean, issuer profile; an external buyer graduated it 9 s after launch and paid the listing fee | graduated; all three issuers in one pool; fees claimed in DKNG |
 | pSPACEX/USDC | USDC | **Tessera T-SpaceX mark** (PreStocks as cross-check; the two value SpaceX 2.3× apart) | atomic, lean, issuer; outside buyers funded ~70% within 15 s | graduated; fees claimed in USDC |
+| pKALSHI/USDC | USDC | **Tessera T-Kalshi mark** | atomic, lean, issuer, keeper-graduated | graduated; fees claimed |
+| sTSLA-QQ/QQQx | QQQx (Nasdaq-100 xStock) | **Pyth Pro live** — Equity.US.TSLA/USD base, Equity.US.QQQ/USD quote | atomic, lean, issuer, keeper-graduated | graduated; both legs anchored on Pyth |
 | sPLTR/SOL | SOL | PLTRx twin, live | atomic on the **shared config** (`launch-shared.mjs`, unit derived from the ladder, no config rent) | graduated; all three fees claimed to the same partner |
 
 ## Why a stock needs a different curve
@@ -120,9 +122,11 @@ Sources, in order of preference when only one is available:
 3. **Jupiter price** for the xStock mint (secondary-market price, live).
 4. **Issuer-supplied** value, recorded as such.
 
-The mainnet run above used source 2 for GME (32 days stale, flagged in `out/plan.json`) because the
-free Pyth Pro grant covers crypto majors only; with an equity grant the same command uses source 1
-unchanged.
+When a Pyth Pro source exists it is the **anchor** and every twin is recorded as context; otherwise the median of twins
+is used. The free key turned out to include a few equities — `Equity.US.TSLA/USD` and `Equity.US.QQQ/USD` are live —
+so pool 12 (`sTSLA-QQ/QQQx`) is anchored on Pyth Pro on both legs. `scripts/pyth-compare.mjs AAPL` prints the equity,
+xStock, Ondo and redemption-rate feeds side by side (Pro where entitled, push account with age otherwise) against the
+live twins — Pyth's "use one feed, compare both" in one command.
 
 ## Fee profiles — where the revenue is
 
@@ -277,8 +281,10 @@ docs/competitor-scan.md   the 23 public Stocklana repos, and why none has a stoc
 wallet pays the 0.0092 SOL creation fee via preflight → transfer → confirm). Live: **scSNDK**, paired with Backpack
 SNDK, mint [`CUnDgEpzGQNkwQKDCNoyv1SB6YvBygUSCekSPgnsUGkm`](https://pump.fun/coin/CUnDgEpzGQNkwQKDCNoyv1SB6YvBygUSCekSPgnsUGkm)
 · [launch tx](https://solscan.io/tx/2E6RepKQMDmAhBTcRdCFpJBtbyibVFiWQoYdxnCEPVzK7zdewMgffdaRh3F58eMQCFUyuz4U7viN7Pyn1SkaEsts),
-100 bps creator fee, 75% fee share to the keeper wallet. On-chain it is a pump.fun curve with a Token-2022 stock
-quote; the Meteora half of the track is the stock-quoted DBC pools above, and the "agent" is the keeper.
+100 bps creator fee, 75% fee share to the keeper wallet. On-chain it is a pump.fun curve with a Token-2022 stock quote — so we also gave **that token a Meteora pool paired with the
+stock**: DLMM pair [`7LvHsXj3LFmpwCx6mDbsj7erpVdDJsNDznLhzkwWYb2y`](https://solscan.io/account/7LvHsXj3LFmpwCx6mDbsj7erpVdDJsNDznLhzkwWYb2y)
+scSNDK/SNDK with a two-sided position at the curve price (`scripts/meteora-pair.mjs`, Token-2022 on both sides).
+The "agent" is the keeper.
 Clawpump's pair catalogue (`GET /pump-pairs`) lists 156 quote assets including the xStocks and Backpack stocks.
 
 ## Three issuers, one primitive

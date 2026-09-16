@@ -1,0 +1,38 @@
+{
+  "name": "stockcurve TSLA/QQQ 0.01sh",
+  "symbol": "sTSLA-QQ",
+  "description": "stockcurve demo pool token: 1 sTSLA-QQ = 0.01 share-unit of a Tesla reference, launched atomically on a Meteora Dynamic Bonding Curve quoted in QQQx (the Nasdaq-100 xStock). Both references come from Pyth Pro live feeds: Equity.US.TSLA/USD for the base and Equity.US.QQQ/USD for the quote, so the curve discovers Tesla's price relative to the Nasdaq-100 with Pyth as the anchor. Hackathon demo (Stocklana 2026), not a claim on Tesla shares.",
+  "image": "https://stockcurve.purplesquirrelnetworks.workers.dev/meta/sTSLA-QQ.png",
+  "external_url": "https://github.com/ExpertVagabond/stockcurve",
+  "attributes": [
+    {
+      "trait_type": "quote",
+      "value": "QQQx"
+    },
+    {
+      "trait_type": "reference",
+      "value": "Pyth Pro Equity.US.TSLA/USD (live) / Equity.US.QQQ/USD (live)"
+    },
+    {
+      "trait_type": "unit",
+      "value": "0.01 share"
+    },
+    {
+      "trait_type": "curve",
+      "value": "lean: -5% start / +5% graduation, weights 1:1:6"
+    },
+    {
+      "trait_type": "launch",
+      "value": "atomic: create + opening buy in one tx"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "https://stockcurve.purplesquirrelnetworks.workers.dev/meta/sTSLA-QQ.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image"
+  }
+}

@@ -91,16 +91,21 @@ export async function resolveUsdRobust(a, o = {}) {
   for (let i = 0; i < samples; i++) {
     const srcs = [];
     const jobs = [];
-    if (a.pythSymbol) jobs.push(pythLazer(a.pythSymbol).then((r) => r.ok && srcs.push({ src: "pyth-lazer", label: a.pythSymbol, price: r.price, liquidityUsd: null, conf: "high" })).catch(() => {}));
+    for (const sym of [a.pythSymbol, ...(a.pythSymbols || [])].filter(Boolean)) jobs.push(pythLazer(sym).then((r) => r.ok && srcs.push({ src: "pyth-lazer", label: sym, price: r.price, liquidityUsd: null, conf: "high" })).catch(() => {}));
     for (const t of a.twins || []) jobs.push(jupiterPrice(t.mint).then((r) => r.ok && srcs.push({ src: `twin-${t.issuer}`, label: t.symbol, price: r.price, liquidityUsd: r.liquidityUsd, conf: (r.liquidityUsd ?? 0) >= LOW_LIQ_USD ? "high" : "low" })).catch(() => {}));
     if (a.mint) jobs.push(jupiterPrice(a.mint).then((r) => r.ok && srcs.push({ src: "jupiter", label: a.mint.slice(0, 6), price: r.price, liquidityUsd: r.liquidityUsd, conf: (r.liquidityUsd ?? 0) >= LOW_LIQ_USD ? "high" : "low" })).catch(() => {}));
     if (a.pythSymbol) jobs.push(pythOnChain(a.pythSymbol).then((r) => r.ok && r.ageSec <= 3600 && srcs.push({ src: "pyth-onchain", label: a.pythSymbol, price: r.price, liquidityUsd: null, conf: "high" })).catch(() => {}));
     await Promise.all(jobs);
     if (!srcs.length && a.manual != null) srcs.push({ src: "manual", label: "issuer-supplied", price: a.manual, liquidityUsd: null, conf: "manual" });
     if (!srcs.length) throw new Error(`no live source for ${a.pythSymbol || a.mint}`);
-    const ps = srcs.map((s) => s.price).sort((x, y) => x - y);
+    // Pyth Pro is authoritative when present: median over Pyth sources; twins/Jupiter stay recorded as context.
+    const pythSrcs = srcs.filter((s) => s.src === "pyth-lazer");
+    const anchorSrcs = (o.preferPyth ?? true) && pythSrcs.length ? pythSrcs : srcs;
+    for (const s2 of srcs) s2.role = anchorSrcs.includes(s2) ? "anchor" : "context";
+    const ps = anchorSrcs.map((s) => s.price).sort((x, y) => x - y);
     const median = ps.length % 2 ? ps[(ps.length - 1) / 2] : (ps[ps.length / 2 - 1] + ps[ps.length / 2]) / 2;
-    const spreadPct = ps.length > 1 ? ((ps[ps.length - 1] - ps[0]) / median) * 100 : 0;
+    const allPs = srcs.map((s) => s.price).sort((x, y) => x - y);
+    const spreadPct = allPs.length > 1 ? ((allPs[allPs.length - 1] - allPs[0]) / median) * 100 : 0; // disagreement across ALL sources still guards
     rounds.push({ at: new Date().toISOString(), sources: srcs, median, spreadPct });
     if (i < samples - 1) await new Promise((r) => setTimeout(r, (twapSec * 1000) / (samples - 1)));
   }
@@ -109,9 +114,9 @@ export async function resolveUsdRobust(a, o = {}) {
   const maxSpreadSeen = Math.max(...rounds.map((r) => r.spreadPct));
   const highConf = last.sources.some((s) => s.conf === "high");
   if (maxSpreadSeen > maxSpread && !o.force) throw new Error(`reference sources disagree by ${maxSpreadSeen.toFixed(2)}% (> ${maxSpread}%): ${last.sources.map((s) => `${s.src}:${s.label}=$${s.price.toFixed(2)}`).join(", ")} — pass --force to override`);
-  const sourceNames = [...new Set(last.sources.map((s) => s.src))];
+  const anchorNames = [...new Set(last.sources.filter((s) => s.role === "anchor").map((s) => s.src))];
   return {
-    ok: true, price: twap, source: sourceNames.length > 1 ? `median(${sourceNames.join("+")})${samples > 1 ? `·twap${twapSec}s` : ""}` : (last.sources[0].src === "manual" ? "manual" : `${last.sources[0].src}${samples > 1 ? `·twap${twapSec}s` : ""}`),
+    ok: true, price: twap, source: anchorNames.length > 1 ? `median(${anchorNames.join("+")})${samples > 1 ? `·twap${twapSec}s` : ""}` : (anchorNames[0] === "manual" ? "manual" : `${anchorNames[0]}${samples > 1 ? `·twap${twapSec}s` : ""}`),
     feed: last.sources.map((s) => `${s.src}:${s.label}`).join(","), ageSec: 0,
     robust: { median: last.median, twap, samples, twapSec, spreadPct: maxSpreadSeen, lowConfidenceOnly: !highConf && last.sources[0].src !== "manual", sources: last.sources, rounds: rounds.map((r) => ({ at: r.at, median: r.median, spreadPct: r.spreadPct })) },
     tried: [],

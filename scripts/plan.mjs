@@ -26,7 +26,7 @@ if (!quote.mint) throw new Error(`unknown quote ${quoteSym}`);
 
 const refBase = preipo ? await resolvePreIpo(preipo, arg("anchor", "prestocks")) : await resolveUsdRobust({ pythSymbol: `Equity.US.${base}/USD`, twins: twinsOf(base), manual: manualBase }, { twapSec, maxSpreadPct: maxSpread, force });
 const refQuote = quoteSym === "USDC" ? { price: 1, source: "peg", feed: "USDC", ageSec: 0, tried: [] }
-  : await resolveUsdRobust({ pythSymbol: quote.pythUsd || (quoteSym === "SOL" ? "Crypto.SOL/USD" : undefined), mint: quote.mint }, { twapSec, maxSpreadPct: maxSpread, force });
+  : await resolveUsdRobust({ pythSymbol: quote.pythUsd || (quoteSym === "SOL" ? "Crypto.SOL/USD" : undefined), pythSymbols: quote.underlying ? [`Equity.US.${quote.underlying}/USD`] : [], mint: quote.mint }, { twapSec, maxSpreadPct: maxSpread, force });
 
 let floatUsed = float;
 if (raiseUsd) {
@@ -42,7 +42,7 @@ const fmt = (n, d = 8) => Number(n).toFixed(d);
 console.log(`\n== stockcurve plan: ${base}${preipo ? " (pre-IPO)" : ""} (unit ${unit} ${preipo ? (arg("anchor", "prestocks") === "tessera" ? "Tessera-token" : "PreStocks-token") : "share"}) / ${quote.sym} ==`);
 if (refBase.context) { const c = refBase.context; if (c.prestocks) console.log(`prestocks  mark $${c.prestocks.mark.toFixed(2)}  secondary token $${c.prestocks.token.toFixed(2)} (${c.prestocks.basisBps >= 0 ? "+" : ""}${c.prestocks.basisBps.toFixed(0)} bps)  valuation $${(c.prestocks.markValuation / 1e9).toFixed(0)}B`); if (c.tessera) console.log(`tessera    ${c.tessera.symbol} mark $${c.tessera.mark.toFixed(2)}  valuation $${(c.tessera.markValuation / 1e9).toFixed(0)}B  (${c.prestocks ? (c.tessera.markValuation / c.prestocks.markValuation).toFixed(2) + "× PreStocks" : ""})`); }
 console.log(`base ref   $${fmt(refBase.price, 2)}  [${refBase.source}${refBase.stale ? " STALE" : ""}]${refBase.robust ? `  spread ${refBase.robust.spreadPct.toFixed(2)}%${refBase.robust.lowConfidenceOnly ? " ⚠ low-liquidity source only" : ""}` : ""}`);
-if (refBase.robust) for (const src of refBase.robust.sources) console.log(`             ${src.src}:${src.label} $${src.price.toFixed(2)} (${src.conf}${src.liquidityUsd ? ", $" + Math.round(src.liquidityUsd / 1000) + "k liq" : ""})`);
+if (refBase.robust) for (const src of refBase.robust.sources) console.log(`             ${src.role === "anchor" ? "●" : "○"} ${src.src}:${src.label} $${src.price.toFixed(2)} (${src.conf}${src.liquidityUsd ? ", $" + Math.round(src.liquidityUsd / 1000) + "k liq" : ""}${src.role === "context" ? ", context" : ""})`);
 console.log(`quote ref  $${fmt(refQuote.price, 2)}  [${refQuote.source}]${refQuote.robust ? `  spread ${refQuote.robust.spreadPct.toFixed(2)}%` : ""}`);
 console.log(`reference  ${fmt(s.referencePriceQuote)} ${quote.sym}/token  ($${fmt(s.referencePriceQuote * refQuote.price, 4)})`);
 console.log(`start      ${fmt(s.startPriceQuote)}  (-${s.discountBps} bps, curve ${s.curve})`);

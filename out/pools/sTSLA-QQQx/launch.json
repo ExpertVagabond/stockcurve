@@ -4,7 +4,7 @@
   "graduationPriceQuote": 0.005305881184184383,
   "migrationQuoteThreshold": 0.00529959,
   "migrationQuoteThresholdUsd": 3.7341971058,
-  "feeSchedule": "300→30 bps exp over 3600s (60 periods), dynamic fee on",
+  "feeSchedule": "300\u219230 bps exp over 3600s (60 periods), dynamic fee on",
   "curve": "lean",
   "profile": "issuer",
   "partnerUnlockedLpPct": 0,
@@ -33,7 +33,18 @@
   "tokenBadge": "6nenkWN8CPvKLoqZTf5CFpkGq6PcR5i7KvLcmbCS5RoE",
   "txs": {
     "createConfig": "23fo4LJ161m3r8JBKx1Z5RBZp8ySg9uTahE8MH11iZXDCGuEoa3n2ZRKq9idkNYSAtc1cBKi8viQapi6Y98FJaky",
-    "createPoolWithFirstBuy": "5r6fCkQfcySFFsZwsjBhMGJaeF1DhV9CPwjci63AwiuKBSftKQKdyrMkhQ2U4G6pVVA9NAku51GA3QhbHW2x7SQ9"
+    "createPoolWithFirstBuy": "5r6fCkQfcySFFsZwsjBhMGJaeF1DhV9CPwjci63AwiuKBSftKQKdyrMkhQ2U4G6pVVA9NAku51GA3QhbHW2x7SQ9",
+    "claimTradingFee": "54CAh2P2qr5mFtVgBE118GmyVpv6eEvmrSkCSRgTV8ntJs7yB2P3NqJTAxmHhddZem5siLxHABXw85BcyZJR9Vto",
+    "claimCreationFee": "2fGyoqJc6PBw6R1FsCiEKUhb5nJW3LYS46q9vh5P6ET96vfAECsSSqShEubPQurvhj3PANB4Pi8n9rJcp6M2vmUe",
+    "withdrawMigrationFee": "r5pyJdM6q2tHGZLKc3FmiruqRf5EQ7ekeqq9P8fyQbzkBFnJQ8jqYew5DSxyWxTvaCWoW7dXFyj5vmmj61pRXbf"
   },
-  "launchedAt": "2026-09-16T01:41:31.765Z"
+  "launchedAt": "2026-09-16T01:41:31.765Z",
+  "revenue": {
+    "tradingFeeQuote": 0.00013157,
+    "listingFeePct": 3,
+    "creationFeeSol": 0.02,
+    "claimedAt": "2026-09-16T01:42:38.204Z"
+  },
+  "dammV2Pool": "AvHcqUPvfSpFNUDQH3rBfCqBaAURFfAYQh93X1moHdp5",
+  "referenceSource": "pyth-lazer (Equity.US.TSLA/USD + Equity.US.QQQ/USD)"
 }

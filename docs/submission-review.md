@@ -37,6 +37,7 @@ fee sweep**, an issuer **console**, a **sizing tool**, 17 tests, and a 2-minute 
 | Requirement | Evidence |
 |---|---|
 | Launched through Clawpump | `scSNDK` via the partner API, paired with Backpack SNDK — mint `CUnDgEpz…UGkm`, pump.fun curve with Token-2022 stock quote, 75% fee share to the keeper wallet. `scripts/clawpump-launch.mjs`. |
+| **That token on Meteora, stock-paired** | DLMM pair `7LvHsXj3…Yb2y` scSNDK/SNDK, two-sided position at curve price (`meteora-pair.mjs`). The sentence is satisfied literally: launched with Clawpump, pooled on Meteora, paired with a stock. |
 | Meteora stock-paired pool | sRKLB-DK/DKNG (Backpack quote), sGME/AAPLx, sGME-SPY/SPYx (xStock quotes) — all Meteora DBC → DAMM v2. |
 | "Agent" | the keeper: autonomous discover / buy / graduate / migrate / exit / claim; agentId `stockcurve-keeper` on Clawpump. |
 
@@ -48,12 +49,12 @@ fee sweep**, an issuer **console**, a **sizing tool**, 17 tests, and a 2-minute 
 ### Best Use of Tessera ($6k) — "products that drive value to pre-IPO Tessera tokens"
 | Evidence |
 |---|
-| Pool 11 `pSPACEX/USDC` anchored to **Tessera's T-SpaceX mark** (`--anchor tessera`), PreStocks as cross-check; console shows the 2.3× valuation disagreement. Provider fetch retries because their API flaps. Honest gap: we reference Tessera; we don't route flow into T-tokens (their mint isn't badge-eligible as a quote). |
+| Pool 11 `pSPACEX/USDC` and **pool 13 `pKALSHI/USDC`** anchored to **Tessera's mark** (`--anchor tessera`) — Kalshi is one of the two T-tokens the track names. PreStocks as cross-check; console shows the valuation disagreement. Provider fetch retries because their API flaps. Gap: we reference T-tokens; we don't route flow into them (their mint isn't badge-eligible as a quote). |
 
 ### Best use of Pyth market data (3 months Pyth Pro) — "how central Pyth is, soundness, exists post-hackathon"
 | Evidence | Gap |
 |---|---|
-| Pyth Pro (Lazer) is the first source in the resolver; feed ids wired (equity 922, xStock 1792, index 3191, redemption-rate 1791); on-chain push accounts parsed directly with staleness flagged; SOL quote reference comes from Lazer live on every pool. | The account's grant excludes equity/xStock/index feeds (403), so stock references fall back to twins. Requested from Pyth (Discord/X). Zero code change when granted. This is the weakest track; say so plainly in the form rather than overclaim. |
+| **Pool 12 `sTSLA-QQ/QQQx` is anchored on Pyth Pro on both legs** (Equity.US.TSLA/USD, Equity.US.QQQ/USD — the two equities the key is entitled to). Pyth is authoritative in the resolver whenever present (twins become context). `pyth-compare.mjs` puts the equity, xStock, Ondo and redemption-rate feeds side by side (Pro or push account with age) against live twins. SOL/USD from Lazer anchors every SOL-quoted pool. | Most equities on the key are still 403; those pools use twins with provenance. Requested from Pyth. |
 
 ## What to paste
 - Links: repo · console · video (upload the mp4 or YouTube unlisted) · live pool `GretDMXw…` · Clawpump coin page.

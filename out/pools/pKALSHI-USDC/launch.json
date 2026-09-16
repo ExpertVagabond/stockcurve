@@ -1,0 +1,49 @@
+{
+  "referencePriceQuote": 0.4138,
+  "startPriceQuote": 0.39310999999999996,
+  "graduationPriceQuote": 0.43449000000000004,
+  "migrationQuoteThreshold": 2.603854,
+  "migrationQuoteThresholdUsd": 2.603854,
+  "feeSchedule": "300\u219230 bps exp over 3600s (60 periods), dynamic fee on",
+  "curve": "lean",
+  "profile": "issuer",
+  "partnerUnlockedLpPct": 0,
+  "listingFeePct": 3,
+  "dammFeeBps": 20,
+  "creationFeeSol": 0.02,
+  "unit": 0.001,
+  "float": 12,
+  "discountBps": 500,
+  "premiumBps": 500,
+  "weights": [
+    1,
+    1,
+    6
+  ],
+  "name": "stockcurve KALSHI pre-IPO",
+  "symbol": "pKALSHI",
+  "uri": "https://stockcurve.purplesquirrelnetworks.workers.dev/meta/pKALSHI.json",
+  "atomic": true,
+  "openingBuy": 0.393739,
+  "openedAtPrice": 0.41381745255188385,
+  "config": "6HcVZZi353s66pN9RaQDVnQxa25yjWPtsE775HD1Egyn",
+  "baseMint": "AiCqhyQuiT6WNKn7wJgJYrqm3QSXegCJDRmvAYRswvAX",
+  "pool": "4gckR2ZJ4TGWRu8aC7cMQgn5tP2wVLrwc3xGBn8dfZoc",
+  "quoteMint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+  "tokenBadge": null,
+  "txs": {
+    "createConfig": "2XjdG9bp2CNJbLfyc5jYC44NJFw3ZraFD5R6XB6AHqxFLgQ9bQ8utp4TcNV1MTF77qoG8PfxARPBz7iayNc4PW6R",
+    "createPoolWithFirstBuy": "35FnaMUNSxcXL6e5nwDv3HFEhyW9qb7Y7mVLvdXo1zhPA8YXYj3715jctWGaJwtfvEEbkiScJZk5bSq7KL5jJgY4",
+    "claimTradingFee": "5MwL6Yv6onPKFxNFfpiXahsjxPiQvEsyuAKkYVq8RdFpBC2idSqVZkKCMaZzLV9ZiNhF6vca7pDTodThsPhX5sv4",
+    "claimCreationFee": "3HmTwb49QQLb5nhKYjUszSS2ff5Jw44KksENqUEhgLMmAH69soT6LUp7orNqfLyP45iYf7YnSEJnw1k6oot7TtEa",
+    "withdrawMigrationFee": "XjF612j4rsmzKBxtC6yRHLrp1xZLhukyEpVNuFtyLQ46HMe3SpDqsptVNYe9TZ42EgoXVanKc58Q6ZpKJZrLH3C"
+  },
+  "launchedAt": "2026-09-16T01:27:49.364Z",
+  "revenue": {
+    "tradingFeeQuote": 0.062443,
+    "listingFeePct": 3,
+    "creationFeeSol": 0.02,
+    "claimedAt": "2026-09-16T01:29:30.052Z"
+  },
+  "dammV2Pool": "Azpm5avB1RHgZcLKn6CXMu5ARpab9JWU8ELgXpabGZZo"
+}

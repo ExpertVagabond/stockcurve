@@ -1,0 +1,42 @@
+{
+  "name": "stockcurve KALSHI pre-IPO (Tessera)",
+  "symbol": "pKALSHI",
+  "description": "stockcurve pre-IPO demo pool token: 1 pKALSHI = 0.001 of a Tessera T-Kalshi token-unit, launched atomically on a Meteora Dynamic Bonding Curve quoted in USDC with the curve anchored to Tessera's T-Kalshi mark price and monitored against PreStocks' KALSHI mark and secondary price. Hackathon demo (Stocklana 2026); not a claim on Kalshi equity or on any Tessera or PreStocks token.",
+  "image": "https://stockcurve.purplesquirrelnetworks.workers.dev/meta/pKALSHI.png",
+  "external_url": "https://github.com/ExpertVagabond/stockcurve",
+  "attributes": [
+    {
+      "trait_type": "quote",
+      "value": "USDC"
+    },
+    {
+      "trait_type": "reference",
+      "value": "Tessera T-Kalshi mark price"
+    },
+    {
+      "trait_type": "cross-check",
+      "value": "PreStocks KALSHI mark + secondary price"
+    },
+    {
+      "trait_type": "unit",
+      "value": "0.001 Tessera token"
+    },
+    {
+      "trait_type": "curve",
+      "value": "lean: -5% start / +5% graduation, weights 1:1:6"
+    },
+    {
+      "trait_type": "launch",
+      "value": "atomic: create + opening buy in one tx"
+    }
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "https://stockcurve.purplesquirrelnetworks.workers.dev/meta/pKALSHI.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image"
+  }
+}

@@ -8,7 +8,7 @@ import { createRequire } from "node:module";
 const _dlmm = createRequire(import.meta.url)("@meteora-ag/dlmm"); // ESM build has a broken dir import; CJS works
 const DLMM = _dlmm, { StrategyType, ActivationType: DlmmActivation } = _dlmm; // module.exports IS the class, statics + enums attached
 import { DynamicBondingCurveClient } from "@meteora-ag/dynamic-bonding-curve-sdk";
-import { connection, loadKeypair, loadPoolRecord, withPriority, twinsOf } from "../src/config.mjs";
+import { connection, loadKeypair, loadPoolRecord, withPriority, twinsOf, XSTOCKS } from "../src/config.mjs";
 import { resolveUsdRobust } from "../src/prices.mjs";
 import { resolvePreIpo } from "../src/preipo.mjs";
 
@@ -27,7 +27,7 @@ const X = ps.poolState.baseMint, Y = cfg.quoteMint, xDec = 9, yDec = plan.quote.
 
 // reference in quote per base token (same resolver as the keeper)
 const refBase = plan.preipo ? await resolvePreIpo(plan.base, plan.preipoAnchor || "prestocks") : await resolveUsdRobust({ pythSymbol: `Equity.US.${plan.base}/USD`, twins: twinsOf(plan.base), manual: plan.reference?.base?.source === "manual" ? plan.reference.base.price : undefined }, { force: true });
-const refQuote = plan.quote.symbol === "USDC" ? { price: 1 } : await resolveUsdRobust({ pythSymbol: plan.quote.symbol === "SOL" ? "Crypto.SOL/USD" : undefined, mint: plan.quote.mint }, { force: true });
+const refQuote = plan.quote.symbol === "USDC" ? { price: 1 } : await resolveUsdRobust({ pythSymbol: plan.quote.symbol === "SOL" ? "Crypto.SOL/USD" : (XSTOCKS[plan.quote.symbol]?.pythUsd), pythSymbols: XSTOCKS[plan.quote.symbol]?.underlying ? [`Equity.US.${XSTOCKS[plan.quote.symbol].underlying}/USD`] : [], mint: plan.quote.mint }, { force: true });
 const refPrice = (refBase.price * plan.unit) / refQuote.price;
 const pricePerLamport = Number(DLMM.getPricePerLamport(xDec, yDec, refPrice));
 const activeId = DLMM.getBinIdFromPrice(pricePerLamport, binStep, false);

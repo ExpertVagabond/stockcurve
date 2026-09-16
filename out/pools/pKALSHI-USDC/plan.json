@@ -1,0 +1,173 @@
+{
+  "createdAt": "2026-09-16T01:27:14.607Z",
+  "base": "KALSHI",
+  "preipo": true,
+  "preipoAnchor": "tessera",
+  "unit": 0.001,
+  "float": 12,
+  "raiseUsd": 2.5,
+  "quote": {
+    "symbol": "USDC",
+    "mint": "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+    "decimals": 6
+  },
+  "reference": {
+    "base": {
+      "ok": true,
+      "price": 413.8,
+      "source": "tessera-mark",
+      "feed": "T-Kalshi@TKLSidmLVt3cqGaaodG8tyRzoANfQwoh67AccjmubeZ",
+      "anchor": "tessera",
+      "ageSec": 0,
+      "tried": [],
+      "context": {
+        "prestocks": {
+          "symbol": "KALSHI",
+          "mint": "PreLWGkkeqG1s4HEfFZSy9moCrJ7btsHuUtfcCeoRua",
+          "mark": 868.58256063,
+          "token": 840.5110084522067,
+          "basisBps": -323.1880704285894,
+          "markValuation": 31592130962,
+          "impliedValuation": 30571110978,
+          "supply": 904.904434985
+        },
+        "tessera": {
+          "symbol": "T-Kalshi",
+          "mint": "TKLSidmLVt3cqGaaodG8tyRzoANfQwoh67AccjmubeZ",
+          "mark": 413.8,
+          "markValuation": 14000000000,
+          "holders": 2606
+        }
+      }
+    },
+    "quote": {
+      "price": 1,
+      "source": "peg",
+      "feed": "USDC",
+      "ageSec": 0,
+      "tried": []
+    }
+  },
+  "summary": {
+    "referencePriceQuote": 0.4138,
+    "startPriceQuote": 0.39310999999999996,
+    "graduationPriceQuote": 0.43449000000000004,
+    "migrationQuoteThreshold": 2.603854,
+    "migrationQuoteThresholdUsd": 2.603854,
+    "feeSchedule": "300→30 bps exp over 3600s (60 periods), dynamic fee on",
+    "curve": "lean",
+    "profile": "issuer",
+    "partnerUnlockedLpPct": 0,
+    "listingFeePct": 3,
+    "dammFeeBps": 20,
+    "creationFeeSol": 0.02,
+    "unit": 0.001,
+    "float": 12,
+    "discountBps": 500,
+    "premiumBps": 500,
+    "weights": [
+      1,
+      1,
+      6
+    ]
+  },
+  "checkpoints": [
+    0.39310999999999996,
+    0.40690333333333334,
+    0.4138,
+    0.43449000000000004
+  ],
+  "configParams": {
+    "poolFees": {
+      "baseFee": {
+        "cliffFeeNumerator": "01c9c380",
+        "firstFactor": 60,
+        "secondFactor": "3c",
+        "thirdFactor": "0178",
+        "baseFeeMode": 1
+      },
+      "dynamicFee": {
+        "binStep": 1,
+        "binStepU128": "068db8bac710cb",
+        "filterPeriod": 10,
+        "decayPeriod": 120,
+        "reductionFactor": 5000,
+        "maxVolatilityAccumulator": 14460000,
+        "variableFeeControl": 286
+      }
+    },
+    "activationType": 1,
+    "collectFeeMode": 0,
+    "migrationOption": 1,
+    "tokenType": 0,
+    "tokenDecimal": 9,
+    "migrationQuoteThreshold": "27bb4e",
+    "partnerLiquidityPercentage": 0,
+    "partnerPermanentLockedLiquidityPercentage": 100,
+    "creatorLiquidityPercentage": 0,
+    "creatorPermanentLockedLiquidityPercentage": 0,
+    "sqrtStartPrice": "051361e44493a475",
+    "lockedVesting": {
+      "amountPerPeriod": "00",
+      "cliffDurationFromMigrationTime": "00",
+      "frequency": "00",
+      "numberOfPeriod": "00",
+      "cliffUnlockAmount": "00"
+    },
+    "migrationFeeOption": 6,
+    "tokenSupply": {
+      "preMigrationTokenSupply": "02cb417800",
+      "postMigrationTokenSupply": "02cb417800"
+    },
+    "creatorTradingFeePercentage": 0,
+    "migratedPoolFee": {
+      "collectFeeMode": 0,
+      "dynamicFee": 1,
+      "poolFeeBps": 20
+    },
+    "poolCreationFee": "01312d00",
+    "partnerLiquidityVestingInfo": {
+      "vestingPercentage": 0,
+      "bpsPerPeriod": 0,
+      "numberOfPeriods": 0,
+      "cliffDurationFromMigrationTime": 0,
+      "frequency": 0
+    },
+    "creatorLiquidityVestingInfo": {
+      "vestingPercentage": 0,
+      "bpsPerPeriod": 0,
+      "numberOfPeriods": 0,
+      "cliffDurationFromMigrationTime": 0,
+      "frequency": 0
+    },
+    "migratedPoolBaseFeeMode": 0,
+    "migratedPoolMarketCapFeeSchedulerParams": {
+      "numberOfPeriod": 0,
+      "sqrtPriceStepBps": 0,
+      "schedulerExpirationDuration": 0,
+      "reductionFactor": "00"
+    },
+    "enableFirstSwapWithMinFee": false,
+    "compoundingFeeBps": 0,
+    "padding": [],
+    "curve": [
+      {
+        "sqrtPrice": "0529fb66dada746c",
+        "liquidity": "2bfa16b17906e5379737f600"
+      },
+      {
+        "sqrtPrice": "053523613df2d0f4",
+        "liquidity": "2bfa16b17906e5379737f600"
+      },
+      {
+        "sqrtPrice": "05560f6628a815b6",
+        "liquidity": "0107dc8828d6295f4d8b4fc400"
+      }
+    ],
+    "migrationFee": {
+      "feePercentage": 3,
+      "creatorFeePercentage": 0
+    },
+    "tokenUpdateAuthority": 1
+  }
+}

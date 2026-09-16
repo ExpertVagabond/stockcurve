@@ -15,7 +15,7 @@ import { PublicKey } from "@solana/web3.js";
 import { getAssociatedTokenAddressSync, getAccount, TOKEN_PROGRAM_ID, TOKEN_2022_PROGRAM_ID } from "@solana/spl-token";
 import { ActivationType, DynamicBondingCurveClient, DYNAMIC_BONDING_CURVE_PROGRAM_ID, DAMM_V2_MIGRATION_FEE_ADDRESS, SwapMode, deriveDammV2PoolAddress, getPriceFromSqrtPrice } from "@meteora-ag/dynamic-bonding-curve-sdk";
 import { CpAmm, getPriceFromSqrtPrice as dammPrice } from "@meteora-ag/cp-amm-sdk";
-import { connection, loadKeypair, twinOf, twinsOf } from "../src/config.mjs";
+import { connection, loadKeypair, twinOf, twinsOf, XSTOCKS } from "../src/config.mjs";
 import { withPriority } from "../src/config.mjs";
 import { resolveUsd, resolveUsdRobust } from "../src/prices.mjs";
 import { resolvePreIpo } from "../src/preipo.mjs";
