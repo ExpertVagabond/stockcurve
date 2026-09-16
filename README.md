@@ -61,6 +61,15 @@ Ten pools, ~1.6 SOL all-in. Audit of the whole thing: [docs/audit.md](docs/audit
 | sTSLA-QQ/QQQx | QQQx (Nasdaq-100 xStock) | **Pyth Pro live** — Equity.US.TSLA/USD base, Equity.US.QQQ/USD quote | atomic, lean, issuer, keeper-graduated | graduated; both legs anchored on Pyth |
 | sPLTR/SOL | SOL | PLTRx twin, live | atomic on the **shared config** (`launch-shared.mjs`, unit derived from the ladder, no config rent) | graduated; all three fees claimed to the same partner |
 
+## Launch page (the product surface)
+
+**stockcurve.purplesquirrelnetworks.workers.dev/launch/** — connect a wallet (Phantom / Backpack / Solflare), type a ticker, get the plan
+(median twin reference, unit derivation onto a partner config's ladder, opening buy, fees, rent), simulate, sign **one transaction**.
+The pool is created on a stockcurve partner config, so stockcurve is partner-of-record (creation fee, listing fee, curve fees, DAMM v2
+fees) and the keeper picks the pool up automatically. The Helius key stays server-side (`/rpc` Worker route); metadata is served from
+`/meta/dyn`. Bundle: `scripts/build-launch.mjs` (esbuild; DBC SDK + web3 in the browser). Privy (email login + embedded wallet) is the
+next step for non-crypto issuers; the page is wallet-agnostic so it drops in.
+
 ## One thing per track
 
 The simplest possible version of each — one file, one command, no shared machinery — is in [`simple/`](simple/README.md).

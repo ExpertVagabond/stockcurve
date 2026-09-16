@@ -1,7 +1,9 @@
 name = "stockcurve"
 account_id = "7c5d21f0b32b4bbe0b68e90fc75c327e"
 compatibility_date = "2026-09-01"
+main = "worker.js"
 
 [assets]
 directory = "./site/dist"
+binding = "ASSETS"
 not_found_handling = "single-page-application"

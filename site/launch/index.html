@@ -1,0 +1,116 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Launch · stockcurve</title>
+<style>
+:root{--bg:#0a0a0b;--bg-2:#141416;--line:#26262a;--line-2:#35353b;--fg:#fff;--fg-2:#d2d2d6;--fg-3:#8c8c95;--red:#e50914;--red-hi:#f6121d;--green:#8de08d;--acc:#7aa2ff;--mono:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace}
+body{margin:0;background:var(--bg);color:var(--fg-2);font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5}
+header{display:flex;align-items:center;justify-content:space-between;padding:18px clamp(20px,4.4vw,58px);border-bottom:1px solid var(--line)}
+.brand{font-weight:800;letter-spacing:.02em;color:var(--red);text-decoration:none;text-transform:uppercase}.brand span{color:var(--fg);font-weight:700}
+main{max-width:920px;margin:0 auto;padding:36px clamp(20px,4.4vw,58px) 80px}
+h1{font-size:clamp(26px,4vw,40px);margin:0 0 8px;color:var(--fg)}.sub{color:var(--fg-3);margin:0 0 28px}
+.card{background:var(--bg-2);border:1px solid var(--line);border-radius:8px;padding:22px;margin-bottom:18px}
+.card h2{font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--fg-3);margin:0 0 14px}
+label{display:block;font-size:12.5px;color:var(--fg-3);margin:10px 0 4px;letter-spacing:.06em;text-transform:uppercase}
+input,select{width:100%;box-sizing:border-box;background:#0f0f11;border:1px solid var(--line-2);color:var(--fg);padding:10px 12px;border-radius:5px;font-size:15px;font-family:inherit}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:14px}@media(max-width:600px){.row{grid-template-columns:1fr}}
+.btn{display:inline-flex;align-items:center;gap:9px;padding:11px 22px;border-radius:5px;border:0;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;background:var(--red);color:#fff}.btn.ghost{background:transparent;border:1px solid var(--line-2);color:var(--fg-2)}.btn:disabled{opacity:.45;cursor:default}
+.kv{display:grid;grid-template-columns:max-content 1fr;gap:6px 18px;font-family:var(--mono);font-size:13.5px}.kv b{color:var(--fg-3);font-weight:500}
+.ok{color:var(--green)}.err{color:var(--red-hi)}.muted{color:var(--fg-3)}
+pre{background:#0f0f11;border:1px solid var(--line);border-radius:6px;padding:12px;font-family:var(--mono);font-size:12.5px;overflow:auto;white-space:pre-wrap}
+a{color:var(--acc)}
+</style></head><body>
+<header><a class="brand" href="/">stock<span>curve</span></a><span class="muted" id="wallet">no wallet connected</span></header>
+<main>
+<h1>Launch a stock-quoted curve</h1>
+<p class="sub">Pick a ticker. The pool opens exactly at the live reference price on one of stockcurve's partner configs, in one transaction that you sign. No config rent, no sniper window; stockcurve is the partner of record and runs the keeper.</p>
+
+<div class="card"><h2>1 · Wallet</h2>
+<button class="btn" id="connect">Connect wallet</button> <span class="muted" style="margin-left:10px">Phantom, Backpack, Solflare (injected)</span>
+</div>
+
+<div class="card"><h2>2 · What to launch</h2>
+<div class="row">
+<div><label>Ticker</label><input id="ticker" placeholder="RKLB" value="RKLB" autocapitalize="characters"></div>
+<div><label>Quote / config</label><select id="config"></select></div>
+</div>
+<div class="row">
+<div><label>Token symbol (≤10)</label><input id="symbol" placeholder="sRKLB" maxlength="10"></div>
+<div><label>Token name (≤32)</label><input id="name" placeholder="stockcurve RKLB" maxlength="32"></div>
+</div>
+<div style="margin-top:16px"><button class="btn ghost" id="plan">Build plan</button> <span id="planmsg" class="muted" style="margin-left:10px"></span></div>
+</div>
+
+<div class="card" id="plancard" hidden><h2>3 · Plan</h2><div class="kv" id="kv"></div>
+<div style="margin-top:16px"><button class="btn ghost" id="simulate">Simulate</button> <button class="btn" id="launch" disabled>Sign &amp; launch</button> <span id="txmsg" class="muted" style="margin-left:10px"></span></div>
+</div>
+
+<div class="card" id="result" hidden><h2>4 · Pool</h2><div id="resbody"></div></div>
+<pre id="log" hidden></pre>
+</main>
+<script src="/launch/sc.bundle.js"></script>
+<script>
+const $=(s)=>document.querySelector(s); const log=(m)=>{const p=$("#log");p.hidden=false;p.textContent+=m+"\n";};
+const { BN, Connection, PublicKey, Keypair, Transaction, VersionedTransaction, ComputeBudgetProgram, DynamicBondingCurveClient, deriveDbcPoolAddress, deriveTokenBadgeAddress, getQuoteReserveFromNextSqrtPrice, getSqrtPriceFromPrice, getPriceFromSqrtPrice, feeNumeratorToBps } = window.SC;
+const connection = new Connection(location.origin + "/rpc", "confirmed");
+const client = DynamicBondingCurveClient.create(connection, "confirmed");
+let provider=null, pubkey=null, configs=[], tickers={}, plan=null;
+const SOLM="So11111111111111111111111111111111111111112", USDCM="EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v";
+const PARTNER="8nqQzTU5bqH3yjfi2ST1XvaaqWw447enCqnZkxHXTsKF"; // stockcurve partner wallet (feeClaimer on every config)
+
+async function init(){
+  [configs,tickers]=await Promise.all([fetch("/data/configs.json").then(r=>r.json()),fetch("/data/tickers.json").then(r=>r.json())]);
+  const sel=$("#config"); for (const c of configs) { const o=document.createElement("option"); o.value=c.config; o.textContent=`${c.quote} · ${c.profile} profile · ${c.curve||"standard"} curve · listing ${c.listingFeePct}% · ${c.config.slice(0,6)}…`; sel.appendChild(o); }
+  const pref=configs.find(c=>c.quote==="SOL"&&c.profile==="issuer"); if (pref) sel.value=pref.config;
+  $("#ticker").addEventListener("input",()=>{const t=$("#ticker").value.toUpperCase();$("#symbol").value="s"+t;$("#name").value="stockcurve "+t;}); $("#ticker").dispatchEvent(new Event("input"));
+}
+$("#connect").onclick=async()=>{
+  provider=window.backpack?.solana||window.phantom?.solana||window.solflare||window.solana; if(!provider){$("#wallet").textContent="no injected wallet found";return;}
+  const r=await provider.connect(); pubkey=new PublicKey((r?.publicKey||provider.publicKey).toString()); $("#wallet").textContent=pubkey.toBase58().slice(0,6)+"…"+pubkey.toBase58().slice(-4); $("#launch").disabled=!plan;
+};
+const jupPrice=async(mints)=>{const j=await fetch("https://lite-api.jup.ag/price/v3?ids="+mints.join(",")).then(r=>r.json());return Object.fromEntries(mints.map(m=>[m,j[m]?{price:j[m].usdPrice,liq:j[m].liquidity||0}:null]));};
+const median=(a)=>{const s=[...a].sort((x,y)=>x-y);return s.length%2?s[(s.length-1)/2]:(s[s.length/2-1]+s[s.length/2])/2;};
+
+$("#plan").onclick=async()=>{
+  try{ $("#planmsg").textContent="resolving…"; $("#plancard").hidden=true; plan=null;
+    const t=$("#ticker").value.toUpperCase().trim(); const cfgMeta=configs.find(c=>c.config===$("#config").value);
+    const twins=Object.entries(tickers).filter(([k,v])=>v.underlying.toUpperCase()===t).map(([k,v])=>({sym:k,...v})); if(!twins.length) throw new Error(`no xStock / Backpack / Ondo token found for ${t}`);
+    const px=await jupPrice([...twins.map(x=>x.mint),SOLM,cfgMeta.quoteMint]);
+    const srcs=twins.map(x=>({...x,p:px[x.mint]})).filter(x=>x.p&&x.p.price>0); if(!srcs.length) throw new Error(`${t}: no live twin price`);
+    const refBase=median(srcs.map(s=>s.p.price)); const spread=(Math.max(...srcs.map(s=>s.p.price))/Math.min(...srcs.map(s=>s.p.price))-1)*100; if(spread>2) throw new Error(`twin prices disagree by ${spread.toFixed(1)}% — refusing to launch on a split reference`);
+    const refQuote=cfgMeta.quoteMint===USDCM?1:cfgMeta.quoteMint===SOLM?px[SOLM].price:px[cfgMeta.quoteMint]?.price; if(!refQuote) throw new Error("no quote price");
+    const cfg=await client.state.getPoolConfig(new PublicKey(cfgMeta.config)); const qDec=cfgMeta.quoteDecimals, bDec=cfg.tokenDecimal;
+    const pts=[cfg.sqrtStartPrice,...cfg.curve.filter(c=>!c.liquidity.isZero()).map(c=>c.sqrtPrice)].map(sp=>Number(getPriceFromSqrtPrice(sp,bDec,qDec))); const ladder={start:pts[0],reference:pts[2]??pts[1],graduation:pts[pts.length-1]};
+    const unit=ladder.reference/(refBase/refQuote); const float=Number(cfg.preMigrationTokenSupply.toString())/10**bDec; const threshold=Number(cfg.migrationQuoteThreshold.toString())/10**qDec;
+    const refSqrt=getSqrtPriceFromPrice(ladder.reference.toString(),bDec,qDec); const reserve=getQuoteReserveFromNextSqrtPrice(refSqrt,cfg); const openFee=feeNumeratorToBps(cfg.poolFees.baseFee.cliffFeeNumerator); const buyAmount=reserve.muln(10050).divn(10000-openFee);
+    const badgePda=deriveTokenBadgeAddress(new PublicKey(cfgMeta.quoteMint)); const tokenBadge=(await connection.getAccountInfo(badgePda))?badgePda:undefined;
+    plan={t,cfgMeta,cfg,qDec,bDec,ladder,unit,float,threshold,buyAmount,openFee,tokenBadge,refBase,refQuote,srcs,symbol:$("#symbol").value.trim()||("s"+t),name:$("#name").value.trim()||("stockcurve "+t)};
+    const openQuote=Number(buyAmount.toString())/10**qDec; const raiseUsd=threshold*refQuote;
+    $("#kv").innerHTML=[["reference",`$${refBase.toFixed(2)} (median of ${srcs.map(s=>s.sym+" $"+s.p.price.toFixed(2)).join(", ")})`],["quote",`${cfgMeta.quote} $${refQuote.toFixed(2)}`],["unit",`${unit.toPrecision(5)} shares per token → float ${float} tokens = ${(float*unit).toFixed(2)} shares`],["ladder",`${ladder.start.toFixed(6)} → ${ladder.reference.toFixed(6)} → ${ladder.graduation.toFixed(6)} ${cfgMeta.quote}/token (−5% · ref · +5%)`],["raise at graduation",`${threshold} ${cfgMeta.quote} ≈ $${raiseUsd.toFixed(0)}`],["your opening buy",`<b class="ok" style="color:var(--green)">${openQuote.toFixed(4)} ${cfgMeta.quote}</b> ≈ $${(openQuote*refQuote).toFixed(2)} (moves the curve to reference; opening fee ${openFee} bps)`],["fees to partner",`listing ${cfgMeta.listingFeePct}% of raise · creation ${cfgMeta.creationFeeSol} SOL · ${cfgMeta.dammFeeBps??""} bps on the DAMM v2 pool`],["rent you pay",`≈0.03 SOL (pool, vaults, metadata)`]].map(([k,v])=>`<b>${k}</b><span>${v}</span>`).join("");
+    $("#plancard").hidden=false; $("#planmsg").textContent=""; $("#launch").disabled=!pubkey;
+  }catch(e){ $("#planmsg").innerHTML=`<span class="err">${e.message}</span>`; }
+};
+
+async function buildTx(payer){
+  const baseMint=Keypair.generate(); const uri=`${location.origin}/meta/dyn?s=${encodeURIComponent(plan.symbol)}&n=${encodeURIComponent(plan.name)}`;
+  const tx=await client.creator.createPoolWithFirstBuy({ createPoolParam:{ baseMint:baseMint.publicKey, config:new PublicKey(plan.cfgMeta.config), name:plan.name, symbol:plan.symbol, uri, payer, poolCreator:payer, tokenBadge:plan.tokenBadge }, firstBuyParam:{ buyer:payer, buyAmount:plan.buyAmount, minimumAmountOut:new BN(1), referralTokenAccount:null } });
+  tx.instructions.unshift(ComputeBudgetProgram.setComputeUnitPrice({microLamports:50000})); tx.feePayer=payer; tx.recentBlockhash=(await connection.getLatestBlockhash()).blockhash;
+  return {tx,baseMint};
+}
+$("#simulate").onclick=async()=>{
+  try{ $("#txmsg").textContent="simulating…"; const payer=pubkey||new PublicKey(PARTNER); const {tx,baseMint}=await buildTx(payer); tx.partialSign(baseMint);
+    const v=new VersionedTransaction(tx.compileMessage()); const sim=await connection.simulateTransaction(v,{sigVerify:false,replaceRecentBlockhash:true});
+    if(sim.value.err){ $("#txmsg").innerHTML=`<span class="err">simulation failed: ${JSON.stringify(sim.value.err)}</span>`; log((sim.value.logs||[]).slice(-8).join("\n")); return; }
+    $("#txmsg").innerHTML=`<span class="ok">simulation OK · ${sim.value.unitsConsumed} CU · ${tx.instructions.length} instructions${pubkey?"":" (simulated as the partner wallet; connect to launch)"}</span>`;
+  }catch(e){ $("#txmsg").innerHTML=`<span class="err">${e.message}</span>`; log(String(e.stack||e)); }
+};
+$("#launch").onclick=async()=>{
+  try{ if(!pubkey||!plan) return; $("#launch").disabled=true; $("#txmsg").textContent="building…"; const {tx,baseMint}=await buildTx(pubkey); tx.partialSign(baseMint);
+    $("#txmsg").textContent="sign in your wallet…"; const signed=await provider.signTransaction(tx);
+    $("#txmsg").textContent="sending…"; const sig=await connection.sendRawTransaction(signed.serialize(),{skipPreflight:false,maxRetries:3}); log("sent "+sig);
+    const conf=await connection.confirmTransaction({signature:sig,...(await connection.getLatestBlockhash())},"confirmed"); if(conf.value.err) throw new Error("failed on chain: "+JSON.stringify(conf.value.err));
+    const pool=deriveDbcPoolAddress(new PublicKey(plan.cfgMeta.quoteMint),baseMint.publicKey,new PublicKey(plan.cfgMeta.config)); const ps=await client.state.getPool(pool); const opened=Number(getPriceFromSqrtPrice(ps.poolState.sqrtPrice,plan.bDec,plan.qDec));
+    $("#result").hidden=false; $("#resbody").innerHTML=`<div class="kv"><b>pool</b><span><a href="https://solscan.io/account/${pool.toBase58()}" target="_blank">${pool.toBase58()}</a></span><b>token</b><span>${baseMint.publicKey.toBase58()}</span><b>opened at</b><span>${opened.toFixed(6)} ${plan.cfgMeta.quote}/token (${((opened/plan.ladder.reference-1)*1e4).toFixed(0)} bps vs reference)</span><b>tx</b><span><a href="https://solscan.io/tx/${sig}" target="_blank">${sig.slice(0,20)}…</a></span><b>trade</b><span><a href="https://app.meteora.ag/dbc/${pool.toBase58()}" target="_blank">app.meteora.ag</a> · appears on the <a href="/">console</a> within 30 min (the keeper watches every pool on stockcurve configs)</span></div>`;
+    $("#txmsg").innerHTML=`<span class="ok">launched</span>`;
+  }catch(e){ $("#txmsg").innerHTML=`<span class="err">${e.message}</span>`; log(String(e.stack||e)); $("#launch").disabled=false; }
+};
+init();
+</script></body></html>

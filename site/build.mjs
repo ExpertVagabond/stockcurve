@@ -15,6 +15,16 @@ for (const name of readdirSync("out/pools").sort()) {
   pools.push({ name, status, launch, plan: { base: plan.base, unit: plan.unit, float: plan.float, quote: plan.quote, summary: plan.summary, checkpoints: plan.checkpoints, reference: plan.reference } });
 }
 writeFileSync("site/dist/data/pools.json", JSON.stringify(pools, null, 2));
+// Launch page data: the partner configs a user can launch on (deduped), and the ticker → mint maps for references.
+const configs = {};
+for (const p of pools) { const l = p.launch; if (!l.config || !l.quoteMint) continue; if (!configs[l.config]) configs[l.config] = { config: l.config, quote: p.plan.quote.symbol, quoteMint: l.quoteMint, quoteDecimals: p.plan.quote.decimals, profile: l.profile || "demo", listingFeePct: l.listingFeePct || 0, dammFeeBps: l.dammFeeBps, creationFeeSol: l.creationFeeSol || 0, curve: p.plan.summary?.curve, example: p.name }; }
+writeFileSync("site/dist/data/configs.json", JSON.stringify(Object.values(configs), null, 2));
+const cfgmod = await import("../src/config.mjs");
+const tickers = {}; for (const [k, v] of Object.entries(cfgmod.XSTOCKS)) tickers[k] = { mint: typeof v === "string" ? v : v.mint, issuer: "xstocks", underlying: k.replace(/x$/, "") };
+for (const [k, v] of Object.entries(cfgmod.BACKPACK)) tickers[k] = { mint: v.mint, issuer: "backpack", underlying: v.underlying || k, decimals: v.decimals };
+for (const [k, v] of Object.entries(cfgmod.ONDO)) tickers[k] = { mint: v.mint, issuer: "ondo", underlying: (v.underlying || k).replace(/on$/i, "") };
+writeFileSync("site/dist/data/tickers.json", JSON.stringify(tickers));
+mkdirSync("site/dist/launch", { recursive: true }); copyFileSync("site/launch/sc.bundle.js", "site/dist/launch/sc.bundle.js"); copyFileSync("site/launch/index.html", "site/dist/launch/index.html");
 copyFileSync("site/tracks.json", "site/dist/data/tracks.json");
 if (existsSync("out/agents.json")) copyFileSync("out/agents.json", "site/dist/data/agents.json");
 copyFileSync("site/_headers", "site/dist/_headers");
