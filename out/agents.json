@@ -1,0 +1,54 @@
+{
+  "at": "2026-09-16T11:46:10.390Z",
+  "wallet": "8nqQzTU5bqH3yjfi2ST1XvaaqWw447enCqnZkxHXTsKF",
+  "agents": [
+    {
+      "symbol": "scSNDK",
+      "mint": "CUnDgEpzGQNkwQKDCNoyv1SB6YvBygUSCekSPgnsUGkm",
+      "quote": "SNDKbwMUQvZhnLnxLduradgLHG5KrPuKwpnrkkGRhfH",
+      "quoteSymbol": "",
+      "creator": "3mEezSFf5bYaYWe5xvx2nt9BXemQJsd6sZ1BDGi6Bjtx",
+      "curve": "on curve",
+      "mcapUsd": 3521.93715854253,
+      "replies": 0,
+      "lastTrade": 1789522359000,
+      "holders": 3,
+      "vol24h": 0,
+      "pumpUrl": "https://pump.fun/coin/CUnDgEpzGQNkwQKDCNoyv1SB6YvBygUSCekSPgnsUGkm",
+      "pair": "7LvHsXj3LFmpwCx6mDbsj7erpVdDJsNDznLhzkwWYb2y",
+      "pairVol24h": 0,
+      "position": {
+        "x": 199999.999988,
+        "y": 0.000389,
+        "feeX": 0,
+        "feeY": 0,
+        "bins": "-7977..-7937"
+      },
+      "launchedAt": "2026-09-16T00:20:29.550Z"
+    },
+    {
+      "symbol": "scSPCX",
+      "mint": "2QSXUQVQZ7RxjsifbT8tnJocJHbpEt5SCUypLeCjVCcH",
+      "quote": "SPCXxcqXj6e5dJDVNovHN8744zkbhM2bYudU45BimGb",
+      "quoteSymbol": "",
+      "creator": "8t5STnsTmAxXiqNKarhByZZdWQ1NMaNfDVMNKPtmzxAk",
+      "curve": "on curve",
+      "mcapUsd": 3773.374028910337,
+      "replies": 0,
+      "lastTrade": 1789557970000,
+      "holders": 3,
+      "vol24h": 0,
+      "pumpUrl": "https://pump.fun/coin/2QSXUQVQZ7RxjsifbT8tnJocJHbpEt5SCUypLeCjVCcH",
+      "pair": "GYN1e3YjRrWuAZDVJthgW1wYJBPaciZxmW1gfDRaFkHP",
+      "pairVol24h": 0,
+      "position": {
+        "x": 139999.999989,
+        "y": 0.003696,
+        "feeX": 0,
+        "feeY": 0,
+        "bins": "-7002..-6962"
+      },
+      "launchedAt": "2026-09-16T11:24:22.727Z"
+    }
+  ]
+}

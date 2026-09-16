@@ -16,6 +16,7 @@ for (const name of readdirSync("out/pools").sort()) {
 }
 writeFileSync("site/dist/data/pools.json", JSON.stringify(pools, null, 2));
 copyFileSync("site/tracks.json", "site/dist/data/tracks.json");
+if (existsSync("out/agents.json")) copyFileSync("out/agents.json", "site/dist/data/agents.json");
 copyFileSync("site/_headers", "site/dist/_headers");
 writeFileSync("site/dist/index.html", readFileSync("site/index.html", "utf8").replace("__BUILT_AT__", new Date().toISOString()));
 console.log(`site/dist built with ${pools.length} pools:`, pools.map((p) => p.name).join(", "));
