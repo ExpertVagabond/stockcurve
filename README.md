@@ -63,6 +63,8 @@ Ten pools, ~1.6 SOL all-in. Audit of the whole thing: [docs/audit.md](docs/audit
 
 ## One thing per track
 
+The simplest possible version of each — one file, one command, no shared machinery — is in [`simple/`](simple/README.md).
+
 | Track | They asked for | The one thing |
 |---|---|---|
 | **Main track** (Solana Foundation) | Could this be a real app people actually use? | A live DBC pool you can trade right now, opened at reference with an atomic launch — [sRDDT/SOL on Solscan](https://solscan.io/account/GretDMXwL3Na7AtVvQzaAuQhVw8zVwsttqVxkYKXE3FP) |
