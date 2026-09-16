@@ -13,7 +13,7 @@ const holders = async (mint) => { let n = 0, cursor; do { const r = await fetch(
 const rows = [];
 for (const l of launches) {
   const mint = l.response?.mintAddress; if (!mint) continue;
-  const c = await fetch(`https://frontend-api-v3.pump.fun/coins/${mint}`, { headers: { "user-agent": "Mozilla/5.0" } }).then((r) => r.json()).catch(() => ({}));
+  const c = l.response?.dbcPool ? { symbol: l.request.symbol, complete: false, creator: "clawpump-dbc" } : await fetch(`https://frontend-api-v3.pump.fun/coins/${mint}`, { headers: { "user-agent": "Mozilla/5.0" } }).then((r) => r.json()).catch(() => ({}));
   const ps = await fetch(`https://api.dexscreener.com/tokens/v1/solana/${mint}`).then((r) => r.json()).catch(() => []);
   const pump = ps.find((p) => p.dexId === "pumpfun" || p.dexId === "pumpswap"), met = ps.find((p) => p.dexId === "meteora");
   const pair = pairs.find((p) => p.x === mint);

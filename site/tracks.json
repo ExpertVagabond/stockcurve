@@ -21,13 +21,13 @@
     "track": "Stocknized Agent on Clawpump",
     "sponsor": "Clawpump",
     "ask": "Launch your token with a stock-paired liquidity pool using clawpump and Meteora",
-    "thing": "Three Stocknized agent tokens launched through Clawpump's API (scSPCX/SPCX and scSNDK/SNDK on Backpack/Sunrise stocks, BonkClaw/CLAW), two pooled on Meteora DLMM, run by the Clawpump agent Solent (SAID-verified wallet 597y\u2026A6g6)",
-    "link": "https://solscan.io/account/GYN1e3YjRrWuAZDVJthgW1wYJBPaciZxmW1gfDRaFkHP",
-    "linkLabel": "scSPCX/SPCX Meteora DLMM pair",
-    "link2": "https://pump.fun/coin/2QSXUQVQZ7RxjsifbT8tnJocJHbpEt5SCUypLeCjVCcH",
-    "link2Label": "scSPCX on Clawpump / pump.fun",
-    "link3": "https://solscan.io/account/7LvHsXj3LFmpwCx6mDbsj7erpVdDJsNDznLhzkwWYb2y",
-    "link3Label": "scSNDK/SNDK Meteora DLMM pair"
+    "thing": "Four Stocknized agent tokens through Clawpump: $SOLENT/SPCX on a Meteora DBC curve via Clawpump's own launcher (fees in SPCX), plus scSPCX/SPCX, scSNDK/SNDK and BonkClaw/CLAW via the API, two pooled on Meteora DLMM; run by SAID-verified agent Solent",
+    "link": "https://solscan.io/account/AaPSRyVpG2c2BWrVHDDSX9kWBvVRdozfxzA5RmUAPzjD",
+    "linkLabel": "$SOLENT/SPCX Meteora DBC pool (Clawpump-launched)",
+    "link2": "https://solscan.io/account/GYN1e3YjRrWuAZDVJthgW1wYJBPaciZxmW1gfDRaFkHP",
+    "link2Label": "scSPCX/SPCX Meteora DLMM pair",
+    "link3": "https://pump.fun/coin/8z8MZcqJd4phpNN7C69iJQrhW5LG3dwJsP932n6z8oyJ",
+    "link3Label": "BonkClaw on Clawpump"
   },
   {
     "track": "Best Use of PreStocks",
