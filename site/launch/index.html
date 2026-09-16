@@ -36,6 +36,10 @@ a{color:var(--acc)}
 <div><label>Token symbol (≤10)</label><input id="symbol" placeholder="sRKLB" maxlength="10"></div>
 <div><label>Token name (≤32)</label><input id="name" placeholder="stockcurve RKLB" maxlength="32"></div>
 </div>
+<div class="row">
+<div><label>Logo URL (optional, png/jpg, square)</label><input id="image" placeholder="https://…/logo.png"></div>
+<div><label>One-line description (optional)</label><input id="desc" placeholder="What this launch is for" maxlength="200"></div>
+</div>
 <div style="margin-top:16px"><button class="btn ghost" id="plan">Build plan</button> <span id="planmsg" class="muted" style="margin-left:10px"></span></div>
 </div>
 
@@ -58,8 +62,8 @@ const PARTNER="8nqQzTU5bqH3yjfi2ST1XvaaqWw447enCqnZkxHXTsKF"; // stockcurve part
 
 async function init(){
   [configs,tickers]=await Promise.all([fetch("/data/configs.json").then(r=>r.json()),fetch("/data/tickers.json").then(r=>r.json())]);
-  const sel=$("#config"); for (const c of configs) { const o=document.createElement("option"); o.value=c.config; o.textContent=`${c.quote} · ${c.profile} profile · ${c.curve||"standard"} curve · listing ${c.listingFeePct}% · ${c.config.slice(0,6)}…`; sel.appendChild(o); }
-  const pref=configs.find(c=>c.quote==="SOL"&&c.profile==="issuer"); if (pref) sel.value=pref.config;
+  const sel=$("#config"); for (const c of configs) { const o=document.createElement("option"); o.value=c.config; o.textContent=(c.label||`${c.quote} · ${c.profile} profile`)+(c.thresholdUsd?` · graduates ≈$${Math.round(c.thresholdUsd).toLocaleString()}`:"")+` · listing ${c.listingFeePct}%`; sel.appendChild(o); }
+  const pref=configs.find(c=>c.default)||configs.find(c=>c.quote==="SOL"&&c.profile==="issuer"); if (pref) sel.value=pref.config;
   $("#ticker").addEventListener("input",()=>{const t=$("#ticker").value.toUpperCase();$("#symbol").value="s"+t;$("#name").value="stockcurve "+t;}); $("#ticker").dispatchEvent(new Event("input"));
 }
 $("#connect").onclick=async()=>{
@@ -90,7 +94,8 @@ $("#plan").onclick=async()=>{
 };
 
 async function buildTx(payer){
-  const baseMint=Keypair.generate(); const uri=`${location.origin}/meta/dyn?s=${encodeURIComponent(plan.symbol)}&n=${encodeURIComponent(plan.name)}`;
+  const baseMint=Keypair.generate(); const img=$("#image").value.trim(), desc=$("#desc").value.trim();
+  const uri=`${location.origin}/meta/dyn?s=${encodeURIComponent(plan.symbol)}&n=${encodeURIComponent(plan.name)}${img?"&i="+encodeURIComponent(img):""}${desc?"&d="+encodeURIComponent(desc):""}`;
   const tx=await client.creator.createPoolWithFirstBuy({ createPoolParam:{ baseMint:baseMint.publicKey, config:new PublicKey(plan.cfgMeta.config), name:plan.name, symbol:plan.symbol, uri, payer, poolCreator:payer, tokenBadge:plan.tokenBadge }, firstBuyParam:{ buyer:payer, buyAmount:plan.buyAmount, minimumAmountOut:new BN(1), referralTokenAccount:null } });
   tx.instructions.unshift(ComputeBudgetProgram.setComputeUnitPrice({microLamports:50000})); tx.feePayer=payer; tx.recentBlockhash=(await connection.getLatestBlockhash()).blockhash;
   return {tx,baseMint};
@@ -110,6 +115,9 @@ $("#launch").onclick=async()=>{
     const pool=deriveDbcPoolAddress(new PublicKey(plan.cfgMeta.quoteMint),baseMint.publicKey,new PublicKey(plan.cfgMeta.config)); const ps=await client.state.getPool(pool); const opened=Number(getPriceFromSqrtPrice(ps.poolState.sqrtPrice,plan.bDec,plan.qDec));
     $("#result").hidden=false; $("#resbody").innerHTML=`<div class="kv"><b>pool</b><span><a href="https://solscan.io/account/${pool.toBase58()}" target="_blank">${pool.toBase58()}</a></span><b>token</b><span>${baseMint.publicKey.toBase58()}</span><b>opened at</b><span>${opened.toFixed(6)} ${plan.cfgMeta.quote}/token (${((opened/plan.ladder.reference-1)*1e4).toFixed(0)} bps vs reference)</span><b>tx</b><span><a href="https://solscan.io/tx/${sig}" target="_blank">${sig.slice(0,20)}…</a></span><b>trade</b><span><a href="https://app.meteora.ag/dbc/${pool.toBase58()}" target="_blank">app.meteora.ag</a> · appears on the <a href="/">console</a> within 30 min (the keeper watches every pool on stockcurve configs)</span></div>`;
     $("#txmsg").innerHTML=`<span class="ok">launched</span>`;
+    // distribution: a prefilled post so the pool is findable the minute it exists
+    const post=`${plan.symbol}: a ${plan.t} launch curve on Meteora, quoted in ${plan.cfgMeta.quote}, opened at the live reference ($${plan.refBase.toFixed(2)}). Graduates at +5%. https://app.meteora.ag/dbc/${pool.toBase58()} via stockcurve`;
+    $("#resbody").innerHTML+=`<div style="margin-top:14px"><a class="btn" href="https://x.com/intent/post?text=${encodeURIComponent(post)}" target="_blank">Post the launch on X</a> <span class="muted" style="margin-left:8px">prefilled, edit before posting</span></div>`;
   }catch(e){ $("#txmsg").innerHTML=`<span class="err">${e.message}</span>`; log(String(e.stack||e)); $("#launch").disabled=false; }
 };
 init();

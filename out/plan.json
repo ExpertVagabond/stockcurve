@@ -1,11 +1,11 @@
 {
-  "createdAt": "2026-09-16T13:33:40.277Z",
+  "createdAt": "2026-09-16T13:59:05.388Z",
   "base": "RKLB",
   "preipo": false,
   "preipoAnchor": null,
   "unit": 1,
-  "float": 5,
-  "raiseUsd": 150,
+  "float": 303,
+  "raiseUsd": 10000,
   "quote": {
     "symbol": "SOL",
     "mint": "So11111111111111111111111111111111111111112",
@@ -15,14 +15,14 @@
     "base": {
       "ok": true,
       "price": 63.50705879322168,
-      "source": "twin-ondo·twap60s",
+      "source": "twin-ondo·twap30s",
       "feed": "twin-ondo:RKLBon",
       "ageSec": 0,
       "robust": {
         "median": 63.50705879322168,
         "twap": 63.50705879322168,
-        "samples": 6,
-        "twapSec": 60,
+        "samples": 3,
+        "twapSec": 30,
         "spreadPct": 0,
         "lowConfidenceOnly": true,
         "sources": [
@@ -37,32 +37,17 @@
         ],
         "rounds": [
           {
-            "at": "2026-09-16T13:31:06.296Z",
+            "at": "2026-09-16T13:57:54.387Z",
             "median": 63.50705879322168,
             "spreadPct": 0
           },
           {
-            "at": "2026-09-16T13:31:21.501Z",
+            "at": "2026-09-16T13:58:12.170Z",
             "median": 63.50705879322168,
             "spreadPct": 0
           },
           {
-            "at": "2026-09-16T13:31:37.244Z",
-            "median": 63.50705879322168,
-            "spreadPct": 0
-          },
-          {
-            "at": "2026-09-16T13:31:53.172Z",
-            "median": 63.50705879322168,
-            "spreadPct": 0
-          },
-          {
-            "at": "2026-09-16T13:32:09.219Z",
-            "median": 63.50705879322168,
-            "spreadPct": 0
-          },
-          {
-            "at": "2026-09-16T13:32:24.402Z",
+            "at": "2026-09-16T13:58:29.145Z",
             "median": 63.50705879322168,
             "spreadPct": 0
           }
@@ -72,30 +57,30 @@
     },
     "quote": {
       "ok": true,
-      "price": 97.09723294333334,
-      "source": "pyth-lazer·twap60s",
+      "price": 97.18634952666666,
+      "source": "pyth-lazer·twap30s",
       "feed": "jupiter:So1111,pyth-onchain:Crypto.SOL/USD,pyth-lazer:Crypto.SOL/USD",
       "ageSec": 0,
       "robust": {
-        "median": 97.21114516,
-        "twap": 97.09723294333334,
-        "samples": 6,
-        "twapSec": 60,
-        "spreadPct": 0.12600871000787175,
+        "median": 97.14001123,
+        "twap": 97.18634952666666,
+        "samples": 3,
+        "twapSec": 30,
+        "spreadPct": 0.13298438793130368,
         "lowConfidenceOnly": false,
         "sources": [
           {
             "src": "jupiter",
             "label": "So1111",
-            "price": 97.16371940106214,
-            "liquidityUsd": 829717099.092901,
+            "price": 97.1359590306294,
+            "liquidityUsd": 831033924.054445,
             "conf": "high",
             "role": "context"
           },
           {
             "src": "pyth-onchain",
             "label": "Crypto.SOL/USD",
-            "price": 97.08865065,
+            "price": 97.26514008000001,
             "liquidityUsd": null,
             "conf": "high",
             "role": "context"
@@ -103,7 +88,7 @@
           {
             "src": "pyth-lazer",
             "label": "Crypto.SOL/USD",
-            "price": 97.21114516,
+            "price": 97.14001123,
             "liquidityUsd": null,
             "conf": "high",
             "role": "anchor"
@@ -111,34 +96,19 @@
         ],
         "rounds": [
           {
-            "at": "2026-09-16T13:32:26.296Z",
-            "median": 97.04196065000001,
-            "spreadPct": 0.1231665598261059
+            "at": "2026-09-16T13:58:30.374Z",
+            "median": 97.21955294,
+            "spreadPct": 0.046890917126664565
           },
           {
-            "at": "2026-09-16T13:32:41.531Z",
-            "median": 97.03813719,
-            "spreadPct": 0.10642075681832515
+            "at": "2026-09-16T13:58:48.691Z",
+            "median": 97.19948441,
+            "spreadPct": 0.0737452713950305
           },
           {
-            "at": "2026-09-16T13:32:56.411Z",
-            "median": 97.07091071,
-            "spreadPct": 0.0872967300909233
-          },
-          {
-            "at": "2026-09-16T13:33:11.799Z",
-            "median": 97.09132459,
-            "spreadPct": 0.06819493786214914
-          },
-          {
-            "at": "2026-09-16T13:33:26.086Z",
-            "median": 97.12991936,
-            "spreadPct": 0.042488154290584494
-          },
-          {
-            "at": "2026-09-16T13:33:40.101Z",
-            "median": 97.21114516,
-            "spreadPct": 0.12600871000787175
+            "at": "2026-09-16T13:59:05.335Z",
+            "median": 97.14001123,
+            "spreadPct": 0.13298438793130368
           }
         ]
       },
@@ -146,20 +116,20 @@
     }
   },
   "summary": {
-    "referencePriceQuote": 0.6540563193009308,
-    "startPriceQuote": 0.6213535033358842,
-    "graduationPriceQuote": 0.6867591352659773,
-    "migrationQuoteThreshold": 1.351642402,
-    "migrationQuoteThresholdUsd": 131.2407371630806,
+    "referencePriceQuote": 0.6534565718593657,
+    "startPriceQuote": 0.6207837432663974,
+    "graduationPriceQuote": 0.686129400452334,
+    "migrationQuoteThreshold": 102.797630267,
+    "migrationQuoteThresholdUsd": 9990.52642564171,
     "feeSchedule": "300→30 bps exp over 3600s (60 periods), dynamic fee on",
     "curve": "lean",
-    "profile": "seed",
-    "partnerUnlockedLpPct": 90,
-    "listingFeePct": 0,
+    "profile": "issuer",
+    "partnerUnlockedLpPct": 0,
+    "listingFeePct": 3,
     "dammFeeBps": 20,
-    "creationFeeSol": 0,
+    "creationFeeSol": 0.02,
     "unit": 1,
-    "float": 5,
+    "float": 303,
     "discountBps": 500,
     "premiumBps": 500,
     "weights": [
@@ -169,10 +139,10 @@
     ]
   },
   "checkpoints": [
-    0.6213535033358842,
-    0.6431553806459153,
-    0.6540563193009308,
-    0.6867591352659773
+    0.6207837432663974,
+    0.6425656289950429,
+    0.6534565718593657,
+    0.686129400452334
   ],
   "configParams": {
     "poolFees": {
@@ -198,12 +168,12 @@
     "migrationOption": 1,
     "tokenType": 0,
     "tokenDecimal": 9,
-    "migrationQuoteThreshold": "50906d22",
-    "partnerLiquidityPercentage": 90,
-    "partnerPermanentLockedLiquidityPercentage": 10,
+    "migrationQuoteThreshold": "17ef375b3b",
+    "partnerLiquidityPercentage": 0,
+    "partnerPermanentLockedLiquidityPercentage": 100,
     "creatorLiquidityPercentage": 0,
     "creatorPermanentLockedLiquidityPercentage": 0,
-    "sqrtStartPrice": "c9cb64d5574e21f3",
+    "sqrtStartPrice": "c9b3b4181e1df188",
     "lockedVesting": {
       "amountPerPeriod": "00",
       "cliffDurationFromMigrationTime": "00",
@@ -213,8 +183,8 @@
     },
     "migrationFeeOption": 6,
     "tokenSupply": {
-      "preMigrationTokenSupply": "012a05f200",
-      "postMigrationTokenSupply": "012a05f200"
+      "preMigrationTokenSupply": "468c351600",
+      "postMigrationTokenSupply": "468c351600"
     },
     "creatorTradingFeePercentage": 0,
     "migratedPoolFee": {
@@ -222,7 +192,7 @@
       "dynamicFee": 1,
       "poolFeeBps": 20
     },
-    "poolCreationFee": "00",
+    "poolCreationFee": "01312d00",
     "partnerLiquidityVestingInfo": {
       "vestingPercentage": 0,
       "bpsPerPeriod": 0,
@@ -249,20 +219,20 @@
     "padding": [],
     "curve": [
       {
-        "sqrtPrice": "cd4de2aecfebf618",
-        "liquidity": "023e31373fa7761070cbc01000"
+        "sqrtPrice": "cd35c8764a7cc6f5",
+        "liquidity": "aaa9936f6a179b505e5fd52000"
       },
       {
-        "sqrtPrice": "cf096b7836866444",
-        "liquidity": "023e31373fa7761070cbc01000"
+        "sqrtPrice": "cef11d2db21d684e",
+        "liquidity": "aaa9936f6a179b505e5fd52000"
       },
       {
-        "sqrtPrice": "d4264b3ea79dff05",
-        "liquidity": "0d75274b7decc462a96e982800"
+        "sqrtPrice": "d40d634b3067328b",
+        "liquidity": "03fff9749c7c8da3e2363efec000"
       }
     ],
     "migrationFee": {
-      "feePercentage": 0,
+      "feePercentage": 3,
       "creatorFeePercentage": 0
     },
     "tokenUpdateAuthority": 1

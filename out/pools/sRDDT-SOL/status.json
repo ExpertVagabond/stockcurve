@@ -1,35 +1,35 @@
 {
-  "at": "2026-09-16T13:19:23.240Z",
+  "at": "2026-09-16T13:52:06.088Z",
   "poolAddress": "GretDMXwL3Na7AtVvQzaAuQhVw8zVwsttqVxkYKXE3FP",
   "symbol": "sRDDT",
   "quote": "SOL",
   "unit": 0.01,
   "preipo": null,
   "reference": {
-    "baseUsd": 157.8142379556304,
-    "baseSource": "median(twin-ondo+twin-backpack)",
+    "baseUsd": 158.55980665170728,
+    "baseSource": "median(twin-backpack+twin-ondo)",
     "baseAgeSec": 0,
     "baseStale": false,
-    "quoteUsd": 97.24181641,
+    "quoteUsd": 97.26270435,
     "quoteSource": "pyth-lazer",
-    "refPriceQuote": 0.01622905081186877,
-    "refPriceUsd": 1.578142379556304
+    "refPriceQuote": 0.01630222064164796,
+    "refPriceUsd": 1.5855980665170728
   },
   "pool": {
     "priceQuote": 0.01654993633087583,
-    "priceUsd": 1.6093458702842165,
-    "basisBps": 197.72291228048243,
+    "priceUsd": 1.6096915643613,
+    "basisBps": 151.95211417702302,
     "startPriceQuote": 0.014062921294375462,
     "graduationPriceQuote": 0.017371843951875573,
     "quoteReserve": 0.023793459,
     "quoteReserveDisplay": 0.023793459,
     "threshold": 0.04184815,
-    "thresholdUsd": 4.069390119398141,
+    "thresholdUsd": 4.070264241044453,
     "progressPct": 56.85665674587766,
     "isMigrated": 0,
     "baseSold": 1.526233379,
     "activationPoint": 1789510907,
-    "ageSec": 53856
+    "ageSec": 55819
   },
   "fees": {
     "totalTradingQuote": 0.000597463,

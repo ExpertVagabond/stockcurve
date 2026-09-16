@@ -1,0 +1,17 @@
+[
+  {
+    "config": "4tmRWBk8QTmoYDnhjDoXe9oi24JkHbBRydGXTEZDswhR",
+    "label": "SOL · issuer profile · lean curve · $10k graduation",
+    "quote": "SOL",
+    "quoteMint": "So11111111111111111111111111111111111111112",
+    "quoteDecimals": 9,
+    "listingFeePct": 0,
+    "dammFeeBps": 25,
+    "creationFeeSol": 0,
+    "thresholdQuote": 99.171671273,
+    "thresholdUsd": 9638.132707481465,
+    "default": true,
+    "createdAt": "2026-09-16T13:59:37.422Z",
+    "tx": "41LTN3dijemsPzxQ3GPdJzb3QfAG7y4VfQNT1NtZPP2n4qBLqvpW3H3ebf9re8t8q7jb68hCwF1j3bTYa6M1fuxK"
+  }
+]

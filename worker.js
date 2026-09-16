@@ -10,7 +10,9 @@ export default {
     }
     if (url.pathname === "/meta/dyn") {
       const s = (url.searchParams.get("s") || "sTOKEN").slice(0, 10), n = (url.searchParams.get("n") || `stockcurve ${s}`).slice(0, 32);
-      const body = { name: n, symbol: s, description: `${n}: a stock-quoted launch curve on Meteora DBC, launched from stockcurve.`, image: `${url.origin}/meta/stockcurve.png`, external_url: url.origin, properties: { category: "image", files: [{ uri: `${url.origin}/meta/stockcurve.png`, type: "image/png" }] } };
+      const i = url.searchParams.get("i"), d = (url.searchParams.get("d") || "").slice(0, 200);
+      const image = i && /^https:\/\/[^\s"']+\.(png|jpe?g|webp|gif)(\?.*)?$/i.test(i) ? i : `${url.origin}/meta/stockcurve.png`;
+      const body = { name: n, symbol: s, description: d || `${n}: a stock-quoted launch curve on Meteora DBC, launched from stockcurve.`, image, external_url: url.origin, properties: { category: "image", files: [{ uri: image, type: image.endsWith(".png") ? "image/png" : "image/jpeg" }] } };
       return new Response(JSON.stringify(body), { headers: { "Content-Type": "application/json", "Access-Control-Allow-Origin": "*", "Cache-Control": "public, max-age=300" } });
     }
     return env.ASSETS.fetch(req);

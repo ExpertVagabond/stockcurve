@@ -25,6 +25,8 @@ const has = (k) => process.argv.includes(`--${k}`);
 const DRY = has("dry");
 const budget = Number(arg("budget", "1"));           // quote units the keeper may spend per pool
 const bandBps = Number(arg("band-bps", "0"));        // only buy when pool < ref·(1 − band)
+const dlmmBandBps = Number(arg("dlmm-band", "0"));   // after migration: open a ±bps DLMM band from inventory (0 = off)
+const dlmmBase = Number(arg("dlmm-base", "1")), dlmmQuote = Number(arg("dlmm-quote", "0.05")); // inventory to put in the band
 const exitBps = Number(arg("exit-bps", "0"));        // sell on DAMM v2 when price ≥ ref·(1 + exit)
 const interval = Number(arg("interval", "15")) * 1000;
 const NO_EXIT = has("no-exit"); // keep inventory as LP-side proof (seed venues)
@@ -145,6 +147,8 @@ async function tick(poolAddr, entry) {
     const { transaction, firstPositionNftKeypair, secondPositionNftKeypair } = await client.migration.migrateToDammV2({ payer: me, pool, dammConfig });
     const sig = await sendTx("migrate", transaction, [kp, firstPositionNftKeypair, secondPositionNftKeypair].filter(Boolean));
     log({ ev: "migrated", pool: poolAddr, sig });
+    // launch-and-earn: after migration, open the ±band DLMM position from inventory so the pool earns on flow (--dlmm-band <bps>, 0 = off)
+    if (dlmmBandBps > 0) { try { const { execFileSync } = await import("node:child_process"); const out = execFileSync("node", ["scripts/dlmm-band.mjs", "--pool", poolAddr, "--base", String(dlmmBase), "--quote", String(dlmmQuote), "--width-bps", String(dlmmBandBps)], { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] }); log({ ev: "dlmm-band", pool: poolAddr, out: out.trim().split("\n").slice(-2).join(" | ").slice(0, 200) }); } catch (e) { log({ ev: "dlmm-band-failed", pool: poolAddr, err: String(e.stderr || e.message).slice(-200) }); } }
     return "migrated";
   }
 
@@ -218,7 +222,7 @@ if (arg("pool")) {
   }, "confirmed");
   for (const e of registry.values()) if (e.launch.pool && !(await client.state.getPool(new PublicKey(e.launch.pool))).poolState.isMigrated) tracked.set(e.launch.pool, e);
 } else {
-  console.log("usage: --pool <addr> | --watch   [--budget q] [--band-bps n] [--exit-bps n] [--graduate] [--once] [--dry]"); process.exit(1);
+  console.log("usage: --pool <addr> | --watch   [--budget q] [--band-bps n] [--exit-bps n] [--graduate] [--dlmm-band bps --dlmm-base n --dlmm-quote n] [--once] [--dry]"); process.exit(1);
 }
 
 for (;;) {

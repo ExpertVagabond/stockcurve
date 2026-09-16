@@ -1,0 +1,46 @@
+{
+  "at": "2026-09-16T13:52:36.234Z",
+  "poolAddress": "FqLxggcrgbstMa2nMJi5mkQnKSYGZqDmnrG1j3qy7ZG9",
+  "symbol": "sRKLB2",
+  "quote": "SOL",
+  "unit": 1,
+  "preipo": null,
+  "reference": {
+    "baseUsd": 63.50705879322168,
+    "baseSource": "twin-ondo",
+    "baseAgeSec": 0,
+    "baseStale": false,
+    "quoteUsd": 97.30949026,
+    "quoteSource": "pyth-lazer",
+    "refPriceQuote": 0.6526296522932961,
+    "refPriceUsd": 63.50705879322168
+  },
+  "pool": {
+    "priceQuote": 0.6554417675932668,
+    "priceUsd": 63.78070429961418,
+    "basisBps": 43.08899067164917,
+    "startPriceQuote": 0.6213535033358842,
+    "graduationPriceQuote": 0.6867591352659773,
+    "quoteReserve": 0.246751183,
+    "quoteReserveDisplay": 0.246751183,
+    "threshold": 1.351642402,
+    "thresholdUsd": 131.527633152422,
+    "progressPct": 18.255655684882843,
+    "isMigrated": 0,
+    "baseSold": 0.385018177,
+    "activationPoint": 1789565919,
+    "ageSec": 837
+  },
+  "fees": {
+    "totalTradingQuote": 0.006108374,
+    "partnerUnclaimedQuote": 0.006108374,
+    "currentBaseFeeBps": 300,
+    "schedule": "300→30 bps exp over 3600s (60 periods), dynamic fee on"
+  },
+  "quoteMint": {
+    "mint": "So11111111111111111111111111111111111111112",
+    "scaledUiMultiplier": 1
+  },
+  "config": "39iUXwSrjgzNShSeFVjePJCebD9d5WJ1t4tr9d5dWwKB",
+  "baseMint": "9YqPRZ8WJQPedegF5v1V5G1X9cgGg6Lz5v15Lsy7Cw1y"
+}
