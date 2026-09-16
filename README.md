@@ -102,6 +102,15 @@ writing) so displayed quote amounts are share-units, not raw balances.
 The reference price comes from [`src/prices.mjs`](src/prices.mjs), which records provenance
 (`source`, `ageSec`, `feed`) into the plan so the config is auditable:
 
+The reference is a **median across every live source, optionally time-averaged** (`--twap <sec>`): Pyth Pro when
+granted, every on-chain twin the ticker has (xStock, Backpack, Ondo — e.g. GME = median of GMEx and GMEon), the
+Pyth push account when fresh. Sources with under $10k of liquidity are used but flagged; if sources disagree by more
+than `--max-spread` (2%) the plan refuses. At launch a **drift guard** re-resolves the reference and refuses if it
+moved more than 1% since the plan, because the ±band is fixed at config time. `--raise-usd` sizes the float so the
+graduation threshold lands on a dollar amount (USD graduation) instead of a token count.
+
+Sources, in order of preference when only one is available:
+
 1. **Pyth Pro (Lazer)** `POST /v1/latest_price` — live; `Equity.US.<T>/USD` for the base,
    `Crypto.<T>X/USD` for the xStock quote. The redemption-rate feed (`Crypto.AAPLX/AAPL.RR`) and
    the 24/7 `Equity.Index.*` feeds are wired for the basis view.

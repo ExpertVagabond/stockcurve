@@ -32,8 +32,8 @@ fixed-now, known-and-accepted, and next.
 
 ## Next (ordered by value)
 
-1. **Reference = median of sources + 5-min TWAP**, reject if sources disagree > 2%; per-source liquidity floor for twins.
-2. **Graduation in USD terms** (`buildCurveWithMarketCap`) so the +5% band doesn't drift with the reference between plan and launch.
+1. ~~Reference = median of sources + TWAP~~ **done**: `resolveUsdRobust` (median across Pyth/twins/Jupiter, `--twap`, `--max-spread`, low-liquidity flag).
+2. ~~Graduation in USD terms~~ **done**: `--raise-usd` sizes the float; launch-time **drift guard** refuses if the reference moved > 1% since the plan.
 3. **Post-graduation liquidity**: route part of migrated LP into a DLMM band around reference (market-making the basis), not
    only a full-range DAMM v2 position.
 4. **Pool-creation watcher for third-party launches** on our shared configs (the launchpad's inbound side) + creation-fee

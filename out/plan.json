@@ -1,43 +1,118 @@
 {
-  "createdAt": "2026-09-16T00:07:18.903Z",
-  "base": "RKLB",
+  "createdAt": "2026-09-16T00:16:12.420Z",
+  "base": "GME",
   "preipo": false,
-  "unit": 0.01,
-  "float": 5,
+  "unit": 0.1,
+  "float": 45,
+  "raiseUsd": 50,
   "quote": {
-    "symbol": "DKNG",
-    "mint": "DKNGQFNGQmoBdXSRGKJ8tTu7uPDasw5JDcfMmWniNfow",
-    "decimals": 6
+    "symbol": "SOL",
+    "mint": "So11111111111111111111111111111111111111112",
+    "decimals": 9
   },
   "reference": {
     "base": {
       "ok": true,
-      "price": 63.50705879322168,
-      "source": "jupiter-xstock-twin",
-      "feed": "E9VQY3VnrpVSekFByzRmfeK1kxgM3UiKCoVVbdUondo",
+      "price": 21.456766630172464,
+      "source": "median(twin-ondo+twin-xstocks)·twap20s",
+      "feed": "twin-ondo:GMEon,twin-xstocks:GMEx",
       "ageSec": 0,
-      "tried": [
-        "lazer: HTTP 403: Not entitled: feed 1373 (no grant accepts this feed (asset type 'equity', instrument type 'spot', exchange 1))"
-      ]
+      "robust": {
+        "median": 21.456766630172464,
+        "twap": 21.456766630172464,
+        "samples": 2,
+        "twapSec": 20,
+        "spreadPct": 0.6625307740189921,
+        "lowConfidenceOnly": false,
+        "sources": [
+          {
+            "src": "twin-ondo",
+            "label": "GMEon",
+            "price": 21.52784547118963,
+            "liquidityUsd": 19.793597533463917,
+            "conf": "low"
+          },
+          {
+            "src": "twin-xstocks",
+            "label": "GMEx",
+            "price": 21.3856877891553,
+            "liquidityUsd": 252672.288247381,
+            "conf": "high"
+          }
+        ],
+        "rounds": [
+          {
+            "at": "2026-09-16T00:15:24.750Z",
+            "median": 21.456766630172464,
+            "spreadPct": 0.6625307740189921
+          },
+          {
+            "at": "2026-09-16T00:15:48.140Z",
+            "median": 21.456766630172464,
+            "spreadPct": 0.6625307740189921
+          }
+        ]
+      },
+      "tried": []
     },
     "quote": {
       "ok": true,
-      "price": 24.797837195219543,
-      "source": "jupiter-v3",
-      "feed": "DKNGQFNGQmoBdXSRGKJ8tTu7uPDasw5JDcfMmWniNfow",
+      "price": 96.87928483,
+      "source": "median(jupiter+pyth-onchain+pyth-lazer)·twap20s",
+      "feed": "jupiter:So1111,pyth-onchain:Crypto.SOL/USD,pyth-lazer:Crypto.SOL/USD",
       "ageSec": 0,
-      "tried": [
-        "lazer: no lazer id (metadata unavailable)",
-        "onchain: no hermes feed"
-      ]
+      "robust": {
+        "median": 96.87679943,
+        "twap": 96.87928483,
+        "samples": 2,
+        "twapSec": 20,
+        "spreadPct": 0.019169653941044217,
+        "lowConfidenceOnly": false,
+        "sources": [
+          {
+            "src": "jupiter",
+            "label": "So1111",
+            "price": 96.87331305280011,
+            "liquidityUsd": 828856570.0384176,
+            "conf": "high"
+          },
+          {
+            "src": "pyth-onchain",
+            "label": "Crypto.SOL/USD",
+            "price": 96.891884,
+            "liquidityUsd": null,
+            "conf": "high"
+          },
+          {
+            "src": "pyth-lazer",
+            "label": "Crypto.SOL/USD",
+            "price": 96.87679943,
+            "liquidityUsd": null,
+            "conf": "high"
+          }
+        ],
+        "rounds": [
+          {
+            "at": "2026-09-16T00:15:50.603Z",
+            "median": 96.88177023,
+            "spreadPct": 0.017181295312143723
+          },
+          {
+            "at": "2026-09-16T00:16:12.401Z",
+            "median": 96.87679943,
+            "spreadPct": 0.019169653941044217
+          }
+        ]
+      },
+      "tried": []
     }
   },
   "summary": {
-    "referencePriceQuote": 0.02560991843492883,
-    "startPriceQuote": 0.02432942251318239,
-    "graduationPriceQuote": 0.026890414356675274,
-    "migrationQuoteThreshold": 0.067146,
-    "migrationQuoteThresholdUsd": 1.6650755763102114,
+    "referencePriceQuote": 0.022147940777870072,
+    "startPriceQuote": 0.021040543738976566,
+    "graduationPriceQuote": 0.023255337816763578,
+    "migrationQuoteThreshold": 0.522625968,
+    "migrationQuoteThresholdUsd": 50.631630013426474,
     "feeSchedule": "300→30 bps exp over 3600s (60 periods), dynamic fee on",
     "curve": "lean",
     "profile": "issuer",
@@ -45,8 +120,8 @@
     "listingFeePct": 3,
     "dammFeeBps": 20,
     "creationFeeSol": 0.02,
-    "unit": 0.01,
-    "float": 5,
+    "unit": 0.1,
+    "float": 45,
     "discountBps": 500,
     "premiumBps": 500,
     "weights": [
@@ -56,10 +131,10 @@
     ]
   },
   "checkpoints": [
-    0.02432942251318239,
-    0.02518308646101335,
-    0.02560991843492883,
-    0.026890414356675274
+    0.021040543738976566,
+    0.021778808431572236,
+    0.022147940777870072,
+    0.023255337816763578
   ],
   "configParams": {
     "poolFees": {
@@ -85,12 +160,12 @@
     "migrationOption": 1,
     "tokenType": 0,
     "tokenDecimal": 9,
-    "migrationQuoteThreshold": "01064a",
+    "migrationQuoteThreshold": "1f26a3b0",
     "partnerLiquidityPercentage": 0,
     "partnerPermanentLockedLiquidityPercentage": 100,
     "creatorLiquidityPercentage": 0,
     "creatorPermanentLockedLiquidityPercentage": 0,
-    "sqrtStartPrice": "01434163f63d0bbd",
+    "sqrtStartPrice": "25223b65c4e9d7f7",
     "lockedVesting": {
       "amountPerPeriod": "00",
       "cliffDurationFromMigrationTime": "00",
@@ -100,8 +175,8 @@
     },
     "migrationFeeOption": 6,
     "tokenSupply": {
-      "preMigrationTokenSupply": "012a05f200",
-      "postMigrationTokenSupply": "012a05f200"
+      "preMigrationTokenSupply": "0a7a358200",
+      "postMigrationTokenSupply": "0a7a358200"
     },
     "creatorTradingFeePercentage": 0,
     "migratedPoolFee": {
@@ -136,16 +211,16 @@
     "padding": [],
     "curve": [
       {
-        "sqrtPrice": "0148e0b012275d6d",
-        "liquidity": "048efa192b7091a8f995fd00"
+        "sqrtPrice": "25c791f809942518",
+        "liquidity": "04b6800d6cb613c6dbf8a84c00"
       },
       {
-        "sqrtPrice": "014ba72febb05e50",
-        "liquidity": "048efa192b7091a8f995fd00"
+        "sqrtPrice": "26193032133a97cb",
+        "liquidity": "04b6800d6cb613c6dbf8a84c00"
       },
       {
-        "sqrtPrice": "0153d7e0be1e5533",
-        "liquidity": "1b59dc9704a369f5d983ee00"
+        "sqrtPrice": "270a0b434705245a",
+        "liquidity": "1c4700508c4476a9232bda0000"
       }
     ],
     "migrationFee": {

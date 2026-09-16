@@ -130,6 +130,12 @@ export const SOL = { mint: WSOL, decimals: 9, pythUsd: "Crypto.SOL/USD" }; // wr
 
 /** Live on-chain twin of an underlying ticker: xStock, then Backpack, then Ondo. */
 export const twinOf = (ticker) => XSTOCKS[`${ticker}x`]?.mint || BACKPACK[ticker]?.mint || ONDO[`${ticker}on`]?.mint;
+/** Every on-chain twin of a ticker, labelled by issuer — the median reference uses all of them. */
+export const twinsOf = (ticker) => [
+  XSTOCKS[`${ticker}x`] && { issuer: "xstocks", symbol: `${ticker}x`, mint: XSTOCKS[`${ticker}x`].mint },
+  BACKPACK[ticker] && { issuer: "backpack", symbol: ticker, mint: BACKPACK[ticker].mint },
+  ONDO[`${ticker}on`] && { issuer: "ondo", symbol: `${ticker}on`, mint: ONDO[`${ticker}on`].mint },
+].filter(Boolean);
 
 export const PYTH_PUSH_ORACLE = new PublicKey("pythWSnswVUd12oZpeFP8e9CVaEqJg25g1Vtc2biRsT");
 export const LAZER_HTTP = "https://pyth-lazer-0.dourolabs.app/v1/latest_price";

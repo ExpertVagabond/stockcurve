@@ -81,6 +81,13 @@ Targets: Main track + Best Use of Meteora DBC ($5k) + Stocknized Agent on Clawpu
 - Audit (docs/audit.md): priority fee on all sends, loadPoolRecord by --pool (decimals mislabel bug), --no-exit, status quote feed,
   refresh.mjs. Console 10 pools. Wallet ≈ 0.93 SOL + 0.18 DKNG + 2.4 sSNDK etc.
 
+## Median/TWAP reference + USD graduation (2026-09-16 ~03:00 UTC)
+- prices.mjs resolveUsdRobust: median across Pyth Lazer / all twins (xStock+Backpack+Ondo via twinsOf) / Jupiter / fresh push account;
+  --twap <sec> samples; --max-spread 2% refusal; low-liquidity flag. Wired into plan (base+quote), keeper, status.
+- plan --raise-usd sizes float to a dollar graduation. launch/launch-atomic drift guard: refuses if ref moved >1% since plan (--force).
+  Verified: fresh plan passes (+0.00%), 3%-stale plan refused. Not launched (wallet 0.95 SOL).
+- Key pages opened for Matthew: Pyth Terminal, Clawpump developers, Helius dashboard.
+
 ## Needs Matthew (interactive)
 1. Register + submit on hackathons.solana.com (links: repo, console; video optional).
 2. Pyth Terminal: equity/xStock feed grant on the Pro token (free grant = crypto majors only; all stock feeds 403).

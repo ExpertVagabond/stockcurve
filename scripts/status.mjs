@@ -4,9 +4,9 @@ import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { PublicKey } from "@solana/web3.js";
 import { getMint, getExtensionData, ExtensionType, TOKEN_2022_PROGRAM_ID } from "@solana/spl-token";
 import { DynamicBondingCurveClient, getPriceFromSqrtPrice, feeNumeratorToBps } from "@meteora-ag/dynamic-bonding-curve-sdk";
-import { connection, XSTOCKS, twinOf } from "../src/config.mjs";
+import { connection, XSTOCKS, twinOf, twinsOf } from "../src/config.mjs";
 import { loadPoolRecord } from "../src/config.mjs";
-import { resolveUsd } from "../src/prices.mjs";
+import { resolveUsd, resolveUsdRobust } from "../src/prices.mjs";
 import { resolvePreIpo } from "../src/preipo.mjs";
 
 const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
@@ -19,7 +19,7 @@ const [ps, progress, feeMetrics, refBase, refQuote] = await Promise.all([
   client.state.getPool(pool),
   client.state.getPoolQuoteTokenCurveProgress(pool),
   client.state.getPoolFeeMetrics(pool),
-  plan.preipo ? resolvePreIpo(plan.base) : resolveUsd({ pythSymbol: `Equity.US.${plan.base}/USD`, twinMint: twinOf(plan.base), manual: plan.reference?.base?.source === "manual" ? plan.reference.base.price : undefined }),
+  plan.preipo ? resolvePreIpo(plan.base) : resolveUsdRobust({ pythSymbol: `Equity.US.${plan.base}/USD`, twins: twinsOf(plan.base), manual: plan.reference?.base?.source === "manual" ? plan.reference.base.price : undefined }, { force: true }),
   plan.quote.symbol === "USDC" ? { price: 1, source: "peg", ageSec: 0 } : resolveUsd({ pythSymbol: XSTOCKS[plan.quote.symbol]?.pythUsd || (plan.quote.symbol === "SOL" ? "Crypto.SOL/USD" : undefined), mint: plan.quote.mint }),
 ]);
 const cfg = await client.state.getPoolConfig(ps.poolState.config);

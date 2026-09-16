@@ -11,6 +11,9 @@ import { DynamicBondingCurveClient, deriveDbcPoolAddress, deriveTokenBadgeAddres
 import { connection, loadKeypair } from "../src/config.mjs";
 import { withPriority } from "../src/config.mjs";
 import { buildEquityCurve } from "../src/curve.mjs";
+import { resolveUsdRobust } from "../src/prices.mjs";
+import { resolvePreIpo } from "../src/preipo.mjs";
+import { twinsOf } from "../src/config.mjs";
 
 const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
 const DRY = process.argv.includes("--dry");
@@ -27,6 +30,15 @@ const badgePda = deriveTokenBadgeAddress(quoteMint);
 const tokenBadge = (await connection.getAccountInfo(badgePda)) ? badgePda : undefined;
 if (!tokenBadge && !["USDC", "SOL"].includes(plan.quote.symbol)) throw new Error(`no TokenBadge for quote ${plan.quote.symbol}`);
 
+
+// Drift guard: the ladder was built for plan.reference; if the live reference moved, the ±band would be wrong from block one.
+{
+  const maxDrift = Number(arg("max-drift", "1"));
+  const live = plan.preipo ? await resolvePreIpo(plan.base) : await resolveUsdRobust({ pythSymbol: `Equity.US.${plan.base}/USD`, twins: twinsOf(plan.base), manual: plan.reference?.base?.source === "manual" ? plan.reference.base.price : undefined }, { force: true });
+  const driftPct = (live.price / plan.reference.base.price - 1) * 100;
+  console.log(`drift guard: plan ref $${plan.reference.base.price.toFixed(2)} → live $${live.price.toFixed(2)} (${driftPct >= 0 ? "+" : ""}${driftPct.toFixed(2)}%)`);
+  if (Math.abs(driftPct) > maxDrift && !process.argv.includes("--force")) { console.error(`reference drifted ${driftPct.toFixed(2)}% > ${maxDrift}% since the plan — re-run plan.mjs (or --force)`); process.exit(2); }
+}
 const bDec = 9, qDec = plan.quote.decimals;
 const { configParams, summary } = buildEquityCurve({ refBaseUsd: plan.reference.base.price, refQuoteUsd: plan.reference.quote.price, quoteDecimals: qDec, unit: plan.unit, float: plan.float, discountBps: plan.summary.discountBps, premiumBps: plan.summary.premiumBps, profile: plan.summary.profile || "demo", curve: plan.summary.curve || "standard" });
 if (summary.migrationQuoteThreshold !== plan.summary.migrationQuoteThreshold) throw new Error("curve drifted from plan.json — re-run plan.mjs");
