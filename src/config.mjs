@@ -5,7 +5,9 @@ const require = createRequire(import.meta.url);
 import { homedir } from "node:os";
 import { ComputeBudgetProgram, Connection, Keypair, PublicKey } from "@solana/web3.js";
 
-export const RPC = process.env.RPC || "https://api.mainnet-beta.solana.com";
+// RPC: env RPC > ~/.config/stockcurve/rpc.env (Helius) > public mainnet.
+function rpcFromFile() { try { return readFileSync(`${homedir()}/.config/stockcurve/rpc.env`, "utf8").match(/^RPC=(\S+)/m)?.[1]; } catch { return undefined; } }
+export const RPC = process.env.RPC || rpcFromFile() || "https://api.mainnet-beta.solana.com";
 export const connection = new Connection(RPC, "confirmed");
 
 export const KEYPAIR_PATH = process.env.KEYPAIR || `${homedir()}/.config/solana/lp-farm/keypair.json`;
