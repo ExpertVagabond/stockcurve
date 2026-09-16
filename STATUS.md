@@ -137,3 +137,8 @@ Targets: Main track + Best Use of Meteora DBC ($5k) + Stocknized Agent on Clawpu
 - Memory + STATUS on every milestone.
 
 Exact next command: `cd "$VS/projects/stockcurve" && node scripts/status.mjs` (sanity), then video.
+
+## 2026-09-15 late
+- done: simple/ (one file per track) pushed 9b7bf48; ALLINU/DKNG Meteora DLMM pair F76rVHnd… created + seeded (85 ALLINU / 0.06 DKNG, position 3U6pHCyS…); README notes ALLINU as outside evidence.
+- sibling project $VS/projects/pumpwatch (launches / movers / lookup / trade --jup / tp / loop / snipe) — open positions: SpaceX 840 (tp pid 46045), ALLINU 86.7 (tp pid 57171 --jup).
+- next: submit form; wallet 0.11 SOL (pair rent ~0.12 reclaimable via position close).

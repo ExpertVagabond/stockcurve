@@ -1,5 +1,5 @@
 {
-  "at": "2026-09-16T01:39:31.541Z",
+  "at": "2026-09-16T02:41:25.611Z",
   "poolAddress": "6vyZDFfkDW5GTZ9NbKUVhPmFKgcXYF28GV61hcnHqwfz",
   "symbol": "pOPENAI",
   "quote": "USDC",
@@ -8,12 +8,12 @@
     "prestocks": {
       "symbol": "OPENAI",
       "mint": "PreweJYECqtQwBtpxHL171nL2K6umo692gTm7Q3rpgF",
-      "mark": 953.6858226377461,
-      "token": 1077.8179403135973,
-      "basisBps": 1301.6038901838888,
-      "markValuation": 1181550260293,
-      "impliedValuation": 1335341301818,
-      "supply": 2826.5836782611377
+      "mark": 953.3383407641312,
+      "token": 1083.6974670790748,
+      "basisBps": 1367.3962405671914,
+      "markValuation": 1181119754472,
+      "impliedValuation": 1342625625665,
+      "supply": 2826.5833983818475
     },
     "tessera": {
       "symbol": "T-OpenAI",
@@ -24,19 +24,19 @@
     }
   },
   "reference": {
-    "baseUsd": 953.6858226377461,
+    "baseUsd": 953.3383407641312,
     "baseSource": "prestocks-mark",
     "baseAgeSec": 0,
     "baseStale": false,
     "quoteUsd": 1,
     "quoteSource": "peg",
-    "refPriceQuote": 0.09536858226377462,
-    "refPriceUsd": 0.09536858226377462
+    "refPriceQuote": 0.09533383407641312,
+    "refPriceUsd": 0.09533383407641312
   },
   "pool": {
     "priceQuote": 0.10024457447859433,
     "priceUsd": 0.10024457447859433,
-    "basisBps": 511.2786726066121,
+    "basisBps": 515.1099239589074,
     "startPriceQuote": 0.08115037330956608,
     "graduationPriceQuote": 0.10024457879416987,
     "quoteReserve": 2.84953,
@@ -47,7 +47,7 @@
     "isMigrated": 1,
     "baseSold": 30.57421097,
     "activationPoint": 1789506397,
-    "ageSec": 16374
+    "ageSec": 20088
   },
   "fees": {
     "totalTradingQuote": 0.071474,

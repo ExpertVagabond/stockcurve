@@ -65,6 +65,8 @@ Ten pools, ~1.6 SOL all-in. Audit of the whole thing: [docs/audit.md](docs/audit
 
 The simplest possible version of each — one file, one command, no shared machinery — is in [`simple/`](simple/README.md).
 
+**Outside evidence for the thesis (2026-09-15):** [ALLINU](https://pump.fun/coin/4MMQY9bwkxxTtsK3W227Q5ABT6yFY8Pmn9Ze7wmAXKY8) launched on Raydium LaunchLab quoted in Backpack **DKNG** and reached a $16M cap with 7,000 holders. Its DKNG pool (`5752ia7j…`) is a ~$20 stub; all volume is ALLINU/SOL. We opened the first real stock-quoted venue for it: Meteora DLMM **ALLINU/DKNG** [`F76rVHnd5jbrCBgVvPxW9dp1mntauxkrv8L9XMFTjPsb`](https://solscan.io/account/F76rVHnd5jbrCBgVvPxW9dp1mntauxkrv8L9XMFTjPsb) (`scripts/meteora-pair.mjs`).
+
 | Track | They asked for | The one thing |
 |---|---|---|
 | **Main track** (Solana Foundation) | Could this be a real app people actually use? | A live DBC pool you can trade right now, opened at reference with an atomic launch — [sRDDT/SOL on Solscan](https://solscan.io/account/GretDMXwL3Na7AtVvQzaAuQhVw8zVwsttqVxkYKXE3FP) |
