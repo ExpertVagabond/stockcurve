@@ -1,35 +1,35 @@
 {
-  "at": "2026-09-16T16:07:48.441Z",
+  "at": "2026-09-16T21:55:48.857Z",
   "poolAddress": "ERBiYKkLF15Uqgx3vpPpDw4kgWhnYzz5ADR1YWJWhm1b",
   "symbol": "sRKLB-DK",
   "quote": "DKNG",
   "unit": 0.01,
   "preipo": null,
   "reference": {
-    "baseUsd": 63.59983396081393,
+    "baseUsd": 63.57137315109132,
     "baseSource": "median(twin-ondo+clawpump)",
     "baseAgeSec": 0,
     "baseStale": false,
-    "quoteUsd": 24.460391633445496,
+    "quoteUsd": 24.227379955053813,
     "quoteSource": "jupiter",
-    "refPriceQuote": 0.026001151131959718,
-    "refPriceUsd": 0.6359983396081393
+    "refPriceQuote": 0.026239475035694227,
+    "refPriceUsd": 0.6357137315109133
   },
   "pool": {
     "priceQuote": 0.026890377422640718,
-    "priceUsd": 0.6577491629289527,
-    "basisBps": 341.9949702103731,
+    "priceUsd": 0.6514833909531174,
+    "basisBps": 248.06227489728715,
     "startPriceQuote": 0.02432942251318239,
     "graduationPriceQuote": 0.026890414356675274,
     "quoteReserve": 0.067146,
     "quoteReserveDisplay": 0.067146,
     "threshold": 0.067146,
-    "thresholdUsd": 1.6424174566193313,
+    "thresholdUsd": 1.6267716544620432,
     "progressPct": 100,
     "isMigrated": 1,
     "baseSold": 2.577808618,
     "activationPoint": 1789517274,
-    "ageSec": 57594
+    "ageSec": 78474
   },
   "fees": {
     "totalTradingQuote": 0.001666,
