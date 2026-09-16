@@ -1,0 +1,55 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Before you build on Solana: the day-zero checklist</title>
+<meta name="description" content="Seven things to set up before writing any code on a Solana project: mailbox, name and handles, logo set, repo, linked keys, a wallet with a floor, one artifact per track.">
+<style>:root{--bg:#07100C;--ink:#EAF3EE;--muted:#7E9990;--mint:#2BE8A5;--line:#17251F}body{margin:0;background:var(--bg);color:var(--ink);font-family:Archivo,Inter,-apple-system,Helvetica,Arial,sans-serif;line-height:1.55}main{max-width:820px;margin:0 auto;padding:48px 24px 96px}h1{font-size:clamp(28px,5vw,44px);line-height:1.1;margin:0 0 8px}h2{font-size:15px;letter-spacing:.2em;text-transform:uppercase;color:var(--mint);margin:36px 0 10px}ul{padding-left:22px}li{margin:8px 0}code{font-family:ui-monospace,Menlo,monospace;font-size:.92em;background:#0f1d17;padding:1px 6px;border-radius:4px}p{margin:10px 0}a{color:var(--mint)}.by{color:var(--muted);font-size:14px;margin-bottom:28px}</style></head>
+<body><main><div class="by">Purple Squirrel Media · <a href="https://x.com/expertvagabond">@expertvagabond</a> · from the <a href="/">stockcurve</a> build, Stocklana 2026</div><h1>Before you build on Solana: the day-zero checklist</h1>
+<p>For any Solana project or hackathon entry. Everything here takes one afternoon and costs nothing. Skipping it costs days</p>
+<p>later, in the order listed.</p>
+<h2>1. One identity</h2>
+<ul>
+<li><b>Name.</b> Check the X handle, GitHub name, domain and npm name in one sitting. Renaming after launch means redoing the</li>
+<p>  site, the deck, the repo and every sponsor form.</p>
+<li><b>Mailbox on a domain you own.</b> <code>project@yourdomain</code>. Not a personal Gmail. Every account below signs up with it, so</li>
+<p>  handing the project to a teammate or a buyer is handing over one login.</p>
+<li><b>Handles.</b> Project X account; a second one if an agent or bot will post. Created with the mailbox. One X developer app can</li>
+<p>  be authorized by all of them; posting is cheap, reading is what costs.</p>
+<li><b>Logo, avatar, banner</b> from one source image: 512 square, 1500×500, and a 2:3 poster. Every form asks. Do it once.</li>
+</ul>
+<h2>2. Repo before code</h2>
+<ul>
+<li>Create it empty. Decide public or private now. <code>.gitignore</code> before the first commit: <code>node_modules/</code>, <code>.env</code>, <code>out/</code>, <code>*.log</code>.</li>
+<li>Secrets live in <code>~/.config/&lt;project&gt;/</code> with 600 permissions, never in the tree, never in a doc or a video.</li>
+<li>A <code>STATUS.md</code> with done / next / exact next command, from day one, so any cutoff resumes instead of restarts.</li>
+</ul>
+<h2>3. Accounts and keys, from inside the account you&#x27;ll use</h2>
+<ul>
+<li>Sign up for every sponsor, RPC provider, and data feed with the project mailbox.</li>
+<li>Generate API keys inside the dashboard you&#x27;ll actually operate from. Keys minted from a docs-page form can be unlinked</li>
+<p>  from your account: they work for some routes and 403 on the rest, and you find out mid-build.</p>
+<li>Read each sponsor&#x27;s dashboard and their pinned posts before their API docs. The button you&#x27;re about to rebuild usually exists.</li>
+<li>Ask for entitlements (paid feeds, allowlists, partner tiers) on day one. They take days; the ask takes minutes.</li>
+</ul>
+<h2>4. Money</h2>
+<ul>
+<li>One project hot wallet, funded once, with a <b>1 SOL floor you never spend</b>. Rent, congestion retries, creation fees and</li>
+<p>  sponsor deposits all arrive at the wrong moment.</p>
+<li>Know what can&#x27;t be undone before you sign: locked LP, permanent configs, account rent that never closes. Demo scale</li>
+<p>  doesn&#x27;t make it cheaper; rent is fixed.</p>
+<li>The project wallet does not trade. Small trades lose to fees; that lesson costs more than it teaches.</li>
+</ul>
+<h2>5. Plan the submission, then build</h2>
+<ul>
+<li>One sentence per track naming the artifact a judge will click. Build those first, in the simplest form that exists on</li>
+<p>  mainnet. Depth only where a sponsor&#x27;s own criteria ask for it.</p>
+<li>A live page that shows everything, from day two. Judges and sponsors click links; they don&#x27;t read repos.</li>
+<li>The &quot;why now&quot; with sources (a volume number, a sponsor announcement), written on day one. It won&#x27;t change.</li>
+</ul>
+<h2>6. Talk early, verify always</h2>
+<ul>
+<li>Reply on each sponsor&#x27;s hackathon post with what&#x27;s live, the day it&#x27;s live. Sponsor accounts do reply, and their words end</li>
+<p>  up in your submission.</p>
+<li>Post from the project handle on a cadence: numbers and sources, no predictions, nothing that isn&#x27;t on chain.</li>
+<li>Read every on-chain claim back from chain before you write it down. The claims that sound best are the ones to check twice.</li>
+</ul>
+<h2>The order</h2>
+<p>Mailbox → name and handles → logo → repo → accounts and linked keys → wallet with a floor → one artifact per track → live page</p>
+<p>→ sponsor replies → build the rest.</p></main></body></html>

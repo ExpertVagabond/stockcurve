@@ -27,6 +27,7 @@ const tickers = {}; for (const [k, v] of Object.entries(cfgmod.XSTOCKS)) tickers
 for (const [k, v] of Object.entries(cfgmod.BACKPACK)) tickers[k] = { mint: v.mint, issuer: "backpack", underlying: v.underlying || k, decimals: v.decimals };
 for (const [k, v] of Object.entries(cfgmod.ONDO)) tickers[k] = { mint: v.mint, issuer: "ondo", underlying: (v.underlying || k).replace(/on$/i, "") };
 writeFileSync("site/dist/data/tickers.json", JSON.stringify(tickers));
+mkdirSync("site/dist/day-zero", { recursive: true }); copyFileSync("site/day-zero/index.html", "site/dist/day-zero/index.html");
 mkdirSync("site/dist/launch", { recursive: true }); copyFileSync("site/launch/sc.bundle.js", "site/dist/launch/sc.bundle.js"); copyFileSync("site/launch/index.html", "site/dist/launch/index.html");
 copyFileSync("site/tracks.json", "site/dist/data/tracks.json");
 if (existsSync("out/agents.json")) copyFileSync("out/agents.json", "site/dist/data/agents.json");
