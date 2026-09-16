@@ -1,35 +1,35 @@
 {
-  "at": "2026-09-16T11:07:55.484Z",
+  "at": "2026-09-16T11:38:49.688Z",
   "poolAddress": "9rKgkPWtf2fWAd8heFjmrZam6dMiMNAZioTHBLVAfQ6B",
   "symbol": "sGME-SPY",
   "quote": "SPYx",
   "unit": 0.05,
   "preipo": null,
   "reference": {
-    "baseUsd": 21.435706866370644,
+    "baseUsd": 21.35500111364542,
     "baseSource": "median(twin-ondo+twin-xstocks)",
     "baseAgeSec": 0,
     "baseStale": false,
-    "quoteUsd": 759.6802448238516,
+    "quoteUsd": 762.6127566241021,
     "quoteSource": "jupiter",
-    "refPriceQuote": 0.0014108374551283073,
-    "refPriceUsd": 1.0717853433185323
+    "refPriceQuote": 0.001400120895444939,
+    "refPriceUsd": 1.0677500556822712
   },
   "pool": {
     "priceQuote": 0.0014732603371697159,
-    "priceUsd": 1.11920677363036,
-    "basisBps": 442.45268520838545,
+    "priceUsd": 1.123527126953951,
+    "basisBps": 522.3794742491439,
     "startPriceQuote": 0.001192639714710403,
     "graduationPriceQuote": 0.0014732608240540274,
     "quoteReserve": 0.00354906,
     "quoteReserveDisplay": 0.0035629341273561337,
     "threshold": 0.00354903,
-    "thresholdUsd": 2.6961279792871937,
+    "thresholdUsd": 2.706535551641637,
     "progressPct": 100,
     "isMigrated": 1,
     "baseSold": 2.591028584,
     "activationPoint": 1789505722,
-    "ageSec": 51153
+    "ageSec": 53007
   },
   "fees": {
     "totalTradingQuote": 0.00025373,
