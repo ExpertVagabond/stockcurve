@@ -21,11 +21,11 @@ SEGMENTS = [
     ("00-title",
      "Stockcurve. Launch curves for tokenized stocks on Solana, built on Meteora's dynamic bonding curve."),
     ("01-console",
-     "Ninety five percent of tokenized stocks on Solana have no venue. Backpack alone has over eleven hundred "
-     "mints, and only forty eight of them trade. A memecoin curve is the wrong tool for that, because a stock "
-     "has a fair value. So the pool is quoted in the stock token itself, and the curve is anchored to a live "
-     "reference. It opens five percent under, and graduates five percent over. This console shows every pool "
-     "we ran, its reference, its basis, and whether it graduated."),
+     "Backpack has mints for over eleven hundred U S stocks on Solana. Forty eight have ever been issued. "
+     "The rest never launch, because a stock with zero holders has no way to find a price. A memecoin curve "
+     "is the wrong tool for that. A stock has a fair value. So the pool is quoted in the stock token itself, "
+     "the curve is anchored to a live reference, it opens five percent under and graduates five percent over. "
+     "The console shows every pool, its reference, its basis, and whether it graduated."),
     ("02-terminal",
      "Planning a launch resolves the reference as a median across every live source. X stocks, Backpack, and "
      "Ondo twins, time averaged, and it sizes the float in dollars. Then the keeper takes over. It watches the "

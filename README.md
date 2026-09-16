@@ -152,7 +152,7 @@ launched on pool 6's config: no config rent, creation fee + curve fees + listing
 
 ### Sizing a real pool (`scripts/size.mjs`)
 
-`node scripts/size.mjs --base RKLB --raise 50000 --quote USDC` — RKLB has a Backpack mint, no venue, no badge and
+`node scripts/size.mjs --base RKLB --raise 50000 --quote USDC` — RKLB has a pre-deployed Backpack mint with zero supply, no badge and
 a 119-day-stale Pyth push account: the exact case the primitive is for. Two curve shapes (`--curve`):
 
 | curve | float | raise | issuer's opening buy | inventory back | listing 3% | curve fees |
@@ -291,9 +291,11 @@ RKLB — no xStock, no Backpack price, stale Pyth account — still gets a live 
 
 ## Why this matters beyond the demo
 
-`scripts/scan-backpack.mjs` (public Backpack API): **1,158 tokenized US stocks already have Solana
-mints; 51 have any on-chain price; 48 already carry a Meteora DBC quote badge.** 95% of tokenized
-stocks on Solana have no price-discovery venue. Every xStock we could find (20/20) is badged too.
+`scripts/scan-backpack.mjs` + `scan-backpack-venues.mjs` (public Backpack API, on-chain supply): Backpack has
+**pre-deployed Solana mints for 1,158 US stocks. Only 48 have ever been issued (non-zero supply) — and all 48 trade
+on Jupiter and carry a Meteora DBC quote badge.** The other ~1,100 can be minted on demand through Backpack's API,
+but nothing launches them: a stock with zero holders has no price-discovery path. That is the gap.
+(An earlier draft of this README said "95% have no venue" — wrong: those mints are empty, not unpriced.) Every xStock we could find (20/20) is badged too.
 The same command works against both issuers today. Full numbers and the pre-IPO (Tessera/PreStocks)
 analysis: [docs/research-findings.md](docs/research-findings.md).
 

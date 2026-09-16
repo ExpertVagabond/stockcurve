@@ -2,7 +2,7 @@
 
 Everything below was measured, not read. Scripts in `scripts/scan-*.mjs`; raw output in `out/backpack-scan.txt`.
 
-## 1. The addressable problem is ~1,100 tokenized stocks with no venue (Backpack)
+## 1. The addressable problem: ~1,100 tokenized stocks that exist as mints but have never been issued (Backpack)
 
 `GET api.backpack.exchange/api/v1/assets` (public, no key):
 
@@ -13,7 +13,10 @@ Everything below was measured, not read. Scripts in `scripts/scan-*.mjs`; raw ou
 | … with **any** Jupiter price (i.e. any on-chain liquidity) | **51** |
 | … already carrying a **Meteora DBC TokenBadge** | **48** (DKNG, RDDT, MSTR, HOOD, INTC, NKE, AMC, COST, BA, RBLX, MU, SKHY, SPCX …) |
 
-So **95% of tokenized stocks on Solana have no price discovery venue at all.** That is the number
+**Correction (2026-09-16, `scan-backpack-venues.mjs`):** only **48 of the 1,158 mints have non-zero supply**; the other 1,110
+are empty pre-deployed mints. All 48 issued tokens trade on Jupiter and are the 48 badged; Backpack's own exchange
+lists 4 as spot and 18 as perps. So it is NOT "95% have no venue" — it is "the long tail has never been issued because
+there is no launch path for a stock with zero holders". Same thesis, honest number. That is the number
 behind Meteora's bounty sentence ("price discovery for thinly traded or newly tokenized stock pairs")
 and the "life after hackathon" argument: the same one-command primitive we ran twice today works,
 permissionlessly, against two issuers (Backed xStocks and Backpack Securities) — 20 + 48 badged quote
@@ -77,5 +80,5 @@ The identical decay signature across two quotes and two references is the curve,
 - **Reality rTokens (Bitget)** — US stocks/ETFs (rAAPL, rQQQ…), 1:1 backed via Alpaca Securities, on **Morph and Arbitrum**,
   not Solana. Not usable as a DBC quote or twin today; relevant only as a cross-chain reference or if they bridge.
   Source: https://web3.bitget.com/en/blog/articles/reality-rtokens
-- Solana issuers usable today: **xStocks** (20 badged), **Backpack Securities** (48 badged + 1,110 mints with no venue), **Ondo**
+- Solana issuers usable today: **xStocks** (20 badged), **Backpack Securities** (48 issued + badged; 1,110 pre-deployed mints with zero supply, mintable on demand), **Ondo**
   (Pyth has `Crypto.*ON/USD` feeds; mints not yet scanned).

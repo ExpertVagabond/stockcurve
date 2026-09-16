@@ -16,7 +16,7 @@
 
 **Description (≈250 words)**
 
-95% of tokenized stocks on Solana have no price-discovery venue: Backpack Securities alone has 1,158 stocks with mints and only 48 with any on-chain price (measured, script in repo). Memecoin launch curves are the wrong tool for that — a stock has a fair value.
+Backpack Securities has pre-deployed Solana mints for 1,158 US stocks, but only 48 have ever been issued — and all 48 trade (measured on-chain, script in repo). The other 1,100 can be minted on demand and never are, because a stock with zero holders has no price-discovery path. Memecoin launch curves are the wrong tool for that — a stock has a fair value.
 
 stockcurve turns Meteora's Dynamic Bonding Curve into an IPO-style launch for equity-like assets. The pool is quoted in a stock token (xStocks or Backpack, both already Meteora-badged) or USDC/SOL. The curve's start (−15%), graduation (+5%) and liquidity weights (thin in the discount, dense around fair value) are derived from a reference price with recorded provenance: Pyth Pro when granted, the Pyth push account on Solana, a live on-chain twin (GME→GMEx, DKNG→Backpack DKNG), or — for pre-IPO names with no exchange print — the PreStocks mark price, cross-checked against the PreStocks secondary and Tessera's valuation.
 

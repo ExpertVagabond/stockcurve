@@ -24,7 +24,7 @@ card("demo/raw/card-title.png", "Launch curves for tokenized stocks",
      "stockcurve.purplesquirrelnetworks.workers.dev · github.com/ExpertVagabond/stockcurve")
 card("demo/raw/card-end.png", "What's real",
      ["10 mainnet pools, 3 fee profiles, 1 Clawpump launch, 1 DLMM band", "Every step re-read from chain after sending",
-      "95% of tokenized stocks on Solana have no venue. This is the venue."],
+      "1,100 tokenized stocks exist as mints and were never issued. This is the launch path."],
      "Stocklana 2026 · Matthew Karsten · stockcurve.purplesquirrelnetworks.workers.dev")
 
 _cap = 0

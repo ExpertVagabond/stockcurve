@@ -19,7 +19,7 @@ fee sweep**, an issuer **console**, a **sizing tool**, 17 tests, and a 2-minute 
 ### Main track ($100k, Solana Foundation) — "could this be a real app people actually use?"
 | Criterion | Evidence |
 |---|---|
-| Real user + problem | 1,158 Backpack stocks have Solana mints, 48 trade: 95% of tokenized stocks have no venue (`scan-backpack.mjs`, measured). Issuers need price discovery; DBC is built for launches but tuned for memecoins. |
+| Real user + problem | Backpack has pre-deployed mints for 1,158 US stocks; only 48 have ever been issued, and all 48 trade (`scan-backpack-venues.mjs`, measured). The other ~1,100 are mintable on demand but never launched — no price-discovery path for a stock with zero holders. DBC is built for launches but tuned for memecoins. |
 | Working end-to-end demo | 11 pools launched → traded → graduated → DAMM v2 on mainnet; keeper ran pools 4, 6–11; console live; video with VO. |
 | Reason it belongs on Solana | Meteora DBC/DAMM v2/DLMM, Token-2022 stock mints with Meteora badges, 24/7 markets, sub-second atomic launch. |
 | Quality of execution | Every step re-read from chain; audit doc; tests; drift guard; provenance on every reference. |
@@ -28,7 +28,7 @@ fee sweep**, an issuer **console**, a **sizing tool**, 17 tests, and a 2-minute 
 | Criterion | Evidence |
 |---|---|
 | Original configuration | Stock **as the quote** (badged Token-2022 quotes); inverted liquidity weights (dense at/above reference); lean vs standard shapes; graduation defined as +5% over reference; fees collected in the stock; `Customizable` migrated-pool fee; seed profile with 90% withdrawable LP. |
-| Original use case | IPO-style discovery for stocks with no venue; pre-IPO curves anchored to mark prices; index-relative pricing (sGME-SPY/SPYx); one config serving any ticker via unit derivation. |
+| Original use case | IPO-style discovery for stocks that have never been issued on-chain; pre-IPO curves anchored to mark prices; index-relative pricing (sGME-SPY/SPYx); one config serving any ticker via unit derivation. |
 | Technical soundness | `createConfigAndPoolWithFirstBuy` atomic path; `PartialFill`; keeper bisection on offline `swapQuote2`; migration + fee claims via SDK; 17 tests; measured decay signature identical across 11 pools. |
 | Life after | Issuer profile revenue proven on-chain (listing 3% + creation + trading + DAMM v2 LP); launchpad = partner-of-record; keeper + sweep are the back office. |
 | Sponsor line: "working code on mainnet beats slides" | 11 pools, ~1.7 SOL, every address linked. |
