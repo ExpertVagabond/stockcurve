@@ -25,5 +25,15 @@
       "trait_type": "launch",
       "value": "atomic: create + opening buy in one tx"
     }
-  ]
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "https://raw.githubusercontent.com/ExpertVagabond/stockcurve/main/meta/sPLTR.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image"
+  },
+  "seller_fee_basis_points": 0
 }

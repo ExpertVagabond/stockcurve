@@ -13,7 +13,7 @@ const DRY = process.argv.includes("--dry");
 const plan = JSON.parse(readFileSync("out/plan.json", "utf8"));
 const name = arg("name", `stockcurve ${plan.base} ${plan.unit}sh`);
 const symbol = arg("symbol", `s${plan.base}`);
-const uri = arg("uri", `https://raw.githubusercontent.com/ExpertVagabond/stockcurve/main/meta/${symbol}.json`);
+const uri = arg("uri", `https://stockcurve.purplesquirrelnetworks.workers.dev/meta/${symbol}.json`);
 
 const kp = loadKeypair();
 const me = kp.publicKey;

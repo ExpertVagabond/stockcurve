@@ -22,7 +22,7 @@ const base = preipo ? preipo.toUpperCase() : arg("base");
 if (!base) throw new Error("--base or --preipo required");
 const symbol = arg("symbol", `s${base}`);
 const name = arg("name", `stockcurve ${base}`);
-const uri = arg("uri", `https://raw.githubusercontent.com/ExpertVagabond/stockcurve/main/meta/${symbol}.json`);
+const uri = arg("uri", `https://stockcurve.purplesquirrelnetworks.workers.dev/meta/${symbol}.json`);
 const slackBps = Number(arg("slack-bps", "50"));
 const kp = loadKeypair(), me = kp.publicKey;
 const client = DynamicBondingCurveClient.create(connection, "confirmed");

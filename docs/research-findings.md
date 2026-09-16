@@ -71,3 +71,11 @@ Two design consequences worth stating in the submission:
 | Sniped? | no | yes, bot lost money, curve unaffected |
 
 The identical decay signature across two quotes and two references is the curve, not luck.
+
+## 6. Other tokenized-stock issuers checked (2026-09-16)
+
+- **Reality rTokens (Bitget)** — US stocks/ETFs (rAAPL, rQQQ…), 1:1 backed via Alpaca Securities, on **Morph and Arbitrum**,
+  not Solana. Not usable as a DBC quote or twin today; relevant only as a cross-chain reference or if they bridge.
+  Source: https://web3.bitget.com/en/blog/articles/reality-rtokens
+- Solana issuers usable today: **xStocks** (20 badged), **Backpack Securities** (48 badged + 1,110 mints with no venue), **Ondo**
+  (Pyth has `Crypto.*ON/USD` feeds; mints not yet scanned).

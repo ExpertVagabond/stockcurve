@@ -25,5 +25,15 @@
       "trait_type": "operator",
       "value": "stockcurve keeper"
     }
-  ]
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "https://raw.githubusercontent.com/ExpertVagabond/stockcurve/main/meta/sDKNG.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image"
+  },
+  "seller_fee_basis_points": 0
 }

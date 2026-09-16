@@ -1,0 +1,7 @@
+/meta/*.json
+  Content-Type: application/json; charset=utf-8
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=300
+/meta/*.png
+  Access-Control-Allow-Origin: *
+  Cache-Control: public, max-age=86400

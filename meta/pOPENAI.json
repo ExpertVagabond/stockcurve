@@ -25,5 +25,15 @@
       "trait_type": "curve",
       "value": "-15% start / +5% graduation, weights 1:3:4"
     }
-  ]
+  ],
+  "properties": {
+    "files": [
+      {
+        "uri": "https://raw.githubusercontent.com/ExpertVagabond/stockcurve/main/meta/pOPENAI.png",
+        "type": "image/png"
+      }
+    ],
+    "category": "image"
+  },
+  "seller_fee_basis_points": 0
 }

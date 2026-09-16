@@ -17,7 +17,7 @@ const slackBps = Number(arg("slack-bps", "50")); // overshoot so the opening pri
 const plan = JSON.parse(readFileSync("out/plan.json", "utf8"));
 const symbol = arg("symbol", `s${plan.base}`);
 const name = arg("name", `stockcurve ${plan.base} ${plan.unit}sh`);
-const uri = arg("uri", `https://raw.githubusercontent.com/ExpertVagabond/stockcurve/main/meta/${symbol}.json`);
+const uri = arg("uri", `https://stockcurve.purplesquirrelnetworks.workers.dev/meta/${symbol}.json`);
 const outName = arg("out", `${symbol}-${plan.quote.symbol}`);
 
 const kp = loadKeypair(), me = kp.publicKey;
