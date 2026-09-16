@@ -70,6 +70,8 @@ fees) and the keeper picks the pool up automatically. The Helius key stays serve
 `/meta/dyn`. Bundle: `scripts/build-launch.mjs` (esbuild; DBC SDK + web3 in the browser). Privy (email login + embedded wallet) is the
 next step for non-crypto issuers; the page is wallet-agnostic so it drops in.
 
+**Solent as a paid API (x402):** `POST https://x402-gateway-production-2907.up.railway.app/v1/solent-3ed4d72f` with `{"message": "..."}`. Unpaid calls get a 402 with terms ($0.10, pays to the agent owner); an x402 client pays and gets the agent's answer. Clawpump's gateway currently settles on devnet.
+
 ## One thing per track
 
 The simplest possible version of each — one file, one command, no shared machinery — is in [`simple/`](simple/README.md).

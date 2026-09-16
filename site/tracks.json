@@ -27,7 +27,9 @@
     "link2": "https://solscan.io/account/GYN1e3YjRrWuAZDVJthgW1wYJBPaciZxmW1gfDRaFkHP",
     "link2Label": "scSPCX/SPCX Meteora DLMM pair",
     "link3": "https://pump.fun/coin/8z8MZcqJd4phpNN7C69iJQrhW5LG3dwJsP932n6z8oyJ",
-    "link3Label": "BonkClaw on Clawpump"
+    "link3Label": "BonkClaw on Clawpump",
+    "link4": "https://x402-gateway-production-2907.up.railway.app/v1/solent-3ed4d72f",
+    "link4Label": "Solent as a paid x402 API ($0.10/request; devnet settlement until Clawpump enables mainnet)"
   },
   {
     "track": "Best Use of PreStocks",
