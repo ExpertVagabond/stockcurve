@@ -5,10 +5,10 @@ import BN from "bn.js";
 import { PublicKey } from "@solana/web3.js";
 import { ActivationType, DynamicBondingCurveClient, SwapMode, getPriceFromSqrtPrice } from "@meteora-ag/dynamic-bonding-curve-sdk";
 import { connection, loadKeypair } from "../src/config.mjs";
+import { withPriority, loadPoolRecord } from "../src/config.mjs";
 
 const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
-const launch = JSON.parse(readFileSync("out/launch.json", "utf8"));
-const plan = JSON.parse(readFileSync("out/plan.json", "utf8"));
+const { plan, launch, dir: poolDir } = loadPoolRecord(arg("pool"));
 const pool = new PublicKey(arg("pool", launch.pool));
 const qDec = plan.quote.decimals, bDec = 9, qSym = plan.quote.symbol;
 const amountIn = new BN(Math.round(Number(arg("quote-amount", "0.005")) * 10 ** qDec));
@@ -26,7 +26,7 @@ console.log(`price before ${priceBefore.toFixed(8)} ${qSym}/${launch.symbol}`);
 console.log("quote:", JSON.stringify(quote, (k, v) => (v && v.words) ? v.toString() : v));
 
 const tx = await client.pool.swap2({ owner: kp.publicKey, pool, swapBaseForQuote: false, swapMode: mode, amountIn, minimumAmountOut: quote.minimumAmountOut, referralTokenAccount: null });
-tx.feePayer = kp.publicKey;
+withPriority(tx); tx.feePayer = kp.publicKey;
 tx.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
 tx.sign(kp);
 const sig = await connection.sendRawTransaction(tx.serialize(), { maxRetries: 3 });

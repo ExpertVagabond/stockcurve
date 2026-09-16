@@ -6,11 +6,11 @@ import { PublicKey } from "@solana/web3.js";
 import { DynamicBondingCurveClient, DAMM_V2_MIGRATION_FEE_ADDRESS, deriveDammV2PoolAddress } from "@meteora-ag/dynamic-bonding-curve-sdk";
 import { CpAmm } from "@meteora-ag/cp-amm-sdk";
 import { connection, loadKeypair } from "../src/config.mjs";
+import { withPriority, loadPoolRecord } from "../src/config.mjs";
 
 const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
 const DRY = process.argv.includes("--dry");
-const launch = JSON.parse(readFileSync("out/launch.json", "utf8"));
-const plan = JSON.parse(readFileSync("out/plan.json", "utf8"));
+const { plan, launch, dir: poolDir } = loadPoolRecord(arg("pool"));
 const pool = new PublicKey(arg("pool", launch.pool));
 const frac = Number(arg("withdraw", "0"));
 const kp = loadKeypair(), me = kp.publicKey;
@@ -44,7 +44,7 @@ if (frac > 0) {
   console.log(`withdraw ${frac * 100}% of unlocked liquidity → ≈ ${outA} ${aIsBase ? launch.symbol : plan.quote.symbol} + ${outB} ${aIsBase ? plan.quote.symbol : launch.symbol}`);
   const solBefore = await connection.getBalance(me);
   const tx = await cpAmm.removeLiquidity({ owner: me, position: p.position, pool: dammPool, positionNftAccount: p.positionNftAccount, liquidityDelta: delta, tokenAAmountThreshold: new BN(0), tokenBAmountThreshold: new BN(0), tokenAMint: st.tokenAMint, tokenBMint: st.tokenBMint, tokenAVault: st.tokenAVault, tokenBVault: st.tokenBVault, tokenAProgram: aProg, tokenBProgram: bProg, vestings: [], currentPoint: new BN(Math.floor(Date.now() / 1000)) });
-  tx.feePayer = me; tx.recentBlockhash = (await connection.getLatestBlockhash()).blockhash; tx.sign(kp);
+  withPriority(tx); tx.feePayer = me; tx.recentBlockhash = (await connection.getLatestBlockhash()).blockhash; tx.sign(kp);
   if (DRY) { const sim = await connection.simulateTransaction(tx); console.log("sim", sim.value.err ? "ERR " + JSON.stringify(sim.value.err) + " " + sim.value.logs?.slice(-4).join(" | ") : "OK"); process.exit(0); }
   const sig = await connection.sendRawTransaction(tx.serialize(), { maxRetries: 3 });
   const conf = await connection.confirmTransaction({ signature: sig, ...(await connection.getLatestBlockhash()) }, "confirmed");
@@ -53,6 +53,6 @@ if (frac > 0) {
   const after = await cpAmm.getUserPositionByPool(dammPool, me);
   const solAfter = await connection.getBalance(me);
   console.log(`after: unlocked ${after.map((x) => x.positionState.unlockedLiquidity.toString()).join("+")} · wallet SOL Δ ${((solAfter - solBefore) / 1e9).toFixed(6)} (quote side returned as SOL)`);
-  const dir = `out/pools/${arg("out", `${launch.symbol}-${plan.quote.symbol}`)}`;
+  const dir = poolDir || `out/pools/${arg("out", `${launch.symbol}-${plan.quote.symbol}`)}`;
   if (existsSync(`${dir}/launch.json`)) { const l = JSON.parse(readFileSync(`${dir}/launch.json`, "utf8")); l.txs = { ...l.txs, withdrawLp: sig }; l.lp = { unlockedPct: pctUnlocked, withdrawnFrac: frac, quoteReturned: aIsBase ? outB : outA, baseReturned: aIsBase ? outA : outB, at: new Date().toISOString() }; writeFileSync(`${dir}/launch.json`, JSON.stringify(l, null, 2)); }
 }

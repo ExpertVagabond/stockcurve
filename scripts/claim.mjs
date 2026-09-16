@@ -5,18 +5,18 @@ import BN from "bn.js";
 import { PublicKey } from "@solana/web3.js";
 import { DynamicBondingCurveClient } from "@meteora-ag/dynamic-bonding-curve-sdk";
 import { connection, loadKeypair } from "../src/config.mjs";
+import { withPriority, loadPoolRecord } from "../src/config.mjs";
 
 const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
 const DRY = process.argv.includes("--dry");
-const launch = JSON.parse(readFileSync("out/launch.json", "utf8"));
-const plan = JSON.parse(readFileSync("out/plan.json", "utf8"));
+const { plan, launch, dir: poolDir } = loadPoolRecord(arg("pool"));
 const pool = new PublicKey(arg("pool", launch.pool));
 const qDec = plan.quote.decimals;
 const kp = loadKeypair(), me = kp.publicKey;
 const client = DynamicBondingCurveClient.create(connection, "confirmed");
 
 async function send(label, tx) {
-  tx.feePayer = me; tx.recentBlockhash = (await connection.getLatestBlockhash()).blockhash; tx.sign(kp);
+  withPriority(tx); tx.feePayer = me; tx.recentBlockhash = (await connection.getLatestBlockhash()).blockhash; tx.sign(kp);
   if (DRY) { const sim = await connection.simulateTransaction(tx); console.log(`${label}: sim ${sim.value.err ? "ERR " + JSON.stringify(sim.value.err) : "OK"}`); return null; }
   const sig = await connection.sendRawTransaction(tx.serialize(), { maxRetries: 3 });
   const conf = await connection.confirmTransaction({ signature: sig, ...(await connection.getLatestBlockhash()) }, "confirmed");
@@ -57,6 +57,6 @@ const after = await client.state.getPoolFeeBreakdown(pool);
 const solAfter = await connection.getBalance(me);
 console.log(`after: partner unclaimed ${q(after.partner.unclaimedQuoteFee)}, claimed ${q(after.partner.claimedQuoteFee)} ${plan.quote.symbol}; wallet SOL Δ ${((solAfter - solBefore) / 1e9).toFixed(6)}`);
 if (!DRY) {
-  const dir = `out/pools/${arg("out", `${launch.symbol}-${plan.quote.symbol}`)}`;
+  const dir = poolDir || `out/pools/${arg("out", `${launch.symbol}-${plan.quote.symbol}`)}`;
   if (existsSync(`${dir}/launch.json`)) { const l = JSON.parse(readFileSync(`${dir}/launch.json`, "utf8")); l.txs = { ...l.txs, ...txs }; l.revenue = { tradingFeeQuote: q(after.partner.claimedQuoteFee), listingFeePct: cfg.migrationFeePercentage, creationFeeSol: Number(cfg.poolCreationFee?.toString?.() ?? 0) / 1e9, claimedAt: new Date().toISOString() }; writeFileSync(`${dir}/launch.json`, JSON.stringify(l, null, 2)); console.log(`recorded in ${dir}/launch.json`); }
 }

@@ -1,7 +1,9 @@
 // Shared constants: mints, Pyth feed ids, wallet, RPC.
 import { readFileSync } from "node:fs";
+import { createRequire } from "node:module";
+const require = createRequire(import.meta.url);
 import { homedir } from "node:os";
-import { Connection, Keypair, PublicKey } from "@solana/web3.js";
+import { ComputeBudgetProgram, Connection, Keypair, PublicKey } from "@solana/web3.js";
 
 export const RPC = process.env.RPC || "https://api.mainnet-beta.solana.com";
 export const connection = new Connection(RPC, "confirmed");
@@ -139,4 +141,23 @@ export function loadPythToken() {
     const env = readFileSync(`${homedir()}/.config/pyth/pyth.env`, "utf8");
     return env.match(/PYTH_ACCESS_TOKEN=(\S+)/)?.[1] || null;
   } catch { return null; }
+}
+
+/** Prepend a compute-unit price so sends land on the first try (public RPC + no tip = expired blockhashes). */
+export const PRIORITY_MICROLAMPORTS = Number(process.env.PRIORITY_MICROLAMPORTS || 50_000);
+export function withPriority(tx) {
+  if (!tx.instructions.some((ix) => ix.programId.equals(ComputeBudgetProgram.programId))) tx.instructions.unshift(ComputeBudgetProgram.setComputeUnitPrice({ microLamports: PRIORITY_MICROLAMPORTS }));
+  return tx;
+}
+
+/** Resolve {plan, launch, dir} for a pool: by address from out/pools/*, else the latest out/{plan,launch}.json. */
+export function loadPoolRecord(poolAddr) {
+  const { readdirSync, existsSync } = require("node:fs");
+  if (poolAddr && existsSync("out/pools")) for (const name of readdirSync("out/pools")) {
+    const dir = `out/pools/${name}`;
+    if (!existsSync(`${dir}/launch.json`)) continue;
+    const launch = JSON.parse(readFileSync(`${dir}/launch.json`, "utf8"));
+    if (launch.pool === poolAddr) return { plan: JSON.parse(readFileSync(`${dir}/plan.json`, "utf8")), launch, dir };
+  }
+  return { plan: JSON.parse(readFileSync("out/plan.json", "utf8")), launch: JSON.parse(readFileSync("out/launch.json", "utf8")), dir: null };
 }

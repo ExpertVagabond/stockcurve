@@ -5,12 +5,12 @@ import { PublicKey } from "@solana/web3.js";
 import { getMint, getExtensionData, ExtensionType, TOKEN_2022_PROGRAM_ID } from "@solana/spl-token";
 import { DynamicBondingCurveClient, getPriceFromSqrtPrice, feeNumeratorToBps } from "@meteora-ag/dynamic-bonding-curve-sdk";
 import { connection, XSTOCKS, twinOf } from "../src/config.mjs";
+import { loadPoolRecord } from "../src/config.mjs";
 import { resolveUsd } from "../src/prices.mjs";
 import { resolvePreIpo } from "../src/preipo.mjs";
 
 const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
-const launch = JSON.parse(readFileSync("out/launch.json", "utf8"));
-const plan = JSON.parse(readFileSync("out/plan.json", "utf8"));
+const { plan, launch, dir: poolDir } = loadPoolRecord(arg("pool"));
 const pool = new PublicKey(arg("pool", launch.pool));
 const qDec = plan.quote.decimals, bDec = 9;
 
@@ -20,7 +20,7 @@ const [ps, progress, feeMetrics, refBase, refQuote] = await Promise.all([
   client.state.getPoolQuoteTokenCurveProgress(pool),
   client.state.getPoolFeeMetrics(pool),
   plan.preipo ? resolvePreIpo(plan.base) : resolveUsd({ pythSymbol: `Equity.US.${plan.base}/USD`, twinMint: twinOf(plan.base), manual: plan.reference?.base?.source === "manual" ? plan.reference.base.price : undefined }),
-  plan.quote.symbol === "USDC" ? { price: 1, source: "peg", ageSec: 0 } : resolveUsd({ pythSymbol: `Crypto.${plan.quote.symbol.toUpperCase()}/USD`, mint: plan.quote.mint }),
+  plan.quote.symbol === "USDC" ? { price: 1, source: "peg", ageSec: 0 } : resolveUsd({ pythSymbol: XSTOCKS[plan.quote.symbol]?.pythUsd || (plan.quote.symbol === "SOL" ? "Crypto.SOL/USD" : undefined), mint: plan.quote.mint }),
 ]);
 const cfg = await client.state.getPoolConfig(ps.poolState.config);
 

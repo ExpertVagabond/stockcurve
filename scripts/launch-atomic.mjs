@@ -9,6 +9,7 @@ import BN from "bn.js";
 import { Keypair, PublicKey } from "@solana/web3.js";
 import { DynamicBondingCurveClient, deriveDbcPoolAddress, deriveTokenBadgeAddress, getQuoteReserveFromNextSqrtPrice, getSqrtPriceFromPrice, getPriceFromSqrtPrice } from "@meteora-ag/dynamic-bonding-curve-sdk";
 import { connection, loadKeypair } from "../src/config.mjs";
+import { withPriority } from "../src/config.mjs";
 import { buildEquityCurve } from "../src/curve.mjs";
 
 const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
@@ -47,7 +48,7 @@ const { createConfigTx, createPoolWithFirstBuyTx } = await client.partner.create
 });
 
 async function send(label, tx, signers) {
-  tx.feePayer = me;
+  withPriority(tx); tx.feePayer = me;
   tx.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
   tx.sign(...signers);
   if (DRY) { const sim = await connection.simulateTransaction(tx); if (sim.value.err) { console.error(label, "SIM ERR", JSON.stringify(sim.value.err), sim.value.logs?.slice(-8)); process.exit(1); } console.log(`${label}: sim OK, ${sim.value.unitsConsumed} CU, ${tx.instructions.length} ixs`); return null; }

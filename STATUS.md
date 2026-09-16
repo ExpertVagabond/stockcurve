@@ -74,6 +74,13 @@ Targets: Main track + Best Use of Meteora DBC ($5k) + Stocknized Agent on Clawpu
   Keeper self-funded 0.895 SOL raise → DAMM v2 836qKA34…; lp.mjs withdrew 50% unlocked LP: 0.402 SOL + 2.43 sSNDK back (tx QJVT7Vtb…).
 - Gotchas: token name ≤ 32 chars; leftover auto-retry in curve.mjs; keeper SOL-quote native balance. Wallet ≈ 0.62 SOL. 9 pools.
 
+## Pool 10 + Ondo + audit (2026-09-16 ~02:30 UTC)
+- Ondo: 28 mints (…ondo vanity), 28 badged; RKLBon $63.51 = live RKLB twin. twinOf: xStock→Backpack→Ondo. ONDO map in config.
+- Pool 10 sRKLB-DK/DKNG ERBiYKkLF15Uqgx3vpPpDw4kgWhnYzz5ADR1YWJWhm1b: Backpack quote + Ondo reference, atomic 0 bps; external buyer
+  8Fux3NDf… graduated it 9s after launch (paid our 3% listing + fees); keeper migrated (DAMM v2 4BpA4qG8…) + exited; claim.mjs ✓.
+- Audit (docs/audit.md): priority fee on all sends, loadPoolRecord by --pool (decimals mislabel bug), --no-exit, status quote feed,
+  refresh.mjs. Console 10 pools. Wallet ≈ 0.93 SOL + 0.18 DKNG + 2.4 sSNDK etc.
+
 ## Needs Matthew (interactive)
 1. Register + submit on hackathons.solana.com (links: repo, console; video optional).
 2. Pyth Terminal: equity/xStock feed grant on the Pro token (free grant = crypto majors only; all stock feeds 403).

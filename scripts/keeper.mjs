@@ -16,6 +16,7 @@ import { getAssociatedTokenAddressSync, getAccount, TOKEN_PROGRAM_ID, TOKEN_2022
 import { ActivationType, DynamicBondingCurveClient, DYNAMIC_BONDING_CURVE_PROGRAM_ID, DAMM_V2_MIGRATION_FEE_ADDRESS, SwapMode, deriveDammV2PoolAddress, getPriceFromSqrtPrice } from "@meteora-ag/dynamic-bonding-curve-sdk";
 import { CpAmm, getPriceFromSqrtPrice as dammPrice } from "@meteora-ag/cp-amm-sdk";
 import { connection, loadKeypair, twinOf } from "../src/config.mjs";
+import { withPriority } from "../src/config.mjs";
 import { resolveUsd } from "../src/prices.mjs";
 import { resolvePreIpo } from "../src/preipo.mjs";
 
@@ -26,6 +27,7 @@ const budget = Number(arg("budget", "1"));           // quote units the keeper m
 const bandBps = Number(arg("band-bps", "0"));        // only buy when pool < ref·(1 − band)
 const exitBps = Number(arg("exit-bps", "0"));        // sell on DAMM v2 when price ≥ ref·(1 + exit)
 const interval = Number(arg("interval", "15")) * 1000;
+const NO_EXIT = has("no-exit"); // keep inventory as LP-side proof (seed venues)
 
 const kp = loadKeypair();
 const me = kp.publicKey;
@@ -80,7 +82,7 @@ function amountToReach(ps, cfg, currentPoint, target, bDec, qDec, maxRaw) {
 }
 
 async function sendTx(label, tx, signers = [kp]) {
-  tx.feePayer = me;
+  withPriority(tx); tx.feePayer = me;
   tx.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
   tx.sign(...signers);
   if (DRY) { const sim = await connection.simulateTransaction(tx); log({ ev: "dry", label, ok: !sim.value.err, err: sim.value.err }); return null; }
@@ -113,6 +115,7 @@ async function tick(poolAddr, entry) {
     const held = await balance(ps.poolState.baseMint);
     const target = refQuote * (1 + exitBps / 1e4);
     log({ ev: "graduated", ...state, dammPool: dammPool.toBase58(), dammPrice: dPrice, exitTarget: target, heldBase: Number(held) / 10 ** bDec });
+    if (NO_EXIT) { log({ ev: "hold-exit", pool: poolAddr, why: "--no-exit" }); return "done"; }
     if (held > 0n && dPrice >= target) {
       const [aProg, bProg] = await Promise.all([tokenProgramOf(st.tokenAMint), tokenProgramOf(st.tokenBMint)]);
       const slot = await connection.getSlot(), now = Math.floor(Date.now() / 1000);

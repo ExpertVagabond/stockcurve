@@ -4,9 +4,10 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { PublicKey } from "@solana/web3.js";
 import { DynamicBondingCurveClient, DAMM_V2_MIGRATION_FEE_ADDRESS, deriveDammV2PoolAddress } from "@meteora-ag/dynamic-bonding-curve-sdk";
 import { connection, loadKeypair } from "../src/config.mjs";
+import { withPriority, loadPoolRecord } from "../src/config.mjs";
 
 const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
-const launch = JSON.parse(readFileSync("out/launch.json", "utf8"));
+const { launch } = loadPoolRecord(arg("pool"));
 const pool = new PublicKey(arg("pool", launch.pool));
 const kp = loadKeypair();
 const client = DynamicBondingCurveClient.create(connection, "confirmed");
@@ -24,7 +25,7 @@ if (ps.poolState.isMigrated || ps.poolState.migrationProgress === 3) {
   console.log("already migrated (keeper or prior run)");
 } else {
   const { transaction, firstPositionNftKeypair, secondPositionNftKeypair } = await client.migration.migrateToDammV2({ payer: kp.publicKey, pool, dammConfig });
-  transaction.feePayer = kp.publicKey;
+  withPriority(transaction); transaction.feePayer = kp.publicKey;
   transaction.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
   const signers = [kp, firstPositionNftKeypair, secondPositionNftKeypair].filter(Boolean);
   transaction.sign(...signers);

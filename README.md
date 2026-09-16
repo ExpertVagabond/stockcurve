@@ -42,7 +42,7 @@ its first transaction *is* the creation — there is no block in which a sniper 
 DBC pool [`GretDMXwL3Na7AtVvQzaAuQhVw8zVwsttqVxkYKXE3FP`](https://solscan.io/account/GretDMXwL3Na7AtVvQzaAuQhVw8zVwsttqVxkYKXE3FP)
 · [creation+buy tx](https://solscan.io/tx/5nA1XC87vSFsVAH3FLWz3aa4eBVyTuD32FujmrFpw7uZid2RFrPLKqcTX9C1qSGAS6WgNFEbqcpT76n66pxXzibg). Left live on the curve at fair value.
 
-Nine pools, ~1.5 SOL all-in. Console for all pools:
+Ten pools, ~1.6 SOL all-in. Audit of the whole thing: [docs/audit.md](docs/audit.md). Console for all pools:
 **https://stockcurve.purplesquirrelnetworks.workers.dev**
 
 | Pool | Quote | Reference | Launch | Status |
@@ -55,6 +55,7 @@ Nine pools, ~1.5 SOL all-in. Console for all pools:
 | sHOOD/SOL | SOL | Backpack HOOD twin, live | atomic, **issuer profile**, keeper-graduated | graduated; listing + creation + trading fees claimed |
 | sRKLB/SOL | SOL | manual print $63.55 (no live source exists for RKLB) | atomic, **lean curve** (opening buy = 15% of raise), keeper-graduated | graduated; fees claimed |
 | sSNDK/SOL | SOL | Backpack SNDK twin, live ($373k liq) | atomic, lean, **seed profile**, keeper self-funded the raise | graduated; **50% of unlocked LP withdrawn** back to the wallet |
+| sRKLB-DK/DKNG | **Backpack DKNG** | **Ondo RKLBon** twin, live | atomic, lean, issuer profile; an external buyer graduated it 9 s after launch and paid the listing fee | graduated; all three issuers in one pool; fees claimed in DKNG |
 | sPLTR/SOL | SOL | PLTRx twin, live | atomic on the **shared config** (`launch-shared.mjs`, unit derived from the ladder, no config rent) | graduated; all three fees claimed to the same partner |
 
 ## Why a stock needs a different curve
@@ -231,12 +232,25 @@ scripts/launch-atomic.mjs  createConfig, then createPool + opening buy in ONE tx
 scripts/buy.mjs     swapQuote2 + swap2 (ExactIn / PartialFill)
 scripts/status.mjs  issuer console snapshot → out/status.json
 scripts/migrate.mjs migrateToDammV2 + verification
-scripts/keeper.mjs  basis keeper: watch → buy discount → migrate → target-sized exit
+scripts/keeper.mjs  basis keeper: watch → buy discount → migrate → target-sized exit (--no-exit to hold)
+scripts/launch-shared.mjs  pool on an existing partner config, unit derived from the ladder (the launchpad path)
+scripts/claim.mjs   claim trading + creation + listing fees on a pool
+scripts/lp.mjs      DAMM v2 positions; withdraw unlocked LP (seed profile)
+scripts/size.mjs    size a real pool for a target raise, both curve shapes
+scripts/refresh.mjs re-snapshot every pool, rebuild + deploy the console
 scripts/swap.mjs    Jupiter swap between SOL / USDC / xStocks
 scripts/scan-*.mjs  research probes: xStock badges, Backpack (1,158 mints), pre-IPO, on-chain Pyth
 docs/research-findings.md   Backpack/pre-IPO/Clawpump/sniper findings with numbers
 docs/competitor-scan.md   the 23 public Stocklana repos, and why none has a stock-quoted DBC pool
 ```
+
+## Three issuers, one primitive
+
+Every Solana stock issuer we could find is already Meteora-badged as a DBC quote token:
+**xStocks 20/20** (`scan-xstock-badges.mjs`), **Backpack 48** of 1,158 mints (`scan-backpack.mjs`),
+**Ondo 28/28** (`scan-ondo.mjs`). Pool 10 (`sRKLB-DK/DKNG`) is quoted in a Backpack stock and anchored to an
+Ondo twin; pools 1–2 are quoted in xStocks. The twin resolver falls through xStock → Backpack → Ondo, which is how
+RKLB — no xStock, no Backpack price, stale Pyth account — still gets a live reference (RKLBon $63.51 vs $63.55 close).
 
 ## Why this matters beyond the demo
 

@@ -6,6 +6,7 @@ import BN from "bn.js";
 import { Keypair, PublicKey } from "@solana/web3.js";
 import { DynamicBondingCurveClient, deriveDbcPoolAddress, deriveTokenBadgeAddress } from "@meteora-ag/dynamic-bonding-curve-sdk";
 import { connection, loadKeypair } from "../src/config.mjs";
+import { withPriority } from "../src/config.mjs";
 import { buildEquityCurve } from "../src/curve.mjs";
 
 const arg = (k, d) => { const i = process.argv.indexOf(`--${k}`); return i > -1 ? process.argv[i + 1] : d; };
@@ -37,7 +38,7 @@ console.log(`${DRY ? "DRY RUN" : "MAINNET"} launch ${symbol} (${name}) / ${plan.
 console.log(`config ${config.publicKey.toBase58()}  baseMint ${baseMint.publicKey.toBase58()}  badge ${tokenBadge ? tokenBadge.toBase58() : "none (SPL quote)"}`);
 
 async function run(label, tx, signers) {
-  tx.feePayer = me;
+  withPriority(tx); tx.feePayer = me;
   tx.recentBlockhash = (await connection.getLatestBlockhash()).blockhash;
   tx.sign(...signers);
   if (DRY) {

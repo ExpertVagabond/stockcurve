@@ -11,6 +11,7 @@ import BN from "bn.js";
 import { Keypair, PublicKey } from "@solana/web3.js";
 import { DynamicBondingCurveClient, deriveDbcPoolAddress, deriveTokenBadgeAddress, getQuoteReserveFromNextSqrtPrice, getSqrtPriceFromPrice, getPriceFromSqrtPrice, feeNumeratorToBps } from "@meteora-ag/dynamic-bonding-curve-sdk";
 import { connection, loadKeypair, XSTOCKS, BACKPACK, USDC, SOL, WSOL, twinOf } from "../src/config.mjs";
+import { withPriority } from "../src/config.mjs";
 import { resolveUsd } from "../src/prices.mjs";
 import { resolvePreIpo } from "../src/preipo.mjs";
 
@@ -59,7 +60,7 @@ const tx = await client.creator.createPoolWithFirstBuy({
   createPoolParam: { baseMint: baseMint.publicKey, config: configAddr, name, symbol, uri, payer: me, poolCreator: me, tokenBadge },
   firstBuyParam: { buyer: me, buyAmount, minimumAmountOut: new BN(1), referralTokenAccount: null },
 });
-tx.feePayer = me; tx.recentBlockhash = (await connection.getLatestBlockhash()).blockhash; tx.sign(kp, baseMint);
+withPriority(tx); tx.feePayer = me; tx.recentBlockhash = (await connection.getLatestBlockhash()).blockhash; tx.sign(kp, baseMint);
 const before = await connection.getBalance(me);
 let sig = null;
 if (DRY) { const sim = await connection.simulateTransaction(tx); if (sim.value.err) { console.error("SIM ERR", JSON.stringify(sim.value.err), sim.value.logs?.slice(-8)); process.exit(1); } console.log(`createPool+firstBuy: sim OK, ${sim.value.unitsConsumed} CU, ${tx.instructions.length} ixs`); process.exit(0); }
