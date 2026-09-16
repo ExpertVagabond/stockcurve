@@ -1,5 +1,10 @@
 # Runbook: the first real-sized launch (SNDK, seed profile)
 
+**Step zero (2026-09-16):** every bot fill we measured was under ~1 SOL per pool: spray bots buy a fixed budget into every new
+DBC pool, they are not arbing our reference. So the first real launch is sized to what bots + a couple of real buyers can fill:
+a **~5 SOL raise** (opening buy ≈ 0.75 SOL, under 1 SOL all-in). Fills → scale to $10–20k with distribution (routable listing,
+a callout, the Hacker House room). Bots are a launch-day floor, not the buyer.
+
 The two pools that made money (sSNDK/SOL, sGME/AAPLx) did so because a third party bought the discount at launch. This
 repeats that at a size where it pays. Everything below is the same code that ran the 13 demo pools; only the numbers change.
 
