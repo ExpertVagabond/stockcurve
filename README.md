@@ -61,6 +61,19 @@ Ten pools, ~1.6 SOL all-in. Audit of the whole thing: [docs/audit.md](docs/audit
 | sTSLA-QQ/QQQx | QQQx (Nasdaq-100 xStock) | **Pyth Pro live** — Equity.US.TSLA/USD base, Equity.US.QQQ/USD quote | atomic, lean, issuer, keeper-graduated | graduated; both legs anchored on Pyth |
 | sPLTR/SOL | SOL | PLTRx twin, live | atomic on the **shared config** (`launch-shared.mjs`, unit derived from the ladder, no config rent) | graduated; all three fees claimed to the same partner |
 
+## One thing per track
+
+| Track | They asked for | The one thing |
+|---|---|---|
+| **Main track** (Solana Foundation) | Could this be a real app people actually use? | A live DBC pool you can trade right now, opened at reference with an atomic launch — [sRDDT/SOL on Solscan](https://solscan.io/account/GretDMXwL3Na7AtVvQzaAuQhVw8zVwsttqVxkYKXE3FP) |
+| **Best Use of Meteora DBC** (Meteora) | Originality of the DBC configuration, technical soundness, life after the hackathon | A DBC pool quoted in a stock token (AAPLx), curve anchored to reference, graduated to DAMM v2 — [sGME/AAPLx on Solscan](https://solscan.io/account/J1gcmbH3QthJahRdXqEAXc7eDbYE6JoWYqGVViGvFLbm) |
+| **Stocknized Agent on Clawpump** (Clawpump) | Launch your token with a stock-paired liquidity pool using clawpump and Meteora | scSNDK: launched through Clawpump's API paired with Backpack SNDK, then pooled on Meteora (DLMM scSNDK/SNDK) — [scSNDK/SNDK Meteora DLMM pair](https://solscan.io/account/7LvHsXj3LFmpwCx6mDbsj7erpVdDJsNDznLhzkwWYb2y) · [scSNDK on Clawpump / pump.fun](https://pump.fun/coin/CUnDgEpzGQNkwQKDCNoyv1SB6YvBygUSCekSPgnsUGkm) |
+| **Best Use of PreStocks** (PreStocks) | Build your project using PreStocks | A pre-IPO launch curve anchored to the PreStocks OPENAI mark price, monitored against their secondary price — [pOPENAI/USDC on Solscan](https://solscan.io/account/6vyZDFfkDW5GTZ9NbKUVhPmFKgcXYF28GV61hcnHqwfz) |
+| **Best Use of Tessera** (Tessera) | A product or use case with OpenAI or Kalshi T-Tokens | A launch curve anchored to Tessera's T-Kalshi mark price (and one to T-SpaceX) — [pKALSHI/USDC on Solscan](https://solscan.io/account/4gckR2ZJ4TGWRu8aC7cMQgn5tP2wVLrwc3xGBn8dfZoc) |
+| **Best use of Pyth market data** (Pyth) | Live financial data does real work; use one feed, compare both | A pool anchored on Pyth Pro on both legs: Equity.US.TSLA/USD for the base, Equity.US.QQQ/USD for the QQQx quote — [sTSLA-QQ/QQQx on Solscan](https://solscan.io/account/229XVFnwBhJyPdmCpA6f1q3udV6xmScYZQVxduKeet4D) |
+
+Everything else in this README is depth behind those six rows.
+
 ## Why a stock needs a different curve
 
 A memecoin has no fair value, so its curve puts dense liquidity at the bottom and goes vertical on

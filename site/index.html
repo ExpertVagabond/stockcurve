@@ -43,6 +43,8 @@ h1.hero-title{margin:0;font-weight:800;font-size:clamp(36px,7.2vw,78px);line-hei
 .tile-over{position:absolute;inset:0;padding:14px 13px;display:flex;flex-direction:column;justify-content:flex-end;gap:5px;opacity:0;transform:translateY(8px);transition:opacity .25s,transform .25s}
 .tile-over b{color:#fff;font-size:15px;letter-spacing:-.01em}.tile-over .m{font-family:var(--mono);font-size:11.5px;color:var(--fg-2)}.tile-over .s{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);font-weight:700}
 .tile-tag{position:absolute;top:8px;left:8px;background:var(--red);color:#fff;font-size:10px;font-weight:800;letter-spacing:.14em;padding:3px 7px;border-radius:3px;text-transform:uppercase}
+.track-rail{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:10px;padding:0 var(--gutter)}
+.tcard{background:var(--bg-2);border:1px solid var(--line);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}.tcard .t{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);font-weight:800}.tcard .ask{font-size:12.5px;color:var(--fg-3);font-style:italic}.tcard .thing{font-size:14.5px;color:#fff;line-height:1.4}.tcard a{font-size:12.5px;color:var(--acc);text-decoration:none}.tcard a:hover{text-decoration:underline}.tcard .links{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:2px}.tcard button{align-self:flex-start;background:none;border:1px solid var(--line-2);color:var(--fg-2);border-radius:4px;padding:3px 9px;font:600 12px Inter,sans-serif;cursor:pointer}.tcard button:hover{border-color:var(--red);color:#fff}
 .stat-rail{display:flex;gap:9px;padding:0 var(--gutter);overflow-x:auto;scrollbar-width:none}.stat-rail::-webkit-scrollbar{display:none}
 .stat{flex:0 0 auto;min-width:190px;background:var(--bg-2);border:1px solid var(--line);border-radius:6px;padding:14px 16px}.stat .k{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--fg-3);font-weight:600}.stat .v{font:600 24px/1.15 var(--mono);color:#fff;margin-top:6px}.stat .v small{font-size:12px;color:var(--fg-3);font-weight:400;font-family:'Inter',sans-serif}
 .sheet{position:fixed;inset:0;z-index:200;display:none;align-items:flex-start;justify-content:center;overflow-y:auto;background:rgba(0,0,0,.7);padding:5vh 12px 40px}.sheet.open{display:flex}
@@ -65,7 +67,7 @@ footer{padding:30px var(--gutter) 50px;color:var(--fg-3);font-size:13px;border-t
 </style>
 </head>
 <body>
-<nav id="nav"><a class="brand" href="#">stock<span>curve</span></a><div class="navlinks"><a href="#live">Live</a><a href="#graduated">Graduated</a><a class="hide-sm" href="https://github.com/ExpertVagabond/stockcurve" target="_blank" rel="noopener">GitHub</a><a class="hide-sm" href="https://github.com/ExpertVagabond/stockcurve/blob/main/docs/research-findings.md" target="_blank" rel="noopener">Research</a></div></nav>
+<nav id="nav"><a class="brand" href="#">stock<span>curve</span></a><div class="navlinks"><a href="#tracks">Tracks</a><a href="#live">Live</a><a href="#graduated">Graduated</a><a class="hide-sm" href="https://github.com/ExpertVagabond/stockcurve" target="_blank" rel="noopener">GitHub</a><a class="hide-sm" href="https://github.com/ExpertVagabond/stockcurve/blob/main/docs/research-findings.md" target="_blank" rel="noopener">Research</a></div></nav>
 
 <header class="hero"><div class="hero-bg" id="heroBg"></div>
   <div class="hero-inner">
@@ -79,6 +81,7 @@ footer{padding:30px var(--gutter) 50px;color:var(--fg-3);font-size:13px;border-t
 
 <main class="rows">
   <section class="row"><div class="row-head"><h2>Across nine launches</h2><span class="count">mainnet · 2026-09-15</span></div><div class="stat-rail" id="stats"></div></section>
+  <section class="row" id="tracks"><div class="row-head"><h2>One thing per track</h2><span class="count">what each sponsor asked for, and the one artifact that answers it</span></div><div class="track-rail" id="trackRail"></div></section>
   <section class="row" id="live"><div class="row-head"><h2>Live on the curve</h2><span class="count" id="liveCount"></span></div><div class="rail-wrap"><div class="rail" id="railLive"></div></div></section>
   <section class="row" id="graduated"><div class="row-head"><h2>Graduated to DAMM v2</h2><span class="count" id="gradCount"></span></div><div class="rail-wrap"><div class="rail" id="railGrad"></div></div></section>
   <section class="row"><div class="row-head"><h2>By quote token</h2><span class="count">xStocks · Backpack · USDC · SOL</span></div><div class="rail-wrap"><div class="rail" id="railQuote"></div></div></section>
@@ -194,6 +197,9 @@ $("close").onclick = closeSheet; $("sheet").addEventListener("click", e => { if 
   const fees = pools.reduce((a, p) => a + p.status.fees.totalTradingQuote * p.status.reference.quoteUsd, 0);
   const stats = [["Pools on mainnet", pools.length, "one day"], ["Quote tokens", new Set(pools.map(p => p.status.quote)).size, "AAPLx · SPYx · USDC · SOL"], ["Graduated to DAMM v2", grad.length, "100% LP locked"], ["Reference sources", new Set(pools.map(p => p.status.reference.baseSource)).size, "Pyth · twins · pre-IPO mark"], ["Fees earned", "$" + fees.toFixed(2), "at demo float"], ["Revenue streams", pools.filter(p => p.launch.revenue).length ? "3 claimed" : "—", "listing · creation · trading"], ["Seed LP recovered", pools.some(p => p.launch.lp) ? "on-chain" : "—", "90% withdrawable"], ["Sniper window", "0 blocks", "atomic launch"]];
   $("stats").innerHTML = stats.map(([k, v, s]) => `<div class="stat"><div class="k">${k}</div><div class="v">${v} <small>${s}</small></div></div>`).join("");
+  const tracks = await fetch("data/tracks.json").then(r => r.json());
+  $("trackRail").innerHTML = tracks.map(t => `<div class="tcard"><span class="t">${t.track} · ${t.sponsor}</span><span class="ask">“${t.ask}”</span><span class="thing">${t.thing}</span><div class="links"><a href="${t.link}" target="_blank" rel="noopener">${t.linkLabel} ↗</a>${t.link2 ? `<a href="${t.link2}" target="_blank" rel="noopener">${t.link2Label} ↗</a>` : ""}</div>${t.pool ? `<button data-pool="${t.pool}">ⓘ title page</button>` : ""}</div>`).join("");
+  $("trackRail").querySelectorAll("button[data-pool]").forEach(b => { b.onclick = () => { const p = pools.find(x => x.name === b.dataset.pool); if (p) openSheet(p); }; });
   const want = pools.find(p => location.hash.slice(1) === p.name); if (want) openSheet(want);
 })();
 </script>

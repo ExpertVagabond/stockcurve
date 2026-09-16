@@ -14,6 +14,15 @@
 
 **Tracks:** Main · Best Use of Meteora DBC · Stocknized Agent on Clawpump · Best Use of PreStocks · Best Use of Tessera · Best use of Pyth market data
 
+**One thing per track**
+
+- **Main track** — A live DBC pool you can trade right now, opened at reference with an atomic launch. https://solscan.io/account/GretDMXwL3Na7AtVvQzaAuQhVw8zVwsttqVxkYKXE3FP
+- **Best Use of Meteora DBC** — A DBC pool quoted in a stock token (AAPLx), curve anchored to reference, graduated to DAMM v2. https://solscan.io/account/J1gcmbH3QthJahRdXqEAXc7eDbYE6JoWYqGVViGvFLbm
+- **Stocknized Agent on Clawpump** — scSNDK: launched through Clawpump's API paired with Backpack SNDK, then pooled on Meteora (DLMM scSNDK/SNDK). https://solscan.io/account/7LvHsXj3LFmpwCx6mDbsj7erpVdDJsNDznLhzkwWYb2y
+- **Best Use of PreStocks** — A pre-IPO launch curve anchored to the PreStocks OPENAI mark price, monitored against their secondary price. https://solscan.io/account/6vyZDFfkDW5GTZ9NbKUVhPmFKgcXYF28GV61hcnHqwfz
+- **Best Use of Tessera** — A launch curve anchored to Tessera's T-Kalshi mark price (and one to T-SpaceX). https://solscan.io/account/4gckR2ZJ4TGWRu8aC7cMQgn5tP2wVLrwc3xGBn8dfZoc
+- **Best use of Pyth market data** — A pool anchored on Pyth Pro on both legs: Equity.US.TSLA/USD for the base, Equity.US.QQQ/USD for the QQQx quote. https://solscan.io/account/229XVFnwBhJyPdmCpA6f1q3udV6xmScYZQVxduKeet4D
+
 **Description (≈250 words)**
 
 Backpack Securities has pre-deployed Solana mints for 1,158 US stocks, but only 48 have ever been issued — and all 48 trade (measured on-chain, script in repo). The other 1,100 can be minted on demand and never are, because a stock with zero holders has no price-discovery path. Memecoin launch curves are the wrong tool for that — a stock has a fair value.

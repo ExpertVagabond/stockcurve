@@ -1,0 +1,57 @@
+[
+  {
+    "track": "Main track",
+    "sponsor": "Solana Foundation",
+    "ask": "Could this be a real app people actually use?",
+    "thing": "A live DBC pool you can trade right now, opened at reference with an atomic launch",
+    "pool": "sRDDT-SOL",
+    "link": "https://solscan.io/account/GretDMXwL3Na7AtVvQzaAuQhVw8zVwsttqVxkYKXE3FP",
+    "linkLabel": "sRDDT/SOL on Solscan"
+  },
+  {
+    "track": "Best Use of Meteora DBC",
+    "sponsor": "Meteora",
+    "ask": "Originality of the DBC configuration, technical soundness, life after the hackathon",
+    "thing": "A DBC pool quoted in a stock token (AAPLx), curve anchored to reference, graduated to DAMM v2",
+    "pool": "sGME-AAPLx",
+    "link": "https://solscan.io/account/J1gcmbH3QthJahRdXqEAXc7eDbYE6JoWYqGVViGvFLbm",
+    "linkLabel": "sGME/AAPLx on Solscan"
+  },
+  {
+    "track": "Stocknized Agent on Clawpump",
+    "sponsor": "Clawpump",
+    "ask": "Launch your token with a stock-paired liquidity pool using clawpump and Meteora",
+    "thing": "scSNDK: launched through Clawpump's API paired with Backpack SNDK, then pooled on Meteora (DLMM scSNDK/SNDK)",
+    "link": "https://solscan.io/account/7LvHsXj3LFmpwCx6mDbsj7erpVdDJsNDznLhzkwWYb2y",
+    "linkLabel": "scSNDK/SNDK Meteora DLMM pair",
+    "link2": "https://pump.fun/coin/CUnDgEpzGQNkwQKDCNoyv1SB6YvBygUSCekSPgnsUGkm",
+    "link2Label": "scSNDK on Clawpump / pump.fun"
+  },
+  {
+    "track": "Best Use of PreStocks",
+    "sponsor": "PreStocks",
+    "ask": "Build your project using PreStocks",
+    "thing": "A pre-IPO launch curve anchored to the PreStocks OPENAI mark price, monitored against their secondary price",
+    "pool": "pOPENAI-USDC",
+    "link": "https://solscan.io/account/6vyZDFfkDW5GTZ9NbKUVhPmFKgcXYF28GV61hcnHqwfz",
+    "linkLabel": "pOPENAI/USDC on Solscan"
+  },
+  {
+    "track": "Best Use of Tessera",
+    "sponsor": "Tessera",
+    "ask": "A product or use case with OpenAI or Kalshi T-Tokens",
+    "thing": "A launch curve anchored to Tessera's T-Kalshi mark price (and one to T-SpaceX)",
+    "pool": "pKALSHI-USDC",
+    "link": "https://solscan.io/account/4gckR2ZJ4TGWRu8aC7cMQgn5tP2wVLrwc3xGBn8dfZoc",
+    "linkLabel": "pKALSHI/USDC on Solscan"
+  },
+  {
+    "track": "Best use of Pyth market data",
+    "sponsor": "Pyth",
+    "ask": "Live financial data does real work; use one feed, compare both",
+    "thing": "A pool anchored on Pyth Pro on both legs: Equity.US.TSLA/USD for the base, Equity.US.QQQ/USD for the QQQx quote",
+    "pool": "sTSLA-QQQx",
+    "link": "https://solscan.io/account/229XVFnwBhJyPdmCpA6f1q3udV6xmScYZQVxduKeet4D",
+    "linkLabel": "sTSLA-QQ/QQQx on Solscan"
+  }
+]

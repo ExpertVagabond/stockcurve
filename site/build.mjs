@@ -15,6 +15,7 @@ for (const name of readdirSync("out/pools").sort()) {
   pools.push({ name, status, launch, plan: { base: plan.base, unit: plan.unit, float: plan.float, quote: plan.quote, summary: plan.summary, checkpoints: plan.checkpoints, reference: plan.reference } });
 }
 writeFileSync("site/dist/data/pools.json", JSON.stringify(pools, null, 2));
+copyFileSync("site/tracks.json", "site/dist/data/tracks.json");
 copyFileSync("site/_headers", "site/dist/_headers");
 writeFileSync("site/dist/index.html", readFileSync("site/index.html", "utf8").replace("__BUILT_AT__", new Date().toISOString()));
 console.log(`site/dist built with ${pools.length} pools:`, pools.map((p) => p.name).join(", "));
