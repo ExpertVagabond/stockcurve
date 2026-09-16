@@ -55,7 +55,8 @@ def with_captions(src, out, caps, scale=False):
         need = dur(vo) + 1.4; have = dur(src)
         pad = f";[v{len(caps)}]tpad=stop_mode=clone:stop_duration={max(0, need - have):.2f}[vp]" if need > have else f";[v{len(caps)}]null[vp]"
         chain += pad + f";[{n}:a]adelay=600|600,apad,loudnorm=I=-16:TP=-1.5:LRA=11[a]"
-        run(*inputs, "-filter_complex", chain, "-map", "[vp]", "-map", "[a]", "-r", "30", "-pix_fmt", "yuv420p", "-c:a", "aac", "-shortest", out)
+        trim = ["-t", f"{need:.2f}"] if have > need else []  # cut dead tail when the clip outlasts the VO
+        run(*inputs, "-filter_complex", chain, "-map", "[vp]", "-map", "[a]", *trim, "-r", "30", "-pix_fmt", "yuv420p", "-c:a", "aac", "-shortest", out)
     else:
         run(*inputs, "-filter_complex", chain, "-map", f"[v{len(caps)}]", "-r", "30", "-pix_fmt", "yuv420p", out)
 with_captions("demo/raw/console.webm", "demo/raw/seg1.mp4", [("The console: every pool, its reference, basis and lifecycle", 0, 12), ("Title page: curve band, graduation, fees claimed, provenance", 12, 60)], scale=True)

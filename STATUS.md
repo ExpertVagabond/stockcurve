@@ -104,6 +104,13 @@ Targets: Main track + Best Use of Meteora DBC ($5k) + Stocknized Agent on Clawpu
   (tmux capture → PIL frames → mp4; --render-only reuses demo/raw/frames.json; marks.json drives caption windows), demo/assemble.py
   (PIL cards + PNG caption overlays; this ffmpeg has no drawtext). Not posted anywhere — Matthew reviews, then attaches to submission.
 
+## Pool 11 + VO + tests + launchd (2026-09-16 ~05:30 UTC)
+- Tests: test/*.test.mjs, 17 passing (`npm test`). Launchd com.matthewkarsten.stockcurve-refresh every 30 min: refresh --deploy + sweep --pretty
+  (log ~/Library/Logs/stockcurve-refresh.log; first run OK). Tessera provider fetch now retries ×4 (API flaps 500).
+- Pool 11 pSPACEX/USDC 27FWe3Hd8Rd8K6p3CJUcYhQpUkHXS4UjRwLsyKWPWq6j: --anchor tessera (T-SpaceX mark $423), atomic 0 bps, bot 8Fux3NDf… +
+  one more buyer funded ~70% in 15s, keeper graduated → DAMM v2 6mtxCwhs…, fees claimed in USDC. Bot then dumped into DAMM (price 0.27 < ref) — keeper held.
+- Demo video v2 WITH VOICE-OVER (cloned voice, local Qwen3-TTS; F0 84–105 Hz = clone took): 87s, ~/Desktop/stockcurve-demo.mp4. Not posted.
+
 ## Needs Matthew (interactive)
 1. Register + submit on hackathons.solana.com (links: repo, console; video optional).
 2. Pyth Terminal: equity/xStock feed grant on the Pro token (free grant = crypto majors only; all stock feeds 403).

@@ -56,6 +56,7 @@ Ten pools, ~1.6 SOL all-in. Audit of the whole thing: [docs/audit.md](docs/audit
 | sRKLB/SOL | SOL | manual print $63.55 (no live source exists for RKLB) | atomic, **lean curve** (opening buy = 15% of raise), keeper-graduated | graduated; fees claimed |
 | sSNDK/SOL | SOL | Backpack SNDK twin, live ($373k liq) | atomic, lean, **seed profile**, keeper self-funded the raise | graduated; **50% of unlocked LP withdrawn** back to the wallet |
 | sRKLB-DK/DKNG | **Backpack DKNG** | **Ondo RKLBon** twin, live | atomic, lean, issuer profile; an external buyer graduated it 9 s after launch and paid the listing fee | graduated; all three issuers in one pool; fees claimed in DKNG |
+| pSPACEX/USDC | USDC | **Tessera T-SpaceX mark** (PreStocks as cross-check; the two value SpaceX 2.3× apart) | atomic, lean, issuer; outside buyers funded ~70% within 15 s | graduated; fees claimed in USDC |
 | sPLTR/SOL | SOL | PLTRx twin, live | atomic on the **shared config** (`launch-shared.mjs`, unit derived from the ladder, no config rent) | graduated; all three fees claimed to the same partner |
 
 ## Why a stock needs a different curve
@@ -213,7 +214,7 @@ Live proof: [sell of 1.344 pOPENAI at 0.09546909 USDC avg = the reference to 10 
 
 ## Pre-IPO mode (Tessera / PreStocks)
 
-`node scripts/plan.mjs --preipo OPENAI --quote USDC --unit 0.0001 --float 60` swaps the Pyth reference for
+`--anchor tessera` anchors to Tessera's mark instead of PreStocks' (pool 11, `pSPACEX/USDC`). `node scripts/plan.mjs --preipo OPENAI --quote USDC --unit 0.0001 --float 60` swaps the Pyth reference for
 [`src/preipo.mjs`](src/preipo.mjs): the PreStocks mark price is the anchor; the PreStocks secondary token
 price, both providers' valuations and the Tessera mark are recorded as context and shown in the console.
 Neither provider's mint can be a DBC *quote* today (both carry `TransferFeeConfig`, no badge), which is

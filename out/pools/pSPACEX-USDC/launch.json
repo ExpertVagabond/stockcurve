@@ -4,7 +4,7 @@
   "graduationPriceQuote": 0.44415,
   "migrationQuoteThreshold": 3.548994,
   "migrationQuoteThresholdUsd": 3.548994,
-  "feeSchedule": "300→30 bps exp over 3600s (60 periods), dynamic fee on",
+  "feeSchedule": "300\u219230 bps exp over 3600s (60 periods), dynamic fee on",
   "curve": "lean",
   "profile": "issuer",
   "partnerUnlockedLpPct": 0,
@@ -36,13 +36,20 @@
     "createPoolWithFirstBuy": "5i3GaazrNNLkZicDpnnkN7hKzjmpp6vCAPwQjrrYr2ha2VhpEEymbMXtEbpMv4SwHUt1m1VP15ZsAeufBcx6N91h",
     "claimTradingFee": "RF3pKe1eLbi4sWSM95foPjEfhmXQqmNd21PCy4PztGDBuQFq6DiMh8s3NRTWijmf9Jt7HqAdwyLUV7kDhsePbwB",
     "claimCreationFee": "4efaQLeFGF8C5SG7ohWFUah9hDj78DUZ3sTHAfFcz9Bp1ySfTkx588X2zz11amCbmCJSxubfYS37cDmZTDMuwZ2S",
-    "withdrawMigrationFee": "4KQoJPAhnc4M935v54wabB4A9kgYhr66ZV7K8iWr7RjhPHy6NrZSfWckdA46MB3qm1eQKg3VCxc39NyBNojVVZAQ"
+    "withdrawMigrationFee": "4KQoJPAhnc4M935v54wabB4A9kgYhr66ZV7K8iWr7RjhPHy6NrZSfWckdA46MB3qm1eQKg3VCxc39NyBNojVVZAQ",
+    "externalBuyers": "5TyNd88FBvRXjRqZJBNhYFx1etU2dEhDrSqi5MB5fUWYzZFkboCFjs6s9PY9HLCxfpj9MeTJf6VxbKjcUgjCCPmK",
+    "keeperGraduate": "3rzMBttiAngeojCisCXnSXKM73u2iFYsVR8sYErcbhihtGwaafJU7out2MvfzrkSde3x5X6R451t7spfxZbybZXn",
+    "migrateToDammV2": "3hkaAxT1i4AyecW25hHWbkyDtVdcA1pwRqDnDqpV446N67SxhJYZwohCeN9PwwycoGetqusvLhn9wPWv8mRxpaEg"
   },
   "launchedAt": "2026-09-16T01:09:21.052Z",
   "revenue": {
     "tradingFeeQuote": 0.088172,
     "listingFeePct": 3,
     "creationFeeSol": 0.02,
-    "claimedAt": "2026-09-16T01:10:49.511Z"
-  }
+    "claimedAt": "2026-09-16T01:10:49.511Z",
+    "listingFeeQuote": 0.10647,
+    "creationFeePartnerSol": 0.018,
+    "raiseFundedBy": "external buyers ~70% (8Fux3NDf\u2026 + one more) within 15s of launch"
+  },
+  "dammV2Pool": "6mtxCwhs12pyGRGjwd2qouy4zMmekEkfy5j4DiwPncLe"
 }
