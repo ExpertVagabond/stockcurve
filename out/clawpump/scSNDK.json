@@ -1,0 +1,72 @@
+{
+  "request": {
+    "name": "stockcurve SNDK pair",
+    "symbol": "scSNDK",
+    "description": "stockcurve launch paired with Sandisk (SNDK) on Clawpump — a Meteora stock-paired pool for the Stocklana hackathon; issuer-side keeper and console at stockcurve.purplesquirrelnetworks.workers.dev",
+    "imageUrl": "https://stockcurve.purplesquirrelnetworks.workers.dev/meta/sSNDK.png",
+    "agentId": "stockcurve-keeper",
+    "agentName": "stockcurve keeper",
+    "walletAddress": "8nqQzTU5bqH3yjfi2ST1XvaaqWw447enCqnZkxHXTsKF",
+    "pumpQuoteMint": "SNDKbwMUQvZhnLnxLduradgLHG5KrPuKwpnrkkGRhfH",
+    "pumpCreatorFeeBps": 100
+  },
+  "preflight": {
+    "payment": {
+      "method": "sol",
+      "amountLamports": 9218000,
+      "amountSol": 0.009218,
+      "payTo": "49CfXAr58cCTGJnYsbm16fEsE5JRpdR8QQP8E1ZinGCq",
+      "payFrom": "8nqQzTU5bqH3yjfi2ST1XvaaqWw447enCqnZkxHXTsKF",
+      "validForSeconds": 900,
+      "breakdown": {
+        "creationFeeSol": 0.009218,
+        "devBuySol": 0
+      }
+    },
+    "retryWith": {
+      "txSignature": "<signature of that SOL transfer>",
+      "preflightToken": "eyJ2IjoxLCJpYXQiOjE3ODk1MTc5OTcsImV4cCI6MTc4OTUxODg5NywicGF5bG9hZEhhc2giOiI0YmFiNWNiNDY3N2IwMjc0Njg1YTBiMzk2MWRmMTYxYmUwNGNmODQyZWY0NDA5NDc3ZGIxYTJiYzcxN2VhZWM1IiwicmVjaXBpZW50IjoiNDlDZlhBcjU4Y0NUR0puWXNibTE2ZkVzRTVKUnBkUjhRUVA4RTFaaW5HQ3EiLCJhbW91bnRMYW1wb3J0cyI6OTIxODAwMCwiZnVuZGluZ0xhbXBvcnRzIjo5MjE4MDAwfQ.nAXmct0mrY_Yqu7thgSvXzDX30BC2Z3vk_CWOXGH4-U"
+    },
+    "meta": {
+      "timestamp": "2026-09-16T00:19:57.215Z",
+      "requestId": "42e6288d-3c3e-4621-ab67-d619b5fe34ca"
+    }
+  },
+  "paymentTx": "5WKN4brC4g7tQNYFySkpSdJ3J4jqAnFpJM3XM1hC7Y1USgvUSZJVNmenhotJonvXDGfiW9tmCtjC6bDsNShK3nLp",
+  "response": {
+    "success": true,
+    "fundingSource": "self-funded",
+    "paymentVerified": {
+      "method": "sol",
+      "txSignature": "5WKN4brC4g7tQNYFySkpSdJ3J4jqAnFpJM3XM1hC7Y1USgvUSZJVNmenhotJonvXDGfiW9tmCtjC6bDsNShK3nLp",
+      "sender": "8nqQzTU5bqH3yjfi2ST1XvaaqWw447enCqnZkxHXTsKF",
+      "amount": 0.009218,
+      "launchDevBuySol": 0
+    },
+    "mintAddress": "CUnDgEpzGQNkwQKDCNoyv1SB6YvBygUSCekSPgnsUGkm",
+    "pumpQuoteAsset": {
+      "mint": "SNDKbwMUQvZhnLnxLduradgLHG5KrPuKwpnrkkGRhfH",
+      "symbol": "SNDK",
+      "name": "Sandisk",
+      "decimals": 6,
+      "imageUrl": "https://backpack.exchange/api/stock-logo/SNDK",
+      "priceUsd": 1532.5776894284884,
+      "tokenProgram": "TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb",
+      "creatorFeeBps": 100
+    },
+    "txHash": "2E6RepKQMDmAhBTcRdCFpJBtbyibVFiWQoYdxnCEPVzK7zdewMgffdaRh3F58eMQCFUyuz4U7viN7Pyn1SkaEsts",
+    "pumpUrl": "https://pump.fun/coin/CUnDgEpzGQNkwQKDCNoyv1SB6YvBygUSCekSPgnsUGkm",
+    "explorerUrl": "https://solscan.io/tx/2E6RepKQMDmAhBTcRdCFpJBtbyibVFiWQoYdxnCEPVzK7zdewMgffdaRh3F58eMQCFUyuz4U7viN7Pyn1SkaEsts",
+    "earnings": {
+      "feeShare": "75%",
+      "note": "Trading fees will be collected hourly and distributed to your wallet.",
+      "checkEarnings": "https://agents.clawpump.tech//api/fees/earnings?agentId=stockcurve-keeper",
+      "dashboard": "https://agents.clawpump.tech//agent/stockcurve-keeper"
+    },
+    "meta": {
+      "timestamp": "2026-09-16T00:20:29.482Z",
+      "requestId": "8ecd2bd5-6ffa-4048-9273-362f5ad463c2"
+    }
+  },
+  "at": "2026-09-16T00:20:29.550Z"
+}

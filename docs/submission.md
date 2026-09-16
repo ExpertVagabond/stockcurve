@@ -8,6 +8,7 @@
 - GitHub: https://github.com/ExpertVagabond/stockcurve
 - Live console (all pools): https://stockcurve.purplesquirrelnetworks.workers.dev
 - Live pool on the curve right now: https://solscan.io/account/GretDMXwL3Na7AtVvQzaAuQhVw8zVwsttqVxkYKXE3FP
+- Clawpump stock-paired launch (scSNDK / Backpack SNDK): https://pump.fun/coin/CUnDgEpzGQNkwQKDCNoyv1SB6YvBygUSCekSPgnsUGkm
 
 **Tracks:** Main · Best Use of Meteora DBC · Stocknized Agent on Clawpump · Best Use of PreStocks · Best Use of Tessera · Best use of Pyth market data
 
@@ -17,7 +18,7 @@
 
 stockcurve turns Meteora's Dynamic Bonding Curve into an IPO-style launch for equity-like assets. The pool is quoted in a stock token (xStocks or Backpack, both already Meteora-badged) or USDC/SOL. The curve's start (−15%), graduation (+5%) and liquidity weights (thin in the discount, dense around fair value) are derived from a reference price with recorded provenance: Pyth Pro when granted, the Pyth push account on Solana, a live on-chain twin (GME→GMEx, DKNG→Backpack DKNG), or — for pre-IPO names with no exchange print — the PreStocks mark price, cross-checked against the PreStocks secondary and Tessera's valuation.
 
-On mainnet on 2026-09-15 we ran five pools end-to-end (config → pool → buys → curve complete → DAMM v2), across AAPLx, SPYx, USDC, SOL quotes. Four equal buys moved price +10%, +5%, +3.5%, +2.8% on every pool — the curve shape, not luck. A sniper bot hit pool 2 five seconds after creation and sold back at a loss to the 300 bps opening fee schedule.
+On mainnet on 2026-09-15/16 we ran ten pools end-to-end (config → pool → buys → curve complete → DAMM v2), across AAPLx, SPYx, USDC, SOL and Backpack DKNG quotes, with references from xStocks, Backpack and Ondo twins, a pre-IPO mark price, and a median/TWAP resolver; three fee profiles (demo / issuer with 3% listing fee claimed on-chain / seed with 90% withdrawable LP, withdrawn on-chain); and a stock-paired launch through Clawpump's partner API. Four equal buys moved price +10%, +5%, +3.5%, +2.8% on every pool — the curve shape, not luck. A sniper bot hit pool 2 five seconds after creation and sold back at a loss to the 300 bps opening fee schedule.
 
 Then we removed the window entirely: `launch-atomic.mjs` creates the pool and executes the opening buy in one transaction (pool 5 opened 3 bps from reference; its first tx is its creation). And a basis keeper watches the DBC program, buys only the discount, graduates, migrates and exits at target-sized fills — pool 4 was run by it unattended.
 

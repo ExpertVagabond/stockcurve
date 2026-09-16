@@ -253,6 +253,16 @@ docs/research-findings.md   Backpack/pre-IPO/Clawpump/sniper findings with numbe
 docs/competitor-scan.md   the 23 public Stocklana repos, and why none has a stock-quoted DBC pool
 ```
 
+## Clawpump (Stocknized Agent track)
+
+`scripts/clawpump-launch.mjs` launches a stock-paired token through Clawpump's partner API (self-funded: our
+wallet pays the 0.0092 SOL creation fee via preflight → transfer → confirm). Live: **scSNDK**, paired with Backpack
+SNDK, mint [`CUnDgEpzGQNkwQKDCNoyv1SB6YvBygUSCekSPgnsUGkm`](https://pump.fun/coin/CUnDgEpzGQNkwQKDCNoyv1SB6YvBygUSCekSPgnsUGkm)
+· [launch tx](https://solscan.io/tx/2E6RepKQMDmAhBTcRdCFpJBtbyibVFiWQoYdxnCEPVzK7zdewMgffdaRh3F58eMQCFUyuz4U7viN7Pyn1SkaEsts),
+100 bps creator fee, 75% fee share to the keeper wallet. On-chain it is a pump.fun curve with a Token-2022 stock
+quote; the Meteora half of the track is the stock-quoted DBC pools above, and the "agent" is the keeper.
+Clawpump's pair catalogue (`GET /pump-pairs`) lists 156 quote assets including the xStocks and Backpack stocks.
+
 ## Three issuers, one primitive
 
 Every Solana stock issuer we could find is already Meteora-badged as a DBC quote token:

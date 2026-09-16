@@ -88,12 +88,17 @@ Targets: Main track + Best Use of Meteora DBC ($5k) + Stocknized Agent on Clawpu
   Verified: fresh plan passes (+0.00%), 3%-stale plan refused. Not launched (wallet 0.95 SOL).
 - Key pages opened for Matthew: Pyth Terminal, Clawpump developers, Helius dashboard.
 
+## Clawpump DONE (2026-09-16 00:20 UTC)
+- cpk_ key at ~/.config/clawpump/clawpump.env. pump-pairs = 156 quote assets incl. xStocks + Backpack. Self-funded launch needs only an
+  agentId STRING (no dashboard agent). scripts/clawpump-launch.mjs: preflight → pay 0.009218 SOL → launch. scSNDK mint CUnDgEpz… paired
+  with Backpack SNDK on pump.fun (Token-2022 quote), 75% fee share → hot wallet. out/clawpump/scSNDK.json.
+- Still pending: Pyth equity grant (tab open), Helius RPC key (tab open), submission form.
+
 ## Needs Matthew (interactive)
 1. Register + submit on hackathons.solana.com (links: repo, console; video optional).
 2. Pyth Terminal: equity/xStock feed grant on the Pro token (free grant = crypto majors only; all stock feeds 403).
    With it, `node scripts/plan.mjs` uses live Lazer prices unchanged — worth a second pool (TSLAx quote) for the demo.
-3. Clawpump: sign up at clawpump.tech/developers → cpk_ key → then probe `/api/v1/pump-pairs` to see whether the
-   DBC pool can be registered as a stock-paired agent launch (their bounty wording: "using clawpump and Meteora").
+3. ~~Clawpump key~~ done — scSNDK launched.
 
 ## Next (me)
 - 2-min video (terminal run + console) — build, hand over for review, never post.
