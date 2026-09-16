@@ -99,6 +99,11 @@ Targets: Main track + Best Use of Meteora DBC ($5k) + Stocknized Agent on Clawpu
   0.94 sSNDK + 0.159 SOL, 20 bps. sweep.mjs: 9 configs/10 pools, claimed trading fees on 6. keeper: inbound detection + creation-fee claim.
 - Pyth key re-verified: same token, equity/xStock/index still 403 — needs an entitlement on the Pyth Terminal account (pythdata.app opened).
 
+## Demo video (2026-09-16 ~04:30 UTC)
+- demo/stockcurve-demo.mp4 (85s, 1080p, 6.3MB) + copy on ~/Desktop. Pipeline: demo/record-console.mjs (Playwright webm), demo/record-term.py
+  (tmux capture → PIL frames → mp4; --render-only reuses demo/raw/frames.json; marks.json drives caption windows), demo/assemble.py
+  (PIL cards + PNG caption overlays; this ffmpeg has no drawtext). Not posted anywhere — Matthew reviews, then attaches to submission.
+
 ## Needs Matthew (interactive)
 1. Register + submit on hackathons.solana.com (links: repo, console; video optional).
 2. Pyth Terminal: equity/xStock feed grant on the Pro token (free grant = crypto majors only; all stock feeds 403).
