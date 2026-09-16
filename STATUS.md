@@ -111,6 +111,16 @@ Targets: Main track + Best Use of Meteora DBC ($5k) + Stocknized Agent on Clawpu
   one more buyer funded ~70% in 15s, keeper graduated → DAMM v2 6mtxCwhs…, fees claimed in USDC. Bot then dumped into DAMM (price 0.27 < ref) — keeper held.
 - Demo video v2 WITH VOICE-OVER (cloned voice, local Qwen3-TTS; F0 84–105 Hz = clone took): 87s, ~/Desktop/stockcurve-demo.mp4. Not posted.
 
+## Literal track deliverables (2026-09-16 ~07:00 UTC) — 13 pools
+- CORRECTED CLAIM: only 48 of 1,158 Backpack mints have supply; all 48 trade. Not "95% no venue" — "long tail never issued". Fixed in
+  README/docs/submission/VO (VO segment regenerated).
+- Tessera literal: pKALSHI/USDC 4gckR2ZJ… (T-Kalshi anchor) graduated, fees claimed. (Track names OpenAI or Kalshi T-tokens.)
+- Clawpump literal: scSNDK (Clawpump-launched) now has a Meteora DLMM pair 7LvHsXj3… paired with SNDK (meteora-pair.mjs, T22 both sides,
+  createCustomizablePermissionlessLbPair2). Bought scSNDK via Jupiter direct route SNDK→pump.fun.
+- Pyth literal: key IS entitled to Equity.US.TSLA + Equity.US.QQQ (others 403). Pool sTSLA-QQ/QQQx 229XVFnw… anchored on Pyth Pro BOTH legs;
+  resolver now makes Pyth authoritative when present (twins = context). pyth-compare.mjs = "use one feed, compare both".
+- Helius RPC wired (~/.config/stockcurve/rpc.env) → 0 429s. Wallet 0.28 SOL.
+
 ## Needs Matthew (interactive)
 1. Register + submit on hackathons.solana.com (links: repo, console; video optional).
 2. Pyth Terminal: equity/xStock feed grant on the Pro token (free grant = crypto majors only; all stock feeds 403).
