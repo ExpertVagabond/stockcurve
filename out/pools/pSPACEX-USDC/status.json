@@ -1,5 +1,5 @@
 {
-  "at": "2026-09-16T11:38:39.193Z",
+  "at": "2026-09-16T12:47:53.736Z",
   "poolAddress": "27FWe3Hd8Rd8K6p3CJUcYhQpUkHXS4UjRwLsyKWPWq6j",
   "symbol": "pSPACEX",
   "quote": "USDC",
@@ -8,11 +8,11 @@
     "prestocks": {
       "symbol": "SPACEX",
       "mint": "PreANxuXjsy2pvisWWMNB6YaJNzr7681wJJr2rHsfTh",
-      "mark": 144.2070423077303,
-      "token": 111.75350649927597,
-      "basisBps": -2250.4820353502687,
-      "markValuation": 1890714554701,
-      "impliedValuation": 1465212640768,
+      "mark": 144.35738963556415,
+      "token": 113.5639912949878,
+      "basisBps": -2133.1362681408605,
+      "markValuation": 1892685775222,
+      "impliedValuation": 1488950108090,
       "supply": 43712.579246454996
     },
     "tessera": {
@@ -47,7 +47,7 @@
     "isMigrated": 1,
     "baseSold": 8.249177675,
     "activationPoint": 1789520958,
-    "ageSec": 37761
+    "ageSec": 41915
   },
   "fees": {
     "totalTradingQuote": 0.088172,

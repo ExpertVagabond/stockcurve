@@ -1,12 +1,12 @@
 {
-  "at": "2026-09-16T11:46:10.390Z",
+  "at": "2026-09-16T12:47:48.710Z",
   "wallet": "8nqQzTU5bqH3yjfi2ST1XvaaqWw447enCqnZkxHXTsKF",
   "agents": [
     {
       "symbol": "scSNDK",
       "mint": "CUnDgEpzGQNkwQKDCNoyv1SB6YvBygUSCekSPgnsUGkm",
+      "wallet": "8nqQzTU5bqH3yjfi2ST1XvaaqWw447enCqnZkxHXTsKF",
       "quote": "SNDKbwMUQvZhnLnxLduradgLHG5KrPuKwpnrkkGRhfH",
-      "quoteSymbol": "",
       "creator": "3mEezSFf5bYaYWe5xvx2nt9BXemQJsd6sZ1BDGi6Bjtx",
       "curve": "on curve",
       "mcapUsd": 3521.93715854253,
@@ -29,8 +29,8 @@
     {
       "symbol": "scSPCX",
       "mint": "2QSXUQVQZ7RxjsifbT8tnJocJHbpEt5SCUypLeCjVCcH",
+      "wallet": "8nqQzTU5bqH3yjfi2ST1XvaaqWw447enCqnZkxHXTsKF",
       "quote": "SPCXxcqXj6e5dJDVNovHN8744zkbhM2bYudU45BimGb",
-      "quoteSymbol": "",
       "creator": "8t5STnsTmAxXiqNKarhByZZdWQ1NMaNfDVMNKPtmzxAk",
       "curve": "on curve",
       "mcapUsd": 3773.374028910337,
