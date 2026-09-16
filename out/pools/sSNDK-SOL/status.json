@@ -1,35 +1,35 @@
 {
-  "at": "2026-09-16T15:04:47.034Z",
+  "at": "2026-09-16T15:35:45.623Z",
   "poolAddress": "EnrkDGJc1L77nsBmpAcbLs9SssALuf7McSWPYvLw7fEt",
   "symbol": "sSNDK",
   "quote": "SOL",
   "unit": 0.010002808745277326,
   "preipo": null,
   "reference": {
-    "baseUsd": 1542.4007562655731,
-    "baseSource": "median(twin-backpack+twin-ondo)",
+    "baseUsd": 1540.5093428004147,
+    "baseSource": "median(twin-backpack+twin-ondo+clawpump)",
     "baseAgeSec": 0,
     "baseStale": false,
-    "quoteUsd": 97.16784612000001,
+    "quoteUsd": 97.00947437,
     "quoteSource": "pyth-lazer",
-    "refPriceQuote": 0.1587803001668062,
-    "refPriceUsd": 15.428339773495637
+    "refPriceQuote": 0.15884448840092621,
+    "refPriceUsd": 15.409420326345415
   },
   "pool": {
     "priceQuote": 0.16539175380278995,
-    "priceUsd": 16.07076048302642,
-    "basisBps": 416.39004517803005,
+    "priceUsd": 16.0445671015411,
+    "basisBps": 412.18083597199364,
     "startPriceQuote": 0.14964015822245333,
     "graduationPriceQuote": 0.16539175382481683,
     "quoteReserve": 0.895166682,
     "quoteReserveDisplay": 0.895166682,
     "threshold": 0.895166681,
-    "thresholdUsd": 86.98141831115913,
+    "thresholdUsd": 86.83964919734747,
     "progressPct": 100,
     "isMigrated": 1,
     "baseSold": 5.587597849,
     "activationPoint": 1789516422,
-    "ageSec": 54665
+    "ageSec": 56523
   },
   "fees": {
     "totalTradingQuote": 0.022153226,

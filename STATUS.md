@@ -142,3 +142,8 @@ Exact next command: `cd "$VS/projects/stockcurve" && node scripts/status.mjs` (s
 - done: simple/ (one file per track) pushed 9b7bf48; ALLINU/DKNG Meteora DLMM pair F76rVHnd… created + seeded (85 ALLINU / 0.06 DKNG, position 3U6pHCyS…); README notes ALLINU as outside evidence.
 - sibling project $VS/projects/pumpwatch (launches / movers / lookup / trade --jup / tp / loop / snipe) — open positions: SpaceX 840 (tp pid 46045), ALLINU 86.7 (tp pid 57171 --jup).
 - next: submit form; wallet 0.11 SOL (pair rent ~0.12 reclaimable via position close).
+
+## 2026-09-16 midday
+- done: launch page (/launch) with real-size default config 4tmRWBk8; keeper auto DLMM band; Clawpump: $SOLENT/SPCX (their Meteora launcher, pool AaPSRyVp…), BonkClaw/CLAW, Solent SAID-verified + listed; sRKLB2 unwound (+0.246); Clawpump /price in resolver; docs/demo-script.md; submission checklist.
+- next (Matthew): file the submission (docs/submission.md), post the Clawpump + Pyth replies, fund the real launch (≥1.5 SOL for a $1k pool), Solent X handle + autopost.
+- next (me, when funded): docs/real-launch.md steps 1–6 on the $10k config or a $1k plan; post goes out with it.

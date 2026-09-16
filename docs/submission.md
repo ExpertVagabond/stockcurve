@@ -7,7 +7,9 @@
 **Links**
 - GitHub: https://github.com/ExpertVagabond/stockcurve
 - Live console (all pools): https://stockcurve.purplesquirrelnetworks.workers.dev
+- Launch page (sign one transaction, create a stock-quoted pool on a stockcurve partner config): https://stockcurve.purplesquirrelnetworks.workers.dev/launch
 - Live pool on the curve right now: https://solscan.io/account/GretDMXwL3Na7AtVvQzaAuQhVw8zVwsttqVxkYKXE3FP
+- $SOLENT/SPCX, launched with Clawpump's own Meteora DBC launcher, run by the SAID-verified agent Solent: https://solscan.io/account/AaPSRyVpG2c2BWrVHDDSX9kWBvVRdozfxzA5RmUAPzjD
 - Clawpump agent tokens: scSPCX / Backpack-Sunrise SPCX https://pump.fun/coin/2QSXUQVQZ7RxjsifbT8tnJocJHbpEt5SCUypLeCjVCcH (Meteora DLMM pair GYN1e3YjRrWuAZDVJthgW1wYJBPaciZxmW1gfDRaFkHP) · scSNDK / Backpack SNDK https://pump.fun/coin/CUnDgEpzGQNkwQKDCNoyv1SB6YvBygUSCekSPgnsUGkm (pair 7LvHsXj3LFmpwCx6mDbsj7erpVdDJsNDznLhzkwWYb2y)
 - Demo video (2 min, narrated): attach `demo/stockcurve-demo.mp4` (also on the Desktop) or a YouTube-unlisted upload of it
 - Track-by-track evidence: https://github.com/ExpertVagabond/stockcurve/blob/main/docs/submission-review.md
@@ -42,3 +44,12 @@ An issuer console shows curve vs reference basis, graduation progress, fees, mul
 **What's real:** every address in the README is mainnet; every step was re-read from chain after sending. **What's not yet:** our Pyth Pro key lacks the equity-feed entitlement, so stock references currently come from live on-chain twins with recorded provenance; Lazer is wired and takes over the moment the grant lands.
 
 **Team:** Matthew Karsten (solo). Open-source components: Meteora DBC / DAMM v2 SDKs, Jupiter lite API, Pyth, PreStocks/Tessera/Backpack public APIs.
+
+
+## Submit checklist (hackathons.solana.com/hackathons/stocklana/submit, wallet sign-in)
+1. Project name: stockcurve · one-liner above · team: solo (Matthew Karsten).
+2. Links: GitHub, console, launch page, live pool, $SOLENT/SPCX pool, Clawpump coin pages (in the Links block above).
+3. Description: paste from "One-liner" through "Revenue proof".
+4. Tracks: tick all six.
+5. Video: upload demo/stockcurve-demo.mp4 (or YouTube unlisted link).
+6. After submitting, keep editing in place if the form allows; the console and repo update independently of the form.

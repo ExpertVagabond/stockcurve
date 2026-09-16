@@ -1,35 +1,35 @@
 {
-  "at": "2026-09-16T15:04:42.124Z",
+  "at": "2026-09-16T15:35:38.930Z",
   "poolAddress": "5hTGV4FQJkuNLBS9CJG2iAgunQp74EETNM9fcpj4r4tC",
   "symbol": "sRKLB",
   "quote": "SOL",
   "unit": 0.01,
   "preipo": null,
   "reference": {
-    "baseUsd": 63.68207378627909,
-    "baseSource": "twin-ondo",
+    "baseUsd": 63.59983396081393,
+    "baseSource": "median(twin-ondo+clawpump)",
     "baseAgeSec": 0,
     "baseStale": false,
-    "quoteUsd": 97.17855059,
+    "quoteUsd": 97.03030102,
     "quoteSource": "pyth-lazer",
-    "refPriceQuote": 0.0065530997735247344,
-    "refPriceUsd": 0.6368207378627909
+    "refPriceQuote": 0.006554636365366388,
+    "refPriceUsd": 0.6359983396081393
   },
   "pool": {
     "priceQuote": 0.006886863226977273,
-    "priceUsd": 0.6692553865092216,
-    "basisBps": 509.3214890470321,
+    "priceUsd": 0.6682344119971734,
+    "basisBps": 506.8578073473562,
     "startPriceQuote": 0.006230971522754821,
     "graduationPriceQuote": 0.006886863261992172,
     "quoteReserve": 0.017196785,
     "quoteReserveDisplay": 0.017196785,
     "threshold": 0.017196785,
-    "thresholdUsd": 1.6711586411078532,
+    "thresholdUsd": 1.6686092251262206,
     "progressPct": 100,
     "isMigrated": 1,
     "baseSold": 2.577869164,
     "activationPoint": 1789515643,
-    "ageSec": 55439
+    "ageSec": 57295
   },
   "fees": {
     "totalTradingQuote": 0.000426446,

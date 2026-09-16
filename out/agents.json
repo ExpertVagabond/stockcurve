@@ -1,5 +1,5 @@
 {
-  "at": "2026-09-16T15:26:57.803Z",
+  "at": "2026-09-16T15:35:07.350Z",
   "wallet": "8nqQzTU5bqH3yjfi2ST1XvaaqWw447enCqnZkxHXTsKF",
   "agents": [
     {
@@ -24,7 +24,7 @@
       "quote": "SPCXxcqXj6e5dJDVNovHN8744zkbhM2bYudU45BimGb",
       "creator": "clawpump-dbc",
       "curve": "on curve",
-      "holders": 1,
+      "holders": 2,
       "vol24h": 0,
       "pumpUrl": "https://pump.fun/coin/51BYw1nmKaeUrFi89RVmG6dL7CwYw76shw1hoNApfwZ2",
       "pairVol24h": 0,
